@@ -15,7 +15,7 @@ const categoryApi = createApi({
   reducerPath: CATEGORY_API_REDUCER_KEY,
   tagTypes: ['Categories'],
   endpoints: (builder) => ({
-    getCategories: builder.query<GetCategoriesResponse, number | undefined>({
+    getCategories: builder.query<GetCategoriesResponse, number>({
       query: (restaurantId) => `/management/restaurant/${restaurantId}/category`,
       providesTags: (result) => (result
         ? [

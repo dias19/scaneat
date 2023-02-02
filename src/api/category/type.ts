@@ -9,7 +9,7 @@ export interface Category {
 export type GetCategoriesResponse = Category[];
 
 export interface AddCategoryRequest {
-  restaurantId?: number;
+  restaurantId: number;
   name: string;
   description: string;
   isActive: boolean;

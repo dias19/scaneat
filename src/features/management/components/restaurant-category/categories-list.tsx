@@ -19,9 +19,13 @@ export function RestaurantCategories() {
 
   const [addOpen, setAddOpen] = useState(false);
 
+  const skip = Number.isNaN(Number(id));
+
   const {
     data: categories = [],
-  } = categoryApi.endpoints.getCategories.useQuery(Number(id));
+  } = categoryApi.endpoints.getCategories.useQuery(Number(id), {
+    skip,
+  });
 
   return (
     <ManagementLayoutButton title="Menu">

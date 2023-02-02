@@ -14,8 +14,15 @@ import { RestaurantSales } from './sales';
 
 export function RestaurantDetails() {
   const { slug } = useParams();
-  const { data: restaurant } = restaurantsApi.endpoints.getRestaurant.useQuery(slug);
+
+  const skip = typeof (slug) === 'undefined';
+
+  const { data: restaurant } = restaurantsApi.endpoints.getRestaurant.useQuery(slug as string, {
+    skip,
+  });
+
   const [trigger] = restaurantsApi.endpoints.getRestaurantQR.useLazyQuery();
+
   return (
     <ManagementLayoutButton title="Якитория">
       <BoxStyle>
@@ -42,7 +49,7 @@ export function RestaurantDetails() {
           </Box>
         </Box>
         <Card sx={{ mt: 3 }}>
-          <CardActionArea onClick={() => trigger(slug)}>
+          <CardActionArea onClick={() => trigger(slug as string)}>
             <CardContentStyle>
               <ImageStyle
             // eslint-disable-next-line max-len

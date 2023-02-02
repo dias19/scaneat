@@ -19,7 +19,7 @@ export function RestaurantCategoryAdd({ open, setOpen, id }: AddCategoryProps) {
 
   async function handleAdd(data: CategoryFormData) {
     await addCategory({
-      restaurantId: id,
+      restaurantId: id as number,
       isActive: true,
       ...data,
 
