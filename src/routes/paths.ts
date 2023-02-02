@@ -2,7 +2,7 @@ function path(root: string, sublink: string) {
   return `${root}${sublink}`;
 }
 
-const ROOTS_AUTH = '';
+const ROOTS_AUTH = '/';
 const ROOTS_MANAGEMENT = '/management';
 const ROOTS_TICKETS = 'tickets';
 
@@ -17,11 +17,18 @@ export const PATH_MANAGEMENT = {
   myRestaurants: path(ROOTS_MANAGEMENT, '/restaurants'),
   profile: path(ROOTS_MANAGEMENT, '/profile'),
   addRestaurant: path(ROOTS_MANAGEMENT, '/add'),
-  restaurantDetails: (id: number) => path(ROOTS_MANAGEMENT, `/restaurants/${id}`),
-  menu: (id:number) => path(ROOTS_MANAGEMENT, `restaurants/${id}/menu`),
-  orders: (id:number) => path(ROOTS_MANAGEMENT, `restaurants/${id}/orders`),
-  settings: (id:number) => path(ROOTS_MANAGEMENT, `restaurants/${id}/settings`),
-  employees: (id:number) => path(ROOTS_MANAGEMENT, `restaurants/${id}/employees`),
+  restaurantDetails: (slug?: string) => path(ROOTS_MANAGEMENT, `/restaurants/${slug}`),
+  menu: (id?: number) => path(ROOTS_MANAGEMENT, `/restaurants/${id}/menu`),
+  orders: (id?: number) => path(ROOTS_MANAGEMENT, `/restaurants/${id}/orders`),
+  settings: (id?: number) => path(ROOTS_MANAGEMENT, `/restaurants/${id}/settings`),
+  employees: (id?: number) => path(ROOTS_MANAGEMENT, `/restaurants/${id}/employees`),
+  menuItems: (restaurantId?:number, category?:string, categoryId?:number) => path(
+    ROOTS_MANAGEMENT,
+    `/restaurants/${restaurantId}/menu/${category}/${categoryId}`,
+  ),
+  statusPending: path(ROOTS_MANAGEMENT, '/restaurants/status'),
+  statusAccepted: path(ROOTS_MANAGEMENT, '/restaurants/status/accepted'),
+  statusDeclined: path(ROOTS_MANAGEMENT, '/restaurants/status/declined'),
 };
 
 export const PATH_PAGE = {

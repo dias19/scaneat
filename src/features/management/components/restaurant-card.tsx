@@ -5,20 +5,18 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
+import { Restaurant } from '~/api/restaurant/type';
 import { PATH_MANAGEMENT } from '~/routes/paths';
 
 type Props={
-    name: string,
-    address: string,
-    description: string,
-    id:number
+   restaurant: Restaurant
 }
 export function RestaurantCard({
-  name, address, description, id,
+  restaurant,
 }:Props) {
   return (
     <Card>
-      <CardActionArea component={Link} to={PATH_MANAGEMENT.restaurantDetails(id)}>
+      <CardActionArea component={Link} to={PATH_MANAGEMENT.restaurantDetails(restaurant.slug)}>
         <CardContentStyle>
           <CardMedia
             component="img"
@@ -31,13 +29,13 @@ export function RestaurantCard({
           />
           <Box>
             <Typography variant="h6">
-              {name}
+              {restaurant.name}
             </Typography>
             <Typography variant="caption" sx={{ color: 'grey.600' }} component="p">
-              {address}
+              {restaurant.address}
             </Typography>
             <Typography variant="caption" sx={{ mt: 1, color: 'grey.600' }} component="p">
-              {description}
+              {restaurant.rating}
             </Typography>
           </Box>
         </CardContentStyle>

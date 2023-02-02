@@ -2,6 +2,7 @@ import React from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { AuthRoutes } from '~/pages/auth';
 import { ManagementRoutes } from '~/pages/management';
 import { MiscRoutes } from '~/pages/misc';
 import { lazyImport } from '~/utils/lazyImport';
@@ -13,6 +14,7 @@ export function AppRoutes() {
     <BrowserRouter basename={import.meta.env.VITE_PUBLIC_URL}>
       <Routes>
         {MiscRoutes}
+        {AuthRoutes}
         {ManagementRoutes}
         <Route path="*" element={<Page404 />} key="404" />
       </Routes>

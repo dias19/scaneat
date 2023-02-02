@@ -5,13 +5,19 @@ import {
 } from 'redux-persist';
 
 import authApi, { AUTH_API_REDUCER_KEY } from '~/api/auth/api';
+import categoryApi, { CATEGORY_API_REDUCER_KEY } from '~/api/category/api';
+import productsApi, { PRODUCTS_API_REDUCER_KEY } from '~/api/products/api';
+import restaurantApi, { RESTAURANT_REDUCER_KEY } from '~/api/restaurant/api';
 import { authReducer, authSlice } from '~/features/auth';
 
 import { RESET_STATE_ACTION_TYPE } from './actions/resetState';
 
 const reducers = {
   [AUTH_API_REDUCER_KEY]: authApi.reducer,
+  [RESTAURANT_REDUCER_KEY]: restaurantApi.reducer,
   [authSlice.name]: authReducer,
+  [CATEGORY_API_REDUCER_KEY]: categoryApi.reducer,
+  [PRODUCTS_API_REDUCER_KEY]: productsApi.reducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);
@@ -32,7 +38,10 @@ export const store = configureStore({
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
   }).concat(
+    restaurantApi.middleware,
     authApi.middleware,
+    categoryApi.middleware,
+    productsApi.middleware,
   ),
 });
 

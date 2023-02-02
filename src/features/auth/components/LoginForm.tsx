@@ -19,7 +19,6 @@ type FormValuesProps = {
 export function LoginForm() {
   const [login] = authApi.endpoints.login.useMutation();
   const navigate = useNavigate();
-
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -43,8 +42,8 @@ export function LoginForm() {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await login(data).unwrap();
-      navigate('/');
+      await login(data);
+      navigate('/management/restaurants');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 && error.data?.validationErrors?.length > 0) {
