@@ -1,11 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
-import { baseQuery } from '..';
+import { baseQueryWithLogout } from '..';
 import { GetProductsResponse, AddProductRequest, EditProductRequest } from './type';
 
 export const PRODUCTS_API_REDUCER_KEY = 'productsApi';
 const productsApi = createApi({
-  baseQuery,
+  baseQuery: baseQueryWithLogout,
   reducerPath: PRODUCTS_API_REDUCER_KEY,
   tagTypes: ['Products'],
   endpoints: (builder) => ({

@@ -5,12 +5,11 @@ import {
   Button,
   styled,
 } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import categoryApi from '~/api/category/api';
 import { ManagementLayoutButton } from '~/layouts/management';
 import { BOTTOM_NAVIGATION } from '~/layouts/management/constants';
-import { PATH_PAGE } from '~/routes/paths';
 
 import { RestaurantCategoryAdd } from './category-add';
 import { RestaurantCategoryCard } from './category-card';
@@ -20,15 +19,10 @@ export function RestaurantCategories() {
 
   const [addOpen, setAddOpen] = useState(false);
 
-  const navigate = useNavigate();
-
   const {
     data: categories = [],
-    isLoading, isError,
   } = categoryApi.endpoints.getCategories.useQuery(Number(id));
-  if (isError) {
-    navigate(PATH_PAGE.page500);
-  }
+
   return (
     <ManagementLayoutButton title="Menu">
       <Box sx={{ mt: 4, borderRadius: 1 }}>

@@ -56,42 +56,46 @@ const { RestaurantStatusPending } = lazyImport(
   'RestaurantStatusPending',
 );
 export const ManagementRoutes = [
-  <Route path="/management/profile" element={<ManagerProfilePage />} key="profile" />,
-  <Route path="/management/add" element={<AddRestaurantPage />} key="add" />,
-  <Route path="/management/restaurants" element={<MyRestaurantsPage />} key="restaurants" />,
+
+  <Route path="profile" element={<ManagerProfilePage />} key="profile" />,
+
+  <Route path="add" element={<AddRestaurantPage />} key="add" />,
+
+  <Route path="restaurants" element={<MyRestaurantsPage />} key="restaurants" />,
+
   <Route
-    path="/management/restaurants/:slug"
+    path="restaurants/:slug"
     element={<RestaurantDetailsPage />}
     key="restaurant-details"
   />,
   <Route
-    path="/management/restaurants/:id/menu"
+    path="restaurants/:id/menu"
     element={<RestaurantMenuPage />}
     key="restaurant-menu"
   />,
   <Route
-    path="/management/restaurants/:slug/orders"
+    path="restaurants/:slug/orders"
     element={<RestaurantDetailsOrdersPage />}
     key="restaurant-orders"
   />,
   <Route
-    path="/management/restaurants/:slug/employees"
+    path="restaurants/:slug/employees"
     element={<RestaurantDetailsEmployeesPage />}
     key="restaurant-employees"
   />,
   <Route
-    path="/management/restaurants/:slug/settings"
+    path="restaurants/:slug/settings"
     element={<RestaurantDetailsSettingsPage />}
     key="restaurant-details"
   />,
   <Route
-    path="/management/restaurants/:restaurantId/menu/:category/:categoryId"
+    path="restaurants/:restaurantId/menu/:category/:categoryId"
     element={<RestaurantMenuItemsPage />}
     key="restaurant-menu-items"
   />,
 
   <Route
-    path="/management/restaurants/status"
+    path="restaurants/status"
     element={<RestaurantStatusPage />}
     key="restaurants-status"
   >

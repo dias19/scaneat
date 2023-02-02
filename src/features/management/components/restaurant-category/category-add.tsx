@@ -18,13 +18,11 @@ export function RestaurantCategoryAdd({ open, setOpen, id }: AddCategoryProps) {
   const [addCategory] = categoryApi.endpoints.addCategory.useMutation();
 
   async function handleAdd(data: CategoryFormData) {
-    const body = {
-      ...data,
-      isActive: true,
-    };
     await addCategory({
       restaurantId: id,
-      body,
+      isActive: true,
+      ...data,
+
     });
     setOpen(false);
   }

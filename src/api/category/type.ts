@@ -1,25 +1,27 @@
-export type Category = {
+export interface Category {
   name: string;
   description: string;
   isActive: boolean;
-  id:number;
+  id: number;
   isDeleted: boolean;
-};
+}
+
 export type GetCategoriesResponse = Category[];
 
-export type AddCategoryRequest = {
+export interface AddCategoryRequest {
   restaurantId?: number;
-  body?: {
-    name: string;
-    description: string;
-    isActive: boolean;
-  };
-};
-export type PatchCategoryRequest={
-    categoryId: number,
-    body: {
-        name:string,
-        description: string,
-        isActive: boolean,
-    }
+  name: string;
+  description: string;
+  isActive: boolean;
 }
+
+export interface EditCategoryRequest{
+  categoryId: number;
+  name: string;
+  description: string;
+  isActive: boolean;
+}
+
+export type DeleteCategoryResponse = void
+
+export type EditCategoryResponse = void

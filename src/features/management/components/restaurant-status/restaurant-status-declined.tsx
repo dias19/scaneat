@@ -9,7 +9,7 @@ import restaurantApi from '~/api/restaurant/api';
 import { API_THUMBNAIL } from '~/config';
 
 export function RestaurantStatusDeclined() {
-  const { data: restaurants = [], isLoading } = restaurantApi
+  const { data: restaurants = [] } = restaurantApi
     .endpoints.getRestaurants.useQuery('status=rejected');
   const isEmpty = restaurants.length === 0;
   const [verifyRestaurant] = restaurantApi.endpoints.verifyRestaurant.useMutation();

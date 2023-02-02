@@ -16,12 +16,10 @@ type CategoryEditProps={
 export function RestaurantCategoryEdit({ editOpen, setEditOpen, category }: CategoryEditProps) {
   const [editCategory] = categoryApi.endpoints.editCategory.useMutation();
   async function onSubmit(data: CategoryFormData) {
-    const body = {
-      ...data, isActive: true,
-    };
     await editCategory({
       categoryId: category.id,
-      body,
+      isActive: true,
+      ...data,
     });
     setEditOpen(false);
   }

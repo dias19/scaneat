@@ -1,13 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
-import { baseQuery } from '..';
+import { baseQueryWithLogout } from '..';
 import { GetRestaurantsResponse, PostPhotoResponse, Restaurant } from './type';
 
 export const RESTAURANT_REDUCER_KEY = 'restaurantApi';
 
 const restaurantApi = createApi({
   reducerPath: RESTAURANT_REDUCER_KEY,
-  baseQuery,
+  baseQuery: baseQueryWithLogout,
   tagTypes: ['Restaurants'],
   endpoints: (builder) => ({
     getRestaurants: builder.query<GetRestaurantsResponse, string>({
@@ -33,7 +33,7 @@ const restaurantApi = createApi({
       query(restaurantSlug) {
         return {
           url: `/restaurant/${restaurantSlug}/qr`,
-          responseHandler: async (response) => {
+          transformResponse: async (response: any) => {
             const hiddenElement = document.createElement('a');
             const url = window.URL || window.webkitURL;
             const blobData = url.createObjectURL(await response.blob());

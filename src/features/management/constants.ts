@@ -33,14 +33,3 @@ export const MANAGEMENT_RESTAURANT_STATUS = [
     route: PATH_MANAGEMENT.statusDeclined,
   },
 ];
-
-export const RESTAURANT_CATEGORY_STATUS = [
-  {
-    name: 'Активные',
-    route: '',
-  },
-  {
-    name: 'Архивированные',
-    route: '',
-  },
-];

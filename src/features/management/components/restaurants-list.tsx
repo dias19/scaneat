@@ -3,21 +3,16 @@ import React from 'react';
 import {
   Box, styled, Typography,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 
 import restaurantsApi from '~/api/restaurant/api';
 import { ManagementLayoutLogo } from '~/layouts/management';
-import { PATH_PAGE } from '~/routes/paths';
 
 import { RestaurantCard } from './restaurant-card';
 
 export function RestaurantsList() {
-  const navigate = useNavigate();
-  const { data: restaurants = [], isError, isLoading } = restaurantsApi
+  const { data: restaurants = [] } = restaurantsApi
     .endpoints.getRestaurants.useQuery('status=accepted');
-  if (isError) {
-    navigate(PATH_PAGE.page500);
-  }
+
   return (
     <ManagementLayoutLogo>
       <BoxStyle>
