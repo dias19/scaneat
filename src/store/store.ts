@@ -4,9 +4,14 @@ import {
   FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE,
 } from 'redux-persist';
 
+import authApi, { AUTH_API_REDUCER_KEY } from '~/api/auth/api';
+import { authReducer, authSlice } from '~/features/auth';
+
 import { RESET_STATE_ACTION_TYPE } from './actions/resetState';
 
 const reducers = {
+  [AUTH_API_REDUCER_KEY]: authApi.reducer,
+  [authSlice.name]: authReducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);
@@ -26,7 +31,9 @@ export const store = configureStore({
     serializableCheck: {
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
-  }),
+  }).concat(
+    authApi.middleware,
+  ),
 });
 
 export const persistor = persistStore(store);
