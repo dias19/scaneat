@@ -30,6 +30,7 @@ export function RestaurantProductEdit({
       onClose={onCloseEditDish}
       onOpen={onOpenEditDish}
       title={title}
+      hasCloser
     >
       <Box display="flex" flexDirection="column" sx={{ height: '100%' }}>
         <RestaurantProductForm

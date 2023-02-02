@@ -29,6 +29,7 @@ export function RestaurantCategoryEdit({ editOpen, setEditOpen, category }: Cate
       onClose={() => setEditOpen(false)}
       onOpen={() => setEditOpen(true)}
       title={category.name}
+      hasCloser
     >
       <RestaurantCategoryForm
         onSubmit={(data: CategoryFormData) => onSubmit(data)}

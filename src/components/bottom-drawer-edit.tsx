@@ -14,6 +14,7 @@ type BottomDrawerEditProps={
     setOpenDelete: (state: boolean)=> void,
     title: string,
 }
+
 export function BottomDrawerEdit({
   open, setOpen, setOpenEdit, setOpenDelete, title,
 }:BottomDrawerEditProps) {
@@ -23,6 +24,7 @@ export function BottomDrawerEdit({
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       title={title}
+      hasCloser
     >
       <Card sx={{ boxShadow: 'none', mb: 2 }}>
         <CardActionArea onClick={() => {

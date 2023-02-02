@@ -1,20 +1,21 @@
 import React from 'react';
 
 import {
-  Box, styled, SwipeableDrawer, SwipeableDrawerProps,
+  Box, IconButton, styled, SwipeableDrawer, SwipeableDrawerProps, Typography,
 } from '@mui/material';
 
-import { BottomDrawerHeader } from './bottom-drawer-header';
+import { Iconify } from './Iconify';
 
 type Props = Omit<SwipeableDrawerProps, 'onOpen'> & {
   children?: React.ReactNode;
   onClose?: VoidFunction;
   onOpen?: VoidFunction;
   title?: string
+  hasCloser: boolean
 };
 
 export function BottomDrawer({
-  children, onClose, onOpen, title, ...drawerProps
+  children, onClose, onOpen, title, hasCloser, ...drawerProps
 }: Props) {
   const handleOnOpen = () => {
     onOpen?.();
@@ -22,7 +23,17 @@ export function BottomDrawer({
 
   return (
     <DrawerStyle {...drawerProps} onClose={onClose} onOpen={handleOnOpen} anchor="bottom">
-      <BottomDrawerHeader title={title} onClose={onClose} />
+      <HeaderBoxStyle>
+        <HeaderBoxContentStyle>
+          <Typography variant="h5">{title}</Typography>
+        </HeaderBoxContentStyle>
+        {hasCloser
+        && (
+        <IconButton onClick={() => onClose()}>
+          <Iconify icon="material-symbols:close" sx={{ width: 24, height: 24 }} />
+        </IconButton>
+        )}
+      </HeaderBoxStyle>
       <ContentStyle>{children}</ContentStyle>
     </DrawerStyle>
   );
@@ -32,7 +43,7 @@ const DrawerStyle = styled(SwipeableDrawer)(({ theme }) => ({
   '.MuiDrawer-paper': {
     borderTopRightRadius: theme.shape.borderRadius,
     borderTopLeftRadius: theme.shape.borderRadius,
-    background: 'white',
+    background: theme.palette.common.white,
     display: 'flex',
     flexDirection: 'column',
     paddingBottom: theme.spacing(3),
@@ -44,3 +55,13 @@ const ContentStyle = styled(Box)(({ theme }) => ({
   paddingRight: theme.spacing(3),
   flex: 1,
 }));
+
+const HeaderBoxStyle = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(3),
+}));
+
+const HeaderBoxContentStyle = styled(Box)({
+  flexGrow: 1,
+});

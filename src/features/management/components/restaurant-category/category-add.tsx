@@ -33,6 +33,7 @@ export function RestaurantCategoryAdd({ open, setOpen, id }: AddCategoryProps) {
       onOpen={() => setOpen(true)}
       open={open}
       title="Создать категорию"
+      hasCloser
     >
       <Box display="flex" flexDirection="column" height="100%">
         <Typography variant="subtitle2">Создайте категорию</Typography>

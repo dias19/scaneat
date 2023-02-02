@@ -34,6 +34,7 @@ export function RestaurantProductAdd({ open, setOpen, category }: AddProductProp
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       title="Добавить блюдо"
+      hasCloser
     >
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <Typography variant="subtitle2">
