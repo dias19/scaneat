@@ -10,7 +10,8 @@ import { Iconify } from '~/components/Iconify';
 type HeaderProps={
     title?:string
 }
-export function HeaderWithBackButton({ title }:HeaderProps) {
+
+export function BackButtonHeader({ title }:HeaderProps) {
   const navigate = useNavigate();
   return (
     <BoxStyle>
@@ -26,6 +27,7 @@ export function HeaderWithBackButton({ title }:HeaderProps) {
     </BoxStyle>
   );
 }
+
 const BoxStyle = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'start',

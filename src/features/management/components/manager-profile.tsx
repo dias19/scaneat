@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { ManagementLayoutLogo } from '~/layouts/management';
+import { ManagementLogoLayout } from '~/layouts/management';
 
 export function ManagerProfile() {
   return (
-    <ManagementLayoutLogo>
+    <ManagementLogoLayout>
       <h1>User</h1>
-    </ManagementLayoutLogo>
+    </ManagementLogoLayout>
   );
 }

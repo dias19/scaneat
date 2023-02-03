@@ -23,7 +23,7 @@ export function RestaurantStatusPending() {
       {!isEmpty && (
         <Box>
           {restaurants.map((restaurant) => (
-            <Card>
+            <Card key={restaurant.id}>
               <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Box display="flex">
                   <ImageStyle src={API_THUMBNAIL + restaurant.originalUrl} alt="Something" />

@@ -20,6 +20,6 @@ export * from './components/restaurant-status/restaurant-status';
 
 export * from './components/restaurant-status/restaurant-status-pending';
 
-export * from './components/restaurant-status/restaurant-status-declined';
+export * from './components/restaurant-status/restaurant-status-rejected';
 
 export * from './components/restaurant-status/restaurant-status-accepted';

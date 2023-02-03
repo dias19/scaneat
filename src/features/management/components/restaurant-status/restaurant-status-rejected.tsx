@@ -8,18 +8,21 @@ import styled from 'styled-components';
 import restaurantApi from '~/api/restaurant/api';
 import { API_THUMBNAIL } from '~/config';
 
-export function RestaurantStatusDeclined() {
+export function RestaurantStatusRejected() {
   const { data: restaurants = [] } = restaurantApi
     .endpoints.getRestaurants.useQuery('status=rejected');
+
   const isEmpty = restaurants.length === 0;
+
   const [verifyRestaurant] = restaurantApi.endpoints.verifyRestaurant.useMutation();
+
   return (
     <>
       {isEmpty && <Typography> Нету заявок ресторанов</Typography>}
       {!isEmpty && (
       <>
         {restaurants.map((restaurant) => (
-          <Card sx={{ mb: 2 }}>
+          <Card key={restaurant.id} sx={{ mb: 2 }}>
             <CardContentStyle>
               <Box display="flex">
                 <ImageStyle src={API_THUMBNAIL + restaurant.originalUrl} alt="Something" />

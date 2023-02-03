@@ -17,8 +17,8 @@ export function RestaurantStatusAccepted() {
       {isEmpty && <Typography> Нету заявок ресторанов</Typography>}
       {!isEmpty && (
       <Box>
-        {restaurants?.map((restaurant) => (
-          <Card sx={{ mb: 2 }}>
+        {restaurants.map((restaurant) => (
+          <Card key={restaurant.id} sx={{ mb: 2 }}>
             <CardContentStyle>
               <Box display="flex">
                 <ImageStyle src={API_THUMBNAIL + restaurant.originalUrl} alt="Something" />

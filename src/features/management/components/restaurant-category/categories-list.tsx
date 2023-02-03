@@ -8,7 +8,7 @@ import {
 import { useParams } from 'react-router-dom';
 
 import categoryApi from '~/api/category/api';
-import { ManagementLayoutButton } from '~/layouts/management';
+import { CircularLoader } from '~/components/Circular Loader';
 import { BOTTOM_NAVIGATION } from '~/layouts/management/constants';
 
 import { RestaurantCategoryAdd } from './category-add';
@@ -22,28 +22,31 @@ export function RestaurantCategories() {
   const skip = Number.isNaN(Number(id));
 
   const {
-    data: categories = [],
+    data: categories = [], isLoading, isError,
   } = categoryApi.endpoints.getCategories.useQuery(Number(id), {
     skip,
   });
 
   return (
-    <ManagementLayoutButton title="Menu">
-      <Box sx={{ mt: 4, borderRadius: 1 }}>
+    <>
+      <CircularLoader isLoading={isLoading} />
+      {(!isError && !isLoading) && (
+      <BoxStyle>
         {categories.filter((category) => !category.isDeleted).map((category) => (
           <RestaurantCategoryCard key={category.id} category={category} restaurantId={id} />
         ))}
-        <BoxStyle>
+        <BoxButtonStyle>
           <Button variant="contained" size="large" onClick={() => setAddOpen(true)}>
             Добавить Категорию
           </Button>
-        </BoxStyle>
+        </BoxButtonStyle>
         <RestaurantCategoryAdd open={addOpen} setOpen={setAddOpen} id={Number(id)} />
-      </Box>
-    </ManagementLayoutButton>
+      </BoxStyle>
+      )}
+    </>
   );
 }
-const BoxStyle = styled(Box)({
+const BoxButtonStyle = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
   position: 'fixed',
@@ -51,3 +54,11 @@ const BoxStyle = styled(Box)({
   right: 0,
   bottom: (BOTTOM_NAVIGATION.BOTTOM_NAVIGATION_HEIGHT + 16),
 });
+
+const BoxStyle = styled(Box)(({ theme }) => ({
+  marginRight: theme.spacing(2),
+  marginLeft: theme.spacing(2),
+  marginTop: theme.spacing(4),
+  borderRadius: theme.spacing(1),
+
+}));

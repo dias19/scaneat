@@ -1,11 +1,12 @@
-export type ProductFormData = {
+export interface ProductFormData {
     name: string;
     price: number;
-    description: string;
-    photoId: number;
- };
-export type ProductData={
-    name: string;
+ description: string;
+  photoId: number;
+ }
+
+export interface ProductData{
+  name: string;
   id: number;
   description: string;
   createdAt: string;
@@ -16,15 +17,16 @@ export type ProductData={
   originalUrl: string;
   photoId: number;
 }
-export type Category = {
+
+export interface Category {
     name: string;
     description: string;
     isActive: boolean;
     id:number;
     isDeleted: boolean;
-  };
+}
 
-export type CategoryFormData={
+export interface CategoryFormData{
     name:string,
     description: string
 }

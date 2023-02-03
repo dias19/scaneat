@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Route } from 'react-router-dom';
 
+import { ManagementLogoLayout, ManagementStackLayout } from '~/layouts/management';
 import { lazyImport } from '~/utils/lazyImport';
 
 const { ManagerProfilePage } = lazyImport(
@@ -43,9 +44,9 @@ const { RestaurantStatusPage } = lazyImport(
   'RestaurantStatusPage',
 );
 
-const { RestaurantStatusDeclined } = lazyImport(
-  () => import('~/features/management/components/restaurant-status/restaurant-status-declined'),
-  'RestaurantStatusDeclined',
+const { RestaurantStatusRejected } = lazyImport(
+  () => import('~/features/management/components/restaurant-status/restaurant-status-rejected'),
+  'RestaurantStatusRejected',
 );
 const { RestaurantStatusAccepted } = lazyImport(
   () => import('~/features/management/components/restaurant-status/restaurant-status-accepted'),
@@ -57,53 +58,80 @@ const { RestaurantStatusPending } = lazyImport(
 );
 export const ManagementRoutes = [
 
-  <Route path="profile" element={<ManagerProfilePage />} key="profile" />,
+  <Route element={<ManagementLogoLayout />} key="management-layout">
 
-  <Route path="add" element={<AddRestaurantPage />} key="add" />,
+    <Route path="profile" element={<ManagerProfilePage />} key="profile" />
+    ,
 
-  <Route path="restaurants" element={<MyRestaurantsPage />} key="restaurants" />,
+    <Route path="add" element={<AddRestaurantPage />} key="add" />
+    ,
+
+    <Route path="restaurants" element={<MyRestaurantsPage />} key="restaurants" />
+    ,
+
+  </Route>,
 
   <Route
     path="restaurants/:slug"
     element={<RestaurantDetailsPage />}
     key="restaurant-details"
   />,
-  <Route
-    path="restaurants/:id/menu"
-    element={<RestaurantMenuPage />}
-    key="restaurant-menu"
-  />,
-  <Route
-    path="restaurants/:slug/orders"
-    element={<RestaurantDetailsOrdersPage />}
-    key="restaurant-orders"
-  />,
-  <Route
-    path="restaurants/:slug/employees"
-    element={<RestaurantDetailsEmployeesPage />}
-    key="restaurant-employees"
-  />,
-  <Route
-    path="restaurants/:slug/settings"
-    element={<RestaurantDetailsSettingsPage />}
-    key="restaurant-details"
-  />,
+  <Route element={<ManagementStackLayout title="Меню" />} key="restaurant-menu">
+    <Route
+      path="restaurants/:id/menu"
+      element={<RestaurantMenuPage />}
+      key="restaurant-menu"
+    />
+  </Route>,
+  <Route element={<ManagementStackLayout title="Заказы" />} key="restaurant-menu">
+    <Route
+      path="restaurants/:slug/orders"
+      element={<RestaurantDetailsOrdersPage />}
+      key="restaurant-orders"
+    />
+  </Route>,
+  <Route element={<ManagementStackLayout title="Работники" />} key="restaurant-menu">
+    <Route
+      path="restaurants/:slug/employees"
+      element={<RestaurantDetailsEmployeesPage />}
+      key="restaurant-employees"
+    />
+  </Route>,
+  <Route element={<ManagementStackLayout title="Работники" />} key="restaurant-menu">
+    <Route
+      path="restaurants/:slug/settings"
+      element={<RestaurantDetailsSettingsPage />}
+      key="restaurant-details"
+    />
+  </Route>,
+
   <Route
     path="restaurants/:restaurantId/menu/:category/:categoryId"
     element={<RestaurantMenuItemsPage />}
     key="restaurant-menu-items"
   />,
 
-  <Route
-    path="restaurants/status"
-    element={<RestaurantStatusPage />}
-    key="restaurants-status"
-  >
-    <Route index element={<RestaurantStatusPending />} />
-    ,
-    <Route path="accepted" element={<RestaurantStatusAccepted />} />
-    ,
-    <Route path="declined" element={<RestaurantStatusDeclined />} />
+  <Route element={<ManagementLogoLayout />} key="logo-layout">
+    <Route
+      path="restaurants/status"
+      element={<RestaurantStatusPage />}
+      key="restaurants-status"
+    >
+      <Route index element={<RestaurantStatusPending />} key="restaurants-status-pending" />
+      ,
+      <Route
+        path="accepted"
+        element={<RestaurantStatusAccepted />}
+        key="restaurants-status-accepted"
+      />
+      ,
+      <Route
+        path="declined"
+        element={<RestaurantStatusRejected />}
+        key="restaurants-status-rejected"
+      />
 
+    </Route>
+    ,
   </Route>,
 ];
