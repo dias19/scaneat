@@ -19,32 +19,37 @@ type FormProps = {
   product?: ProductData
 };
 
+const AddDishSchema = yup.object({
+  name: yup.string().required('Поля обязательное'),
+  price: yup.number().required('Поля обязательное'),
+  description: yup.string().required('Поля обязательное'),
+  photoId: yup.number().required(),
+});
+
 export function RestaurantProductForm({
   onSubmit, setOpen, buttonName, product,
 }: FormProps) {
-  const AddDishSchema = yup.object({
-    name: yup.string().required('Поля обязательное'),
-    price: yup.number().required('Поля обязательное'),
-    description: yup.string().required('Поля обязательное'),
-    photoId: yup.number().required(),
-  });
   const [postPhoto] = restaurantApi.endpoints.postPhoto.useMutation();
+
   const defaultValues = {
     name: product?.name || '',
     price: Number(product?.price) || 0,
     description: product?.description || '',
     photoId: Number(product?.photoId) || 0,
   };
+
   const methods = useForm<ProductFormData>({
     resolver: yupResolver(AddDishSchema),
     defaultValues,
     mode: 'all',
   });
+
   const {
     handleSubmit,
     formState: { isValid },
     setValue,
   } = methods;
+
   async function handleFileSubmit(e: React.ChangeEvent<HTMLInputElement>) {
     const formData = new FormData();
     if (!e.target.files) return;
@@ -52,6 +57,7 @@ export function RestaurantProductForm({
     const { id } = await postPhoto(formData).unwrap();
     setValue('photoId', Number(id), { shouldValidate: false });
   }
+
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ flexGrow: 1 }}>

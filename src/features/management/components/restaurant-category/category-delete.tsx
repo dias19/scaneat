@@ -12,18 +12,30 @@ type CategoryDeleteProps = {
   deleteOpen: boolean;
   setDeleteOpen: (state: boolean) => void;
 };
+
 export function RestaurantCategoryDelete({
   category,
   deleteOpen,
   setDeleteOpen,
 }: CategoryDeleteProps) {
   const [deleteCategory] = categoryApi.endpoints.deleteCategory.useMutation();
+
+  const handleClose = () => {
+    setDeleteOpen(false);
+  };
+
+  const handleDeleteCategory = async () => {
+    await deleteCategory(category.id);
+    setDeleteOpen(false);
+  };
+
   return (
     <BottomDrawer
       open={deleteOpen}
       onClose={() => setDeleteOpen(false)}
       onOpen={() => setDeleteOpen(true)}
       title={category.name}
+      hasCloser
     >
       <Box>
         <Typography variant="subtitle2">
@@ -39,17 +51,14 @@ export function RestaurantCategoryDelete({
             variant="outlined"
             sx={{ mr: 1 }}
             size="large"
-            onClick={() => setDeleteOpen(false)}
+            onClick={handleClose}
           >
             Отмена
           </Button>
           <Button
             variant="contained"
             size="large"
-            onClick={async () => {
-              await deleteCategory(category.id);
-              setDeleteOpen(false);
-            }}
+            onClick={handleDeleteCategory}
           >
             Удалить
           </Button>

@@ -9,18 +9,19 @@ export type Product = {
   categoryId: number;
   originalUrl: string;
   photoId: number;
+  isDeleted: boolean;
 };
 export type GetProductsResponse = Product[];
+
 export type AddProductRequest = {
-  body: {
-    name: string;
-    description: string;
-    price: number;
-    photoId: number;
-  },
+  name: string;
+  description: string;
+  price: number;
+  photoId: number;
   restaurantId: number,
   categoryId: number,
 };
-export type EditProductRequest=Pick<AddProductRequest, 'body'> & {
+
+export type EditProductRequest=Omit<AddProductRequest, 'restaurantId' | 'categoryId' > & {
     productId: number
 }

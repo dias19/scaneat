@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 
 import authApi from '~/api/auth/api';
 import { FormProvider, RHFTextField } from '~/components/hook-form';
+import { PATH_MANAGEMENT } from '~/routes/paths';
 
 type FormValuesProps = {
   email: string;
@@ -42,15 +43,12 @@ export function LoginForm() {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      const response = await login(data);
-      navigate('/management/restaurants');
+      await login(data).unwrap();
+      navigate(PATH_MANAGEMENT.myRestaurants);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      if (error.status === 400 && error.data?.validationErrors?.length > 0) {
-        const { path, message } = error.data.validationErrors[0];
-        setError(path, { message, type: 'custom' });
-        setError('afterSubmit', { message: 'Wrong credentials', type: 'custom' });
-      }
+      setError('email', { message: 'Wrong credentials', type: 'custom' });
+      setError('password', { message: 'Wrong credentials', type: 'custom' });
     }
   };
   return (

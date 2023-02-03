@@ -17,7 +17,7 @@ type AddCategoryProps = {
 export function RestaurantCategoryAdd({ open, setOpen, id }: AddCategoryProps) {
   const [addCategory] = categoryApi.endpoints.addCategory.useMutation();
 
-  async function handleAdd(data: CategoryFormData) {
+  const handleAdd = async (data:CategoryFormData) => {
     await addCategory({
       restaurantId: id as number,
       isActive: true,
@@ -25,7 +25,7 @@ export function RestaurantCategoryAdd({ open, setOpen, id }: AddCategoryProps) {
 
     });
     setOpen(false);
-  }
+  };
 
   return (
     <BottomDrawerStyle
@@ -44,7 +44,7 @@ export function RestaurantCategoryAdd({ open, setOpen, id }: AddCategoryProps) {
           <RestaurantCategoryForm
             buttonTitle="Создать"
             setOpen={setOpen}
-            onSubmit={(data: CategoryFormData) => handleAdd(data)}
+            onSubmit={handleAdd}
           />
         </Box>
       </Box>

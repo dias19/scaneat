@@ -26,7 +26,7 @@ export function RestaurantSales() {
       <Typography variant="h6" component="p" sx={{ marginTop: 1, marginBottom: 2 }}>
         Продажи
       </Typography>
-      <BoxStyleScroll sx={{ overflowX: 'scroll' }}>
+      <BoxScrollStyle sx={{ overflowX: 'scroll' }}>
         {sales.map((sale) => (
           <BoxStyle key={sale.period}>
             <Typography variant="body2" sx={{ mb: 1 }}>
@@ -37,7 +37,7 @@ export function RestaurantSales() {
             </Typography>
           </BoxStyle>
         ))}
-      </BoxStyleScroll>
+      </BoxScrollStyle>
     </Box>
   );
 }
@@ -51,7 +51,7 @@ const BoxStyle = styled(Box)(({ theme }) => ({
     marginRight: 0,
   },
 }));
-const BoxStyleScroll = styled(Box)({
+const BoxScrollStyle = styled(Box)({
   display: 'flex',
   '&::-webkit-scrollbar': {
     display: 'none',

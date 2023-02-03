@@ -32,7 +32,7 @@ export function RestaurantProductList() {
         )}
         {!isCategoryEmpty && (
           <Box sx={{ mt: 3 }}>
-            {products.map((product) => (
+            {products.filter((product) => !product.isDeleted).map((product) => (
               <RestaurantProductCard key={product.id} product={product} />
             ))}
             <BoxStyle>

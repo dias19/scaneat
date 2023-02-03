@@ -15,8 +15,9 @@ export function RestaurantProductActions({
   open, setOpen, product,
 }: EditDishProps) {
   const [openDeleteProduct, setOpenDeleteProduct] = useState(false);
+
   const [openEditProduct, setOpenEditProduct] = useState(false);
-  console.log(product);
+
   return (
     <>
       <BottomDrawerEdit

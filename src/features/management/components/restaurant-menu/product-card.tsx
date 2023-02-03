@@ -13,8 +13,10 @@ import { RestaurantProductActions } from './product-actions';
 type ItemCardProps = {
   product: ProductData
 };
+
 export function RestaurantProductCard({ product }: ItemCardProps) {
   const [isMoreActive, setActiveMore] = useState(false);
+
   return (
     <>
       <Card sx={{ mb: 2 }}>
@@ -51,12 +53,14 @@ export function RestaurantProductCard({ product }: ItemCardProps) {
     </>
   );
 }
+
 const ImageStyle = styled('img')(({ theme }) => ({
   width: 96,
   height: 96,
   borderRadius: 8,
   marginRight: theme.spacing(2),
 }));
+
 const CardContentStyle = styled(CardContent)(({ theme }) => ({
   display: 'flex',
   padding: theme.spacing(2),

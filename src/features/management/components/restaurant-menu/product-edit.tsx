@@ -1,9 +1,8 @@
 import React from 'react';
 
-import {
-  Box, styled,
-} from '@mui/material';
+import { Box, styled } from '@mui/material';
 
+import productsApi from '~/api/products/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
 
 import { ProductData, ProductFormData } from '../../types';
@@ -21,9 +20,13 @@ type EditDishProps={
 export function RestaurantProductEdit({
   openEditDish, onCloseEditDish, onOpenEditDish, title, product, id,
 }: EditDishProps) {
-  function onSubmit(data:ProductFormData) {
-    console.log(data);
-  }
+  const [editProduct] = productsApi.endpoints.editProduct.useMutation();
+
+  const onSubmit = async (data:ProductFormData) => {
+    await editProduct({ productId: product.id, ...data });
+    onCloseEditDish();
+  };
+
   return (
     <BottomDrawerStyle
       open={openEditDish}
@@ -35,7 +38,7 @@ export function RestaurantProductEdit({
       <Box display="flex" flexDirection="column" sx={{ height: '100%' }}>
         <RestaurantProductForm
           product={product}
-          onSubmit={(data) => onSubmit(data)}
+          onSubmit={onSubmit}
           buttonName="Редактировать"
           setOpen={() => onCloseEditDish()}
         />
@@ -43,6 +46,7 @@ export function RestaurantProductEdit({
     </BottomDrawerStyle>
   );
 }
+
 const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
   '.MuiDrawer-paper': {
     height: `calc(100% - ${theme.spacing(3)})`,

@@ -20,14 +20,15 @@ export function RestaurantProductAdd({ open, setOpen, category }: AddProductProp
   const [addProduct] = productsApi.endpoints.addProduct.useMutation();
   const { restaurantId, categoryId } = useParams();
 
-  async function onSubmit(data: ProductFormData) {
+  const onSubmit = async (data: ProductFormData) => {
     await addProduct({
-      body: data,
       restaurantId: Number(restaurantId),
       categoryId: Number(categoryId),
+      ...data,
     });
     setOpen(false);
-  }
+  };
+
   return (
     <BottomDrawerStyle
       open={open}
@@ -48,7 +49,7 @@ export function RestaurantProductAdd({ open, setOpen, category }: AddProductProp
         <Box sx={{ flexGrow: 1 }}>
           <RestaurantProductForm
             setOpen={setOpen}
-            onSubmit={(data:ProductFormData) => onSubmit(data)}
+            onSubmit={onSubmit}
             buttonName="Создать"
           />
         </Box>

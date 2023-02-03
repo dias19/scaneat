@@ -10,14 +10,13 @@ import { API_THUMBNAIL } from '~/config';
 export function RestaurantStatusAccepted() {
   const { data: restaurants = [] } = restaurantApi
     .endpoints.getRestaurants.useQuery('status=accepted');
-  const isEmpty = restaurants.length === 0;
 
+  const isEmpty = restaurants.length === 0;
   return (
     <>
       {isEmpty && <Typography> Нету заявок ресторанов</Typography>}
       {!isEmpty && (
-      // eslint-disable-next-line react/jsx-no-useless-fragment
-      <>
+      <Box>
         {restaurants?.map((restaurant) => (
           <Card sx={{ mb: 2 }}>
             <CardContentStyle>
@@ -33,7 +32,7 @@ export function RestaurantStatusAccepted() {
             </CardContentStyle>
           </Card>
         ))}
-      </>
+      </Box>
       )}
     </>
   );
@@ -45,6 +44,7 @@ const ImageStyle = styled('img')(({ theme }) => ({
   borderRadius: 8,
   marginRight: theme.spacing(2),
 }));
+
 const CardContentStyle = styled(CardContent)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',

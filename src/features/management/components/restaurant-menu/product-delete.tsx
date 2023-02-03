@@ -12,6 +12,7 @@ type DeleteDishProps = {
   title?: string;
   id: number;
 };
+
 export function RestaurantProductDelete({
   openDeleteDish,
   onCloseDeleteDish,
@@ -20,12 +21,19 @@ export function RestaurantProductDelete({
   id,
 }: DeleteDishProps) {
   const [deleteProduct] = productsApi.endpoints.deleteProduct.useMutation();
+
+  const handleDelete = async () => {
+    await deleteProduct(id);
+    onCloseDeleteDish();
+  };
+
   return (
     <BottomDrawer
       open={openDeleteDish}
       onClose={onCloseDeleteDish}
       onOpen={onOpenDeleteDish}
       title={title}
+      hasCloser
     >
       <Box display="flex" flexDirection="column">
         <Typography variant="subtitle2">Вы уверены что хотите удалить блюдо “Карааге”?</Typography>
@@ -39,10 +47,7 @@ export function RestaurantProductDelete({
           <Button
             variant="contained"
             size="large"
-            onClick={async () => {
-              await deleteProduct(id);
-              onCloseDeleteDish();
-            }}
+            onClick={handleDelete}
           >
             Удалить
           </Button>
