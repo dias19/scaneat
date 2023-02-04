@@ -15,15 +15,15 @@ import { RestaurantCategoryAdd } from './category-add';
 import { RestaurantCategoryCard } from './category-card';
 
 export function RestaurantCategories() {
-  const { id } = useParams();
+  const { restaurantId } = useParams();
 
   const [addOpen, setAddOpen] = useState(false);
 
-  const skip = Number.isNaN(Number(id));
+  const skip = Number.isNaN(Number(restaurantId));
 
   const {
     data: categories = [], isLoading, isError,
-  } = categoryApi.endpoints.getCategories.useQuery(Number(id), {
+  } = categoryApi.endpoints.getCategories.useQuery(Number(restaurantId), {
     skip,
   });
 
@@ -33,14 +33,22 @@ export function RestaurantCategories() {
       {(!isError && !isLoading) && (
       <BoxStyle>
         {categories.filter((category) => !category.isDeleted).map((category) => (
-          <RestaurantCategoryCard key={category.id} category={category} restaurantId={id} />
+          <RestaurantCategoryCard
+            key={category.id}
+            category={category}
+            restaurantId={restaurantId}
+          />
         ))}
         <BoxButtonStyle>
           <Button variant="contained" size="large" onClick={() => setAddOpen(true)}>
             Добавить Категорию
           </Button>
         </BoxButtonStyle>
-        <RestaurantCategoryAdd open={addOpen} setOpen={setAddOpen} id={Number(id)} />
+        <RestaurantCategoryAdd
+          open={addOpen}
+          setOpen={setAddOpen}
+          restaurantId={Number(restaurantId)}
+        />
       </BoxStyle>
       )}
     </>

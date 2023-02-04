@@ -23,3 +23,5 @@ export * from './components/restaurant-status/restaurant-status-pending';
 export * from './components/restaurant-status/restaurant-status-rejected';
 
 export * from './components/restaurant-status/restaurant-status-accepted';
+
+export * from './components/modify-action-bottom-drawer';

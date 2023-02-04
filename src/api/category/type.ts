@@ -17,6 +17,7 @@ export interface AddCategoryRequest {
 
 export interface EditCategoryRequest{
   categoryId: number;
+  restaurantId: number;
   name: string;
   description: string;
   isActive: boolean;
@@ -25,3 +26,5 @@ export interface EditCategoryRequest{
 export type DeleteCategoryResponse = void
 
 export type EditCategoryResponse = void
+
+export type DeleteCategoryRequest=Pick<EditCategoryRequest, 'categoryId' | 'restaurantId'>

@@ -1,15 +1,15 @@
 import React from 'react';
 
 import {
-  Box, Button, Card, CardContent, styled, Typography,
+  Box, Button, Card, CardContent, Typography,
 } from '@mui/material';
 
 import restaurantApi from '~/api/restaurant/api';
-import { API_THUMBNAIL } from '~/config';
+import { Image } from '~/components/image';
 
 export function RestaurantStatusPending() {
   const { data: restaurants = [] } = restaurantApi
-    .endpoints.getRestaurants.useQuery('status=pending');
+    .endpoints.getRestaurants.useQuery('pending');
 
   const [verifyRestaurant] = restaurantApi.endpoints.verifyRestaurant.useMutation();
 
@@ -26,7 +26,11 @@ export function RestaurantStatusPending() {
             <Card key={restaurant.id}>
               <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Box display="flex">
-                  <ImageStyle src={API_THUMBNAIL + restaurant.originalUrl} alt="Something" />
+                  <Image
+                    url={restaurant.originalUrl}
+                    alt={restaurant.name}
+                    style={{ height: 60, width: 60 }}
+                  />
                   <Box sx={{ flexGrow: 1 }}>
                     <Typography variant="subtitle2">{restaurant.name}</Typography>
                     <Typography variant="caption" color="grey.600" component="p">
@@ -64,9 +68,3 @@ export function RestaurantStatusPending() {
     </>
   );
 }
-const ImageStyle = styled('img')(({ theme }) => ({
-  width: 60,
-  height: 60,
-  borderRadius: 8,
-  marginRight: theme.spacing(2),
-}));

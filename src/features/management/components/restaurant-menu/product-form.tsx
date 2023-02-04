@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  Box, Button, Stack,
+  Box, Button, Stack, Typography,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import restaurantApi from '~/api/restaurant/api';
 import { FormProvider, RHFTextField } from '~/components/hook-form';
+import { Image } from '~/components/image';
 
 import { ProductFormData, ProductData } from '../../types';
 
@@ -31,12 +32,25 @@ export function RestaurantProductForm({
 }: FormProps) {
   const [postPhoto] = restaurantApi.endpoints.postPhoto.useMutation();
 
+  const [photoUploaded, setPhotoUploaded] = useState(false);
+
+  const [photoUrl, setPhotoUrl] = useState('');
+
+  const inputFileRef = useRef<HTMLInputElement>(null);
+
   const defaultValues = {
     name: product?.name || '',
     price: Number(product?.price) || 0,
     description: product?.description || '',
     photoId: Number(product?.photoId) || 0,
   };
+
+  useEffect(() => {
+    if (product?.originalUrl) {
+      setPhotoUrl(product.originalUrl);
+      setPhotoUploaded(true);
+    }
+  }, []);
 
   const methods = useForm<ProductFormData>({
     resolver: yupResolver(AddDishSchema),
@@ -50,12 +64,17 @@ export function RestaurantProductForm({
     setValue,
   } = methods;
 
+  const handleClick = () => {
+    inputFileRef.current!.click();
+  };
   async function handleFileSubmit(e: React.ChangeEvent<HTMLInputElement>) {
     const formData = new FormData();
     if (!e.target.files) return;
     formData.append('image', e.target.files[0]);
-    const { id } = await postPhoto(formData).unwrap();
+    const { id, originalUrl } = await postPhoto(formData).unwrap();
     setValue('photoId', Number(id), { shouldValidate: false });
+    setPhotoUrl(originalUrl);
+    setPhotoUploaded(true);
   }
 
   return (
@@ -63,7 +82,49 @@ export function RestaurantProductForm({
       <Box sx={{ flexGrow: 1 }}>
         <FormProvider methods={methods}>
           <Stack spacing={2} sx={{ mt: 2 }}>
-            <input type="file" onChange={(e) => handleFileSubmit(e)} />
+            <Box>
+              {photoUploaded && (
+                <Box display="flex">
+                  <Image
+                    style={{ height: 82, width: 82 }}
+                    url={photoUrl}
+                    alt="Продукт"
+                  />
+                  <Typography>
+                    Выбранное фото
+                  </Typography>
+                </Box>
+              )}
+              <input
+                type="file"
+                ref={inputFileRef}
+                style={{ display: 'none' }}
+                onChange={(e) => handleFileSubmit(e)}
+                placeholder="Выберите рисунок"
+              />
+              <Button
+                color="info"
+                variant="text"
+                onClick={handleClick}
+                size="small"
+              >
+                {photoUploaded
+                  ? (
+                    <Typography
+                      sx={{ textDecoration: 'underline' }}
+                    >
+                      Изменить фото блюда
+                    </Typography>
+                  )
+                  : (
+                    <Typography
+                      sx={{ textDecoration: 'underline' }}
+                    >
+                      Загрузите рисунок
+                    </Typography>
+                  )}
+              </Button>
+            </Box>
             <RHFTextField name="name" label="Название" />
             <RHFTextField name="price" label="Цена" />
             <RHFTextField name="description" label="Описание" multiline minRows={3} />

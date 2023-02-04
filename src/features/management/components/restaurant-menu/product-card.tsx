@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 
 import { Iconify } from '~/components/Iconify';
-import { API_THUMBNAIL } from '~/config';
+import { Image } from '~/components/image';
 
 import { ProductData } from '../../types';
 import { RestaurantProductActions } from './product-actions';
@@ -21,7 +21,11 @@ export function RestaurantProductCard({ product }: ItemCardProps) {
     <>
       <Card sx={{ mb: 2 }}>
         <CardContentStyle>
-          <ImageStyle src={API_THUMBNAIL + product.originalUrl} alt="Something" />
+          <ImageStyle
+            url={product.originalUrl}
+            alt={product.name}
+            style={{ height: 96, width: 96 }}
+          />
           <Box display="flex" flexDirection="column" flexGrow={1}>
             <Box
               display="flex"
@@ -54,12 +58,10 @@ export function RestaurantProductCard({ product }: ItemCardProps) {
   );
 }
 
-const ImageStyle = styled('img')(({ theme }) => ({
+const ImageStyle = styled(Image)({
   width: 96,
   height: 96,
-  borderRadius: 8,
-  marginRight: theme.spacing(2),
-}));
+});
 
 const CardContentStyle = styled(CardContent)(({ theme }) => ({
   display: 'flex',

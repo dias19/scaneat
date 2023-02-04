@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Box, Button, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 import productsApi from '~/api/products/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
@@ -10,7 +11,7 @@ type DeleteDishProps = {
   onCloseDeleteDish: VoidFunction;
   onOpenDeleteDish: VoidFunction;
   title?: string;
-  id: number;
+  productId: number;
 };
 
 export function RestaurantProductDelete({
@@ -18,12 +19,14 @@ export function RestaurantProductDelete({
   onCloseDeleteDish,
   onOpenDeleteDish,
   title,
-  id,
+  productId,
 }: DeleteDishProps) {
   const [deleteProduct] = productsApi.endpoints.deleteProduct.useMutation();
 
+  const { restaurantId } = useParams();
+
   const handleDelete = async () => {
-    await deleteProduct(id);
+    await deleteProduct({ productId, restaurantId: Number(restaurantId) });
     onCloseDeleteDish();
   };
 

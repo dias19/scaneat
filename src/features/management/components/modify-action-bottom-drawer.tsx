@@ -4,8 +4,8 @@ import {
   Card, CardActionArea, Typography, Box, IconButton, Divider, styled, CardContent,
 } from '@mui/material';
 
-import { BottomDrawer } from './bottom-drawer';
-import { Iconify } from './Iconify';
+import { BottomDrawer } from '../../../components/bottom-drawer';
+import { Iconify } from '../../../components/Iconify';
 
 type BottomDrawerEditProps={
     open: boolean,
@@ -15,7 +15,7 @@ type BottomDrawerEditProps={
     title: string,
 }
 
-export function BottomDrawerEdit({
+export function ModifyActionBottomDrawer({
   open, setOpen, setOpenEdit, setOpenDelete, title,
 }:BottomDrawerEditProps) {
   return (

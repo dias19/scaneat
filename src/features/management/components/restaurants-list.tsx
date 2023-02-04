@@ -11,7 +11,7 @@ import { RestaurantCard } from './restaurant-card';
 
 export function RestaurantsList() {
   const { data: restaurants = [], isLoading, isError } = restaurantsApi
-    .endpoints.getRestaurants.useQuery('status=accepted');
+    .endpoints.getRestaurants.useQuery('accepted');
 
   return (
     <>

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-import { BottomDrawerEdit } from '~/components/bottom-drawer-edit';
-
 import { ProductData } from '../../types';
+import { ModifyActionBottomDrawer } from '../modify-action-bottom-drawer';
 import { RestaurantProductDelete } from './product-delete';
 import { RestaurantProductEdit } from './product-edit';
 
@@ -20,7 +19,7 @@ export function RestaurantProductActions({
 
   return (
     <>
-      <BottomDrawerEdit
+      <ModifyActionBottomDrawer
         open={open}
         setOpen={setOpen}
         setOpenDelete={setOpenDeleteProduct}
@@ -32,7 +31,7 @@ export function RestaurantProductActions({
         onCloseDeleteDish={() => setOpenDeleteProduct(false)}
         onOpenDeleteDish={() => setOpenDeleteProduct(true)}
         title={product.name}
-        id={product.id}
+        productId={product.id}
       />
       <RestaurantProductEdit
         openEditDish={openEditProduct}
@@ -40,7 +39,6 @@ export function RestaurantProductActions({
         onOpenEditDish={() => setOpenEditProduct(true)}
         title={product.name}
         product={product}
-        id={product.id}
       />
     </>
   );

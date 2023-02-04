@@ -11,11 +11,11 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { BottomDrawerEdit } from '~/components/bottom-drawer-edit';
 import { Iconify } from '~/components/Iconify';
 import { PATH_MANAGEMENT } from '~/routes/paths';
 
 import { Category } from '../../types';
+import { ModifyActionBottomDrawer } from '../modify-action-bottom-drawer';
 import { RestaurantCategoryDelete } from './category-delete';
 import { RestaurantCategoryEdit } from './category-edit';
 
@@ -34,13 +34,19 @@ export function RestaurantCategoryCard({ category, restaurantId }: CategoryCardP
   const [deleteOpen, setDeleteOpen] = useState(false);
 
   const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate(
+      PATH_MANAGEMENT
+        .menuItems(Number(restaurantId), Number(category.id)),
+      { state: { categoryName: category.name } },
+    );
+  };
   return (
     <>
       <Card key={category.name} sx={{ mb: 2 }}>
         <CardActionArea
           disableRipple={cardDisableRipple}
-          onClick={() => navigate(PATH_MANAGEMENT
-            .menuItems(Number(restaurantId), category.name, Number(category.id)))}
+          onClick={handleNavigate}
         >
           <CardContentStyle>
             <Typography>{category.name}</Typography>
@@ -64,7 +70,7 @@ export function RestaurantCategoryCard({ category, restaurantId }: CategoryCardP
           </CardContentStyle>
         </CardActionArea>
       </Card>
-      <BottomDrawerEdit
+      <ModifyActionBottomDrawer
         open={actionsOpen}
         setOpen={setActionsOpen}
         setOpenDelete={setDeleteOpen}

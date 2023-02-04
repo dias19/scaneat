@@ -22,9 +22,9 @@ export const PATH_MANAGEMENT = {
   orders: (id?: number) => path(ROOTS_MANAGEMENT, `/restaurants/${id}/orders`),
   settings: (id?: number) => path(ROOTS_MANAGEMENT, `/restaurants/${id}/settings`),
   employees: (id?: number) => path(ROOTS_MANAGEMENT, `/restaurants/${id}/employees`),
-  menuItems: (restaurantId?:number, category?:string, categoryId?:number) => path(
+  menuItems: (restaurantId?:number, categoryId?:number) => path(
     ROOTS_MANAGEMENT,
-    `/restaurants/${restaurantId}/menu/${category}/${categoryId}`,
+    `/restaurants/${restaurantId}/menu/${categoryId}`,
   ),
   statusPending: path(ROOTS_MANAGEMENT, '/restaurants/status'),
   statusAccepted: path(ROOTS_MANAGEMENT, '/restaurants/status/accepted'),

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Box, Button, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 import categoryApi from '~/api/category/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
@@ -18,6 +19,7 @@ export function RestaurantCategoryDelete({
   deleteOpen,
   setDeleteOpen,
 }: CategoryDeleteProps) {
+  const { restaurantId } = useParams();
   const [deleteCategory] = categoryApi.endpoints.deleteCategory.useMutation();
 
   const handleClose = () => {
@@ -25,7 +27,10 @@ export function RestaurantCategoryDelete({
   };
 
   const handleDeleteCategory = async () => {
-    await deleteCategory(category.id);
+    await deleteCategory({
+      restaurantId: Number(restaurantId),
+      categoryId: category.id,
+    });
     setDeleteOpen(false);
   };
 

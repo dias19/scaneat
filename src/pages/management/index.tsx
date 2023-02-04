@@ -78,7 +78,7 @@ export const ManagementRoutes = [
   />,
   <Route element={<ManagementStackLayout title="Меню" />} key="restaurant-menu">
     <Route
-      path="restaurants/:id/menu"
+      path="restaurants/:restaurantId/menu"
       element={<RestaurantMenuPage />}
       key="restaurant-menu"
     />
@@ -106,7 +106,7 @@ export const ManagementRoutes = [
   </Route>,
 
   <Route
-    path="restaurants/:restaurantId/menu/:category/:categoryId"
+    path="restaurants/:restaurantId/menu/:categoryId"
     element={<RestaurantMenuItemsPage />}
     key="restaurant-menu-items"
   />,

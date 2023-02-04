@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Box, styled } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 import productsApi from '~/api/products/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
@@ -14,16 +15,15 @@ type EditDishProps={
     onOpenEditDish: VoidFunction,
     title?: string,
    product: ProductData,
-   id: number,
 }
 
 export function RestaurantProductEdit({
-  openEditDish, onCloseEditDish, onOpenEditDish, title, product, id,
+  openEditDish, onCloseEditDish, onOpenEditDish, title, product,
 }: EditDishProps) {
   const [editProduct] = productsApi.endpoints.editProduct.useMutation();
-
+  const { restaurantId } = useParams();
   const onSubmit = async (data:ProductFormData) => {
-    await editProduct({ productId: product.id, ...data });
+    await editProduct({ restaurantId: Number(restaurantId), productId: product.id, ...data });
     onCloseEditDish();
   };
 

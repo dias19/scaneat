@@ -11,15 +11,15 @@ import { RestaurantCategoryForm } from './category-form';
 type AddCategoryProps = {
   open: boolean;
   setOpen: (state: boolean) => void;
-  id?: number;
+  restaurantId?: number;
 };
 
-export function RestaurantCategoryAdd({ open, setOpen, id }: AddCategoryProps) {
+export function RestaurantCategoryAdd({ open, setOpen, restaurantId }: AddCategoryProps) {
   const [addCategory] = categoryApi.endpoints.addCategory.useMutation();
 
   const handleAdd = async (data:CategoryFormData) => {
     await addCategory({
-      restaurantId: id as number,
+      restaurantId: restaurantId as number,
       isActive: true,
       ...data,
 

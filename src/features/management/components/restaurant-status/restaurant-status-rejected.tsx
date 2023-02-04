@@ -6,11 +6,11 @@ import {
 import styled from 'styled-components';
 
 import restaurantApi from '~/api/restaurant/api';
-import { API_THUMBNAIL } from '~/config';
+import { Image } from '~/components/image';
 
 export function RestaurantStatusRejected() {
   const { data: restaurants = [] } = restaurantApi
-    .endpoints.getRestaurants.useQuery('status=rejected');
+    .endpoints.getRestaurants.useQuery('rejected');
 
   const isEmpty = restaurants.length === 0;
 
@@ -25,7 +25,11 @@ export function RestaurantStatusRejected() {
           <Card key={restaurant.id} sx={{ mb: 2 }}>
             <CardContentStyle>
               <Box display="flex">
-                <ImageStyle src={API_THUMBNAIL + restaurant.originalUrl} alt="Something" />
+                <Image
+                  url={restaurant.originalUrl}
+                  alt={restaurant.name}
+                  style={{ height: 60, width: 60 }}
+                />
                 <Box sx={{ flexGrow: 1 }}>
                   <Typography variant="subtitle2">{restaurant.name}</Typography>
                   <Typography variant="caption" color="grey.600" component="p">
@@ -53,12 +57,6 @@ export function RestaurantStatusRejected() {
   );
 }
 
-const ImageStyle = styled('img')(({ theme }) => ({
-  width: 60,
-  height: 60,
-  borderRadius: 8,
-  marginRight: theme.spacing(2),
-}));
 const CardContentStyle = styled(CardContent)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',

@@ -7,6 +7,7 @@ import {
   EditCategoryRequest,
   DeleteCategoryResponse,
   EditCategoryResponse,
+  DeleteCategoryRequest,
 } from './type';
 
 export const CATEGORY_API_REDUCER_KEY = 'categoryApi';
@@ -16,7 +17,7 @@ const categoryApi = createApi({
   tagTypes: ['Categories'],
   endpoints: (builder) => ({
     getCategories: builder.query<GetCategoriesResponse, number>({
-      query: (restaurantId) => `/management/restaurant/${restaurantId}/category`,
+      query: (restaurantId) => `/restaurant/${restaurantId}/category`,
       providesTags: (result) => (result
         ? [
           ...result.map(({ id }) => ({ type: 'Categories' as const, id })),
@@ -26,23 +27,23 @@ const categoryApi = createApi({
     }),
     addCategory: builder.mutation<GetCategoriesResponse, AddCategoryRequest>({
       query: ({ restaurantId, ...body }) => ({
-        url: `/management/category/${restaurantId}`,
+        url: `/restaurant/${restaurantId}/category`,
         method: 'POST',
         body,
       }),
       invalidatesTags: [{ type: 'Categories', id: 'LIST' }],
     }),
     editCategory: builder.mutation < EditCategoryResponse, EditCategoryRequest>({
-      query: ({ categoryId, ...body }) => ({
-        url: `/management/category/${categoryId}`,
+      query: ({ restaurantId, categoryId, ...body }) => ({
+        url: `/restaurant/${restaurantId}/category/${categoryId}`,
         method: 'PATCH',
         body,
       }),
       invalidatesTags: [{ type: 'Categories', id: 'LIST' }],
     }),
-    deleteCategory: builder.mutation <DeleteCategoryResponse, number>({
-      query: (categoryId) => ({
-        url: `/management/category/${categoryId}`,
+    deleteCategory: builder.mutation <DeleteCategoryResponse, DeleteCategoryRequest>({
+      query: ({ restaurantId, categoryId }) => ({
+        url: `/restaurant/${restaurantId}/category/${categoryId}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Categories', id: 'LIST' }],

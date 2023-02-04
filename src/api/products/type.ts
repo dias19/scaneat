@@ -1,4 +1,4 @@
-export type Product = {
+export interface Product {
   name: string;
   id: number;
   description: string;
@@ -10,18 +10,46 @@ export type Product = {
   originalUrl: string;
   photoId: number;
   isDeleted: boolean;
-};
+}
 export type GetProductsResponse = Product[];
 
-export type AddProductRequest = {
+export interface AddProductRequest {
   name: string;
   description: string;
   price: number;
   photoId: number;
-  restaurantId: number,
-  categoryId: number,
+  restaurantId: number;
+  categoryId: number;
+}
+
+export type EditProductRequest = Omit<AddProductRequest, 'restaurantId' | 'categoryId'> & {
+  productId: number;
+  restaurantId: number;
 };
 
-export type EditProductRequest=Omit<AddProductRequest, 'restaurantId' | 'categoryId' > & {
-    productId: number
+export interface GetProductRequest {
+  restaurantId: number;
+  categoryId: number;
+}
+
+export interface DeleteProductRequest {
+  restaurantId: number;
+  productId: number;
+}
+
+export type DeleteProductResponse = void;
+
+export type EditProductResponse = void;
+
+export interface AddProductResponse {
+  categoryId: number;
+  createdAt: string;
+  description: string;
+  id: number;
+  isDeleted: boolean;
+  name: string;
+  photoId: number;
+  price: number;
+  restaurantId: number;
+  updatedAt: string;
 }

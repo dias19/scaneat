@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { styled } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 import categoryApi from '~/api/category/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
@@ -15,10 +16,12 @@ type CategoryEditProps={
 }
 
 export function RestaurantCategoryEdit({ editOpen, setEditOpen, category }: CategoryEditProps) {
+  const { restaurantId } = useParams();
   const [editCategory] = categoryApi.endpoints.editCategory.useMutation();
 
   async function onSubmit(data: CategoryFormData) {
     await editCategory({
+      restaurantId: Number(restaurantId),
       categoryId: category.id,
       isActive: true,
       ...data,

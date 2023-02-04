@@ -22,7 +22,7 @@ const restaurantApi = createApi({
   tagTypes: ['Restaurants'],
   endpoints: (builder) => ({
     getRestaurants: builder.query<GetRestaurantsResponse, GetRestaurantsRequest>({
-      query: (query) => `management/restaurant?${query}`,
+      query: (status) => `/restaurant?status=${status}`,
       providesTags: (result) => (result
         ? [
           ...result.map(({ id }) => ({ type: 'Restaurants' as const, id })),
@@ -40,17 +40,19 @@ const restaurantApi = createApi({
     getRestaurant: builder.query<GetRestaurantResponse, GetRestaurantRequest>({
       query: (restaurantSlug) => `/restaurant/${restaurantSlug}`,
     }),
-    getRestaurantQR: builder.query<Buffer, string>({
+    getRestaurantQR: builder.query<any, string>({
       query(restaurantSlug) {
         return {
           url: `/restaurant/${restaurantSlug}/qr`,
-          transformResponse: async (response: any) => {
-            const hiddenElement = document.createElement('a');
-            const url = window.URL || window.webkitURL;
-            const blobData = url.createObjectURL(await response.blob());
-            hiddenElement.href = blobData;
-            hiddenElement.download = 'qrcode';
-            hiddenElement.click();
+          responseHandler: async (response: any) => {
+            if (response.status === 200) {
+              const hiddenElement = document.createElement('a');
+              const url = window.URL || window.webkitURL;
+              const blobData = url.createObjectURL(await response.blob());
+              hiddenElement.href = blobData;
+              hiddenElement.download = 'qrcode';
+              hiddenElement.click();
+            }
             return { data: null };
           },
         };
@@ -58,14 +60,14 @@ const restaurantApi = createApi({
     }),
     verifyRestaurant: builder.mutation<VerifyRestaurantResponse, VerifyRestaurantRequest>({
       query: (restaurantId) => ({
-        url: `/management/restaurant/requests/${restaurantId}/verify`,
+        url: `/restaurant/${restaurantId}/verify`,
         method: 'PATCH',
       }),
       invalidatesTags: [{ type: 'Restaurants', id: 'Restaurants' }],
     }),
     rejectRestaurant: builder.mutation<RejectRestaurantResponse, RejectRestaurantRequest>({
       query: (restaurantId) => ({
-        url: `/management/restaurant/requests/${restaurantId}/reject`,
+        url: `/restaurant/${restaurantId}/reject`,
         method: 'PATCH',
       }),
       invalidatesTags: [{ type: 'Restaurants', id: 'Restaurants' }],
