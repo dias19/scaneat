@@ -21,7 +21,7 @@ import { RestaurantCategoryEdit } from './category-edit';
 
 type CategoryCardProps = {
   category: Category;
-  restaurantId?: string;
+  restaurantId?: number;
 };
 
 export function RestaurantCategoryCard({ category, restaurantId }: CategoryCardProps) {
@@ -37,7 +37,7 @@ export function RestaurantCategoryCard({ category, restaurantId }: CategoryCardP
   const handleNavigate = () => {
     navigate(
       PATH_MANAGEMENT
-        .menuItems(Number(restaurantId), Number(category.id)),
+        .menuItems(restaurantId, Number(category.id)),
       { state: { categoryName: category.name } },
     );
   };

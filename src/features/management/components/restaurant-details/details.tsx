@@ -1,12 +1,13 @@
 import React from 'react';
 
 import {
-  Avatar, Box, Typography, Button, Card, CardActionArea, CardContent,
+  Box, Typography, Button, Card, CardActionArea, CardContent,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import restaurantsApi from '~/api/restaurant/api';
+import { Image } from '~/components/image';
 
 import ManagementNavigation from '../management-navigation';
 import { RestaurantSales } from './sales';
@@ -25,10 +26,10 @@ export function RestaurantDetails() {
   return (
     <BoxStyle>
       <Box display="flex" flexDirection="row">
-        <Avatar
-            // eslint-disable-next-line max-len
-          src="http://img1.feinfood.com/upload/hotel2/20200905/11fe752eeeab4f0da1e99d487bb0410c.jpg"
-          sx={{ height: 96, width: 96, mr: 2 }}
+        <Image
+          url={restaurant!.originalUrl}
+          alt={restaurant!.name}
+          style={{ height: 96, width: 96 }}
         />
         <Box display="flex" flexDirection="column">
           <Typography variant="h6">

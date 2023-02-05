@@ -23,10 +23,12 @@ export function RestaurantProductDelete({
 }: DeleteDishProps) {
   const [deleteProduct] = productsApi.endpoints.deleteProduct.useMutation();
 
-  const { restaurantId } = useParams();
+  const parameters = useParams();
+
+  const restaurantId = parseInt(parameters.restaurantId as string, 10);
 
   const handleDelete = async () => {
-    await deleteProduct({ productId, restaurantId: Number(restaurantId) });
+    await deleteProduct({ productId, restaurantId });
     onCloseDeleteDish();
   };
 

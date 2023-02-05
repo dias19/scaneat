@@ -45,13 +45,6 @@ export function RestaurantProductForm({
     photoId: Number(product?.photoId) || 0,
   };
 
-  useEffect(() => {
-    if (product?.originalUrl) {
-      setPhotoUrl(product.originalUrl);
-      setPhotoUploaded(true);
-    }
-  }, []);
-
   const methods = useForm<ProductFormData>({
     resolver: yupResolver(AddDishSchema),
     defaultValues,
@@ -64,9 +57,17 @@ export function RestaurantProductForm({
     setValue,
   } = methods;
 
+  useEffect(() => {
+    if (product?.originalUrl) {
+      setPhotoUrl(product.originalUrl);
+      setPhotoUploaded(true);
+    }
+  }, []);
+
   const handleClick = () => {
     inputFileRef.current!.click();
   };
+
   async function handleFileSubmit(e: React.ChangeEvent<HTMLInputElement>) {
     const formData = new FormData();
     if (!e.target.files) return;

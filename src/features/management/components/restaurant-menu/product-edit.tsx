@@ -18,12 +18,20 @@ type EditDishProps={
 }
 
 export function RestaurantProductEdit({
-  openEditDish, onCloseEditDish, onOpenEditDish, title, product,
+  openEditDish,
+  onCloseEditDish,
+  onOpenEditDish,
+  title,
+  product,
 }: EditDishProps) {
   const [editProduct] = productsApi.endpoints.editProduct.useMutation();
-  const { restaurantId } = useParams();
+
+  const parameters = useParams();
+
+  const restaurantId = parseInt(parameters.restaurantId as string, 10);
+
   const onSubmit = async (data:ProductFormData) => {
-    await editProduct({ restaurantId: Number(restaurantId), productId: product.id, ...data });
+    await editProduct({ restaurantId, productId: product.id, ...data });
     onCloseEditDish();
   };
 

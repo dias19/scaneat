@@ -16,12 +16,15 @@ type CategoryEditProps={
 }
 
 export function RestaurantCategoryEdit({ editOpen, setEditOpen, category }: CategoryEditProps) {
-  const { restaurantId } = useParams();
   const [editCategory] = categoryApi.endpoints.editCategory.useMutation();
+
+  const parameters = useParams();
+
+  const restaurantId = parseInt(parameters.restaurantId as string, 10);
 
   async function onSubmit(data: CategoryFormData) {
     await editCategory({
-      restaurantId: Number(restaurantId),
+      restaurantId,
       categoryId: category.id,
       isActive: true,
       ...data,

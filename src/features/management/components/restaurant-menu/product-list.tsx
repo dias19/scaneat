@@ -18,9 +18,16 @@ interface LocationState {
 }
 
 export function RestaurantProductList() {
-  const { restaurantId, categoryId } = useParams();
+  const parameters = useParams();
+
+  const restaurantId = parseInt(parameters.restaurantId as string, 10);
+
+  const categoryId = parseInt(parameters.categoryId as string, 10);
+
   const location = useLocation();
+
   const { categoryName } = location.state as LocationState;
+
   const [addDish, setAddDish] = useState(false);
 
   const {
@@ -28,8 +35,8 @@ export function RestaurantProductList() {
     isLoading,
     isError,
   } = productsApi.endpoints.getProducts.useQuery({
-    restaurantId: Number(restaurantId),
-    categoryId: Number(categoryId),
+    restaurantId,
+    categoryId,
   });
 
   const isCategoryEmpty = products.length === 0;

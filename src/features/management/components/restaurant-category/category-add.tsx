@@ -11,7 +11,7 @@ import { RestaurantCategoryForm } from './category-form';
 type AddCategoryProps = {
   open: boolean;
   setOpen: (state: boolean) => void;
-  restaurantId?: number;
+  restaurantId: number;
 };
 
 export function RestaurantCategoryAdd({ open, setOpen, restaurantId }: AddCategoryProps) {
@@ -19,7 +19,7 @@ export function RestaurantCategoryAdd({ open, setOpen, restaurantId }: AddCatego
 
   const handleAdd = async (data:CategoryFormData) => {
     await addCategory({
-      restaurantId: restaurantId as number,
+      restaurantId,
       isActive: true,
       ...data,
 

@@ -19,7 +19,10 @@ export function RestaurantCategoryDelete({
   deleteOpen,
   setDeleteOpen,
 }: CategoryDeleteProps) {
-  const { restaurantId } = useParams();
+  const parameters = useParams();
+
+  const restaurantId = parseInt(parameters.restaurantId as string, 10);
+
   const [deleteCategory] = categoryApi.endpoints.deleteCategory.useMutation();
 
   const handleClose = () => {
@@ -28,7 +31,7 @@ export function RestaurantCategoryDelete({
 
   const handleDeleteCategory = async () => {
     await deleteCategory({
-      restaurantId: Number(restaurantId),
+      restaurantId,
       categoryId: category.id,
     });
     setDeleteOpen(false);

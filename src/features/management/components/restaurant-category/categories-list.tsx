@@ -15,11 +15,13 @@ import { RestaurantCategoryAdd } from './category-add';
 import { RestaurantCategoryCard } from './category-card';
 
 export function RestaurantCategories() {
-  const { restaurantId } = useParams();
+  const parameters = useParams();
+
+  const restaurantId = parseInt(parameters.restaurantId as string, 10);
 
   const [addOpen, setAddOpen] = useState(false);
 
-  const skip = Number.isNaN(Number(restaurantId));
+  const skip = !restaurantId;
 
   const {
     data: categories = [], isLoading, isError,
@@ -47,7 +49,7 @@ export function RestaurantCategories() {
         <RestaurantCategoryAdd
           open={addOpen}
           setOpen={setAddOpen}
-          restaurantId={Number(restaurantId)}
+          restaurantId={restaurantId}
         />
       </BoxStyle>
       )}

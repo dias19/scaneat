@@ -18,6 +18,16 @@ type BottomDrawerEditProps={
 export function ModifyActionBottomDrawer({
   open, setOpen, setOpenEdit, setOpenDelete, title,
 }:BottomDrawerEditProps) {
+  const handleEdit = () => {
+    setOpen(false);
+    setOpenEdit(true);
+  };
+
+  const handleDelete = () => {
+    setOpen(false);
+    setOpenDelete(true);
+  };
+
   return (
     <BottomDrawer
       open={open}
@@ -27,11 +37,7 @@ export function ModifyActionBottomDrawer({
       hasCloser
     >
       <Card sx={{ boxShadow: 'none', mb: 2 }}>
-        <CardActionArea onClick={() => {
-          setOpen(false);
-          setOpenEdit(true);
-        }}
-        >
+        <CardActionArea onClick={handleEdit}>
           <CardContentStyle>
             <Iconify icon="material-symbols:edit" sx={{ width: 24, height: 24, mr: 1 }} />
             <Typography variant="body2">
@@ -47,11 +53,7 @@ export function ModifyActionBottomDrawer({
       </Card>
       <Divider />
       <Card sx={{ boxShadow: 'none', mt: 2 }}>
-        <CardActionArea onClick={() => {
-          setOpen(false);
-          setOpenDelete(true);
-        }}
-        >
+        <CardActionArea onClick={handleDelete}>
           <CardContentStyle>
             <Iconify icon="material-symbols:delete" sx={{ width: 24, height: 24, mr: 1 }} />
             <Typography variant="body2">

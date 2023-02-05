@@ -18,12 +18,17 @@ type AddProductProp = {
 
 export function RestaurantProductAdd({ open, setOpen, category }: AddProductProp) {
   const [addProduct] = productsApi.endpoints.addProduct.useMutation();
-  const { restaurantId, categoryId } = useParams();
+
+  const parameters = useParams();
+
+  const restaurantId = parseInt(parameters.restaurantId as string, 10);
+
+  const categoryId = parseInt(parameters.categoryId as string, 10);
 
   const onSubmit = async (data: ProductFormData) => {
     await addProduct({
-      restaurantId: Number(restaurantId),
-      categoryId: Number(categoryId),
+      restaurantId,
+      categoryId,
       ...data,
     });
     setOpen(false);
