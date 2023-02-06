@@ -17,7 +17,7 @@ export function ProtectedRoute({
   const { isLoggedIn } = useAuth();
 
   if (!isLoggedIn) {
-    return <Navigate to={redirectPath} replace />;
+    return <Navigate to={redirectPath} />;
   }
 
   return children || <Outlet />;

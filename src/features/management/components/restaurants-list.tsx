@@ -1,63 +1,42 @@
 import React from 'react';
 
-import { Box, styled, Typography } from '@mui/material';
+import {
+  Box, styled, Typography,
+} from '@mui/material';
+
+import restaurantsApi from '~/api/restaurant/api';
+import { CircularLoader } from '~/components/Circular Loader';
 
 import { RestaurantCard } from './restaurant-card';
 
 export function RestaurantsList() {
-  const Restaurants = [
-    {
-      name: 'Якитория',
-      id: 1,
-      address: 'г. Астана, Туран 38',
-      description: 'Суши-бар «Yakitoriya Туран», кухня Японская',
-    },
-    {
-      name: 'Якитория',
-      id: 2,
-      address: 'г. Астана, Туран 38',
-      description: 'Суши-бар «Yakitoriya Туран», кухня Японская',
-    },
-    {
-      name: 'Якитория',
-      id: 3,
-      address: 'г. Астана, Туран 38',
-      description: 'Суши-бар «Yakitoriya Туран», кухня Японская',
-    },
-    {
-      name: 'Якитория',
-      id: 4,
-      address: 'г. Астана, Туран 38',
-      description: 'Суши-бар «Yakitoriya Туран», кухня Японская',
-    },
-    {
-      name: 'Якитория',
-      id: 5,
-      address: 'г. Астана, Туран 38',
-      description: 'Суши-бар «Yakitoriya Туран», кухня Японская',
-    },
-  ];
-  // http://img1.feinfood.com/upload/hotel2/20200905/11fe752eeeab4f0da1e99d487bb0410c.jpg
+  const { data: restaurants = [], isLoading, isError } = restaurantsApi
+    .endpoints.getRestaurants.useQuery('accepted');
+
   return (
-    <BoxStyle>
-      <Typography variant="h6" sx={{ marginBottom: 3 }}>
-        Мои рестораны
-      </Typography>
-      <Box display="grid" gap={2}>
-        {Restaurants.map((restaurant) => (
-          <RestaurantCard
-            name={restaurant.name}
-            address={restaurant.address}
-            description={restaurant.description}
-            id={restaurant.id}
-          />
-        ))}
-      </Box>
-    </BoxStyle>
+    <>
+      <CircularLoader isLoading={isLoading} />
+      {(!isLoading && !isError)
+     && (
+     <BoxStyle>
+       <Typography variant="h6" sx={{ marginBottom: 3 }}>
+         Мои рестораны
+       </Typography>
+       <Box display="grid" gap={2}>
+         {restaurants.map((restaurant) => (
+           <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+         ))}
+       </Box>
+     </BoxStyle>
+     )}
+    </>
   );
 }
+
 const BoxStyle = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   marginTop: theme.spacing(3),
+  marginRight: theme.spacing(2),
+  marginLeft: theme.spacing(2),
 }));

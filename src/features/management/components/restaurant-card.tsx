@@ -1,43 +1,39 @@
 import React from 'react';
 
 import {
-  Card, styled, CardMedia, Box, Typography, CardContent, CardActionArea,
+  Card, styled, Box, Typography, CardContent, CardActionArea,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
+import { Restaurant } from '~/api/restaurant/type';
+import { Image } from '~/components/image';
 import { PATH_MANAGEMENT } from '~/routes/paths';
 
 type Props={
-    name: string,
-    address: string,
-    description: string,
-    id:number
+   restaurant: Restaurant
 }
+
 export function RestaurantCard({
-  name, address, description, id,
+  restaurant,
 }:Props) {
   return (
     <Card>
-      <CardActionArea component={Link} to={PATH_MANAGEMENT.restaurantDetails(id)}>
+      <CardActionArea component={Link} to={PATH_MANAGEMENT.restaurantDetails(restaurant.slug)}>
         <CardContentStyle>
-          <CardMedia
-            component="img"
-            sx={{
-              width: 96, height: 96, borderRadius: 1, mr: 2,
-            }}
-          // eslint-disable-next-line max-len
-            image="http://img1.feinfood.com/upload/hotel2/20200905/11fe752eeeab4f0da1e99d487bb0410c.jpg"
-            alt="Live from space album cover"
+          <Image
+            url={restaurant.originalUrl}
+            alt={restaurant.name}
+            style={{ height: 96, width: 96 }}
           />
           <Box>
             <Typography variant="h6">
-              {name}
+              {restaurant.name}
             </Typography>
             <Typography variant="caption" sx={{ color: 'grey.600' }} component="p">
-              {address}
+              {restaurant.address}
             </Typography>
             <Typography variant="caption" sx={{ mt: 1, color: 'grey.600' }} component="p">
-              {description}
+              {restaurant.rating}
             </Typography>
           </Box>
         </CardContentStyle>

@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 
 import authApi from '~/api/auth/api';
 import { FormProvider, RHFTextField } from '~/components/hook-form';
+import { PATH_MANAGEMENT } from '~/routes/paths';
 
 type FormValuesProps = {
   email: string;
@@ -16,20 +17,19 @@ type FormValuesProps = {
   afterSubmit?: string;
 };
 
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email('Email must be a valid email address').required('Email is required'),
+  password: Yup.string().required('Password is required'),
+});
+
+const defaultValues = {
+  email: '',
+  password: '',
+};
+
 export function LoginForm() {
   const [login] = authApi.endpoints.login.useMutation();
   const navigate = useNavigate();
-
-  const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
-  });
-
-  const defaultValues = {
-    email: '',
-    password: '',
-  };
-
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(LoginSchema),
     defaultValues,
@@ -44,14 +44,11 @@ export function LoginForm() {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await login(data).unwrap();
-      navigate('/');
+      navigate(PATH_MANAGEMENT.myRestaurants);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      if (error.status === 400 && error.data?.validationErrors?.length > 0) {
-        const { path, message } = error.data.validationErrors[0];
-        setError(path, { message, type: 'custom' });
-        setError('afterSubmit', { message: 'Wrong credentials', type: 'custom' });
-      }
+      setError('email', { message: 'Wrong credentials', type: 'custom' });
+      setError('password', { message: 'Wrong credentials', type: 'custom' });
     }
   };
   return (

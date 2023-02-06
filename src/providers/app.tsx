@@ -6,7 +6,10 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { SnackbarProvider } from 'notistack';
 import { ErrorBoundary } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
+import { store, persistor } from '~/store';
 import ThemeProvider from '~/theme';
 
 function ErrorFallback() {
@@ -39,13 +42,13 @@ export function AppProvider({ children }: AppProviderProps) {
       <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <HelmetProvider>
-            {/* <Provider store={store}>
-              <PersistGate loading={<CircularProgress />} persistor={persistor}> */}
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <ThemeProvider>{children}</ThemeProvider>
-            </LocalizationProvider>
-            {/* </PersistGate>
-            </Provider> */}
+            <Provider store={store}>
+              <PersistGate loading={<CircularProgress />} persistor={persistor}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <ThemeProvider>{children}</ThemeProvider>
+                </LocalizationProvider>
+              </PersistGate>
+            </Provider>
           </HelmetProvider>
         </ErrorBoundary>
       </SnackbarProvider>

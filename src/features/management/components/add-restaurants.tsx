@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { ManagementLayout } from '~/layouts/management';
+import { ManagementLogoLayout } from '~/layouts/management';
 
 export function AddRestaurants() {
   return (
-    <ManagementLayout>
+    <ManagementLogoLayout>
       <h1> add</h1>
-    </ManagementLayout>
+    </ManagementLogoLayout>
   );
 }

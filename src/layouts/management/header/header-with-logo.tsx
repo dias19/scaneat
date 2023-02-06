@@ -4,7 +4,7 @@ import { Box, styled } from '@mui/material';
 
 import { Logo } from '~/assets/logo';
 
-export function Header() {
+export function LogoHeader() {
   return (
     <BoxStyle>
       <Logo />

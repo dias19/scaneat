@@ -19,6 +19,7 @@ export function BottomNavigation() {
           <BoxStyle>
             {NAVIGATION_BUTTONS.map((button) => (
               <BottomNavigationButtons
+                key={button.route}
                 activeIcon={button.activeIcon}
                 defaultIcon={button.defaultIcon}
                 route={button.route}

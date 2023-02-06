@@ -12,5 +12,14 @@ export default ({ mode }) => {
   return defineConfig({
     plugins: [react(), tsconfigPaths(), ],
     base: process.env.VITE_PUBLIC_URL,
+    server: {
+      proxy: {
+        '/api': {
+          target: process.env.VITE_PROXY_URL,
+          changeOrigin: true,
+          secure: false,
+        }
+      }
+    }
   })
 }

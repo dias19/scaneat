@@ -99,8 +99,8 @@ const WARNING = {
 const ERROR = {
   lighter: '#FFE7D9',
   light: '#FFA48D',
-  main: '#FF4842',
-  dark: '#B72136',
+  main: '#B71D18',
+  dark: '#B71D18',
   darker: '#7A0C2E',
 };
 
@@ -130,7 +130,7 @@ const GRADIENTS = {
   info: createGradient(INFO.light, INFO.main),
   success: createGradient(SUCCESS.light, SUCCESS.main),
   warning: createGradient(WARNING.light, WARNING.main),
-  error: createGradient(ERROR.light, ERROR.main),
+  error: createGradient(ERROR.dark, ERROR.main),
 };
 
 const CHART_COLORS = {
