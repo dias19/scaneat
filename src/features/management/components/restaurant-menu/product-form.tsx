@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  Box, Button, Stack, Typography,
+  Avatar,
+  Box, Button, Stack, styled, Typography,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -83,48 +84,49 @@ export function RestaurantProductForm({
       <Box sx={{ flexGrow: 1 }}>
         <FormProvider methods={methods}>
           <Stack spacing={2} sx={{ mt: 2 }}>
-            <Box>
+            <Box display="flex">
+              {
+                !photoUploaded
+                && (
+                <Avatar
+                  alt="Remy"
+                  sx={{
+                    height: 82,
+                    width: 82,
+                    borderRadius: 1,
+                    marginRight: 2,
+                  }}
+                />
+                )
+              }
               {photoUploaded && (
-                <Box display="flex">
-                  <Image
-                    style={{ height: 82, width: 82 }}
-                    url={photoUrl}
-                    alt="Продукт"
-                  />
-                  <Typography>
-                    Выбранное фото
-                  </Typography>
-                </Box>
-              )}
-              <input
-                type="file"
-                ref={inputFileRef}
-                style={{ display: 'none' }}
-                onChange={(e) => handleFileSubmit(e)}
-                placeholder="Выберите рисунок"
+              <Image
+                style={{ height: 82, width: 82 }}
+                url={photoUrl}
+                alt="Продукт"
               />
-              <Button
-                color="info"
-                variant="text"
-                onClick={handleClick}
-                size="small"
-              >
-                {photoUploaded
-                  ? (
-                    <Typography
-                      sx={{ textDecoration: 'underline' }}
-                    >
-                      Изменить фото блюда
-                    </Typography>
-                  )
-                  : (
-                    <Typography
-                      sx={{ textDecoration: 'underline' }}
-                    >
-                      Загрузите рисунок
-                    </Typography>
-                  )}
-              </Button>
+              )}
+              <Box display="flex" flexDirection="column">
+                <Typography sx={{ flexGrow: 1 }} variant="body2">
+                  Выбранное фото
+                </Typography>
+                <input
+                  type="file"
+                  ref={inputFileRef}
+                  style={{ display: 'none' }}
+                  onChange={(e) => handleFileSubmit(e)}
+                />
+                <ButtonStyle
+                  color="info"
+                  variant="text"
+                  onClick={handleClick}
+                  size="small"
+                >
+                  {
+                  photoUploaded ? 'Изменить фото блюда' : 'Загрузите рисунок'
+                }
+                </ButtonStyle>
+              </Box>
             </Box>
             <RHFTextField name="name" label="Название" />
             <RHFTextField name="price" label="Цена" />
@@ -148,3 +150,9 @@ export function RestaurantProductForm({
     </Box>
   );
 }
+
+const ButtonStyle = styled(Button)(({ theme }) => ({
+  padding: 0,
+  textDecoration: 'underline',
+  marginBottom: theme.spacing(1),
+}));

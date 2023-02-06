@@ -47,9 +47,17 @@ export function RestaurantProductList() {
         <ManagementStackLayout title={categoryName}>
           <>
             {isCategoryEmpty && (
-              <Typography variant="h6" align="center">
-                Нету созданных товаров
-              </Typography>
+              <>
+                <Typography variant="h6" align="center">
+                  Нету созданных товаров
+                </Typography>
+                <BoxStyle>
+                  <Button variant="contained" size="large" onClick={() => setAddDish(true)}>
+                    Добавить блюдо
+                  </Button>
+                </BoxStyle>
+                <RestaurantProductAdd open={addDish} setOpen={setAddDish} category={categoryName} />
+              </>
             )}
 
             {!isCategoryEmpty && (

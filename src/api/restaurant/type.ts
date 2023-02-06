@@ -24,7 +24,7 @@ export interface PostPhotoResponse{
     originalUrl: string,
 }
 
-export type GetRestaurantResponse=Restaurant
+export type GetRestaurantResponse=Restaurant[]
 
 export type VerifyRestaurantResponse=Restaurant
 

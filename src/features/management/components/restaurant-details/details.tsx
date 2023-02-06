@@ -17,9 +17,10 @@ export function RestaurantDetails() {
 
   const skip = typeof (slug) === 'undefined';
 
-  const { data: restaurant } = restaurantsApi.endpoints.getRestaurant.useQuery(slug as string, {
-    skip,
-  });
+  const { data: restaurant = [] } = restaurantsApi
+    .endpoints.getRestaurant.useQuery(slug as string, {
+      skip,
+    });
 
   const [trigger] = restaurantsApi.endpoints.getRestaurantQR.useLazyQuery();
 
@@ -27,16 +28,16 @@ export function RestaurantDetails() {
     <BoxStyle>
       <Box display="flex" flexDirection="row">
         <Image
-          url={restaurant!.originalUrl}
-          alt={restaurant!.name}
+          url={restaurant[0].originalUrl}
+          alt={restaurant[0].name}
           style={{ height: 96, width: 96 }}
         />
         <Box display="flex" flexDirection="column">
           <Typography variant="h6">
-            {restaurant?.name}
+            {restaurant[0].name}
           </Typography>
           <Typography variant="caption" component="p" sx={{ color: 'grey.600' }}>
-            {restaurant?.address}
+            {restaurant[0].address}
           </Typography>
           <Button
             sx={{ mt: 1, px: 3, bgcolor: 'black' }}
@@ -72,7 +73,7 @@ export function RestaurantDetails() {
       <Typography variant="h6" sx={{ mt: 3, mb: 3 }}>
         Управление рестораном
       </Typography>
-      <ManagementNavigation id={restaurant?.id} />
+      <ManagementNavigation id={restaurant[0].id} />
       <Box sx={{ paddingBottom: 2, overflow: 'hidden' }}>
         <RestaurantSales />
       </Box>
