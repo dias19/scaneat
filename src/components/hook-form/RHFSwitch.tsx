@@ -18,7 +18,7 @@ export function RHFSwitch({ name, ...other }: Props) {
         <Controller
           name={name}
           control={control}
-          render={({ field }) => <Switch {...field} checked={field.value} />}
+          render={({ field }) => <Switch {...field} checked={field.value} color="success" />}
         />
       )}
       {...other}

@@ -1,17 +1,22 @@
 import React, { ReactNode } from 'react';
 
+import { Box, BoxProps } from '@mui/material';
 import { FormProvider as Form, UseFormReturn } from 'react-hook-form';
 
 type Props = {
   children: ReactNode;
   methods: UseFormReturn<any>;
   onSubmit?: VoidFunction;
-};
+}
 
-export function FormProvider({ children, onSubmit, methods }: Props) {
+type CombinedProps= Props & BoxProps
+
+export function FormProvider({
+  children, onSubmit, methods, ...other
+}: CombinedProps) {
   return (
     <Form {...methods}>
-      <form onSubmit={onSubmit}>{children}</form>
+      <Box {...other} component="form" onSubmit={onSubmit}>{children}</Box>
     </Form>
   );
 }

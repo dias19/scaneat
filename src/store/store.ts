@@ -9,6 +9,7 @@ import categoryApi, { CATEGORY_API_REDUCER_KEY } from '~/api/category/api';
 import productsApi, { PRODUCTS_API_REDUCER_KEY } from '~/api/products/api';
 import restaurantApi, { RESTAURANT_REDUCER_KEY } from '~/api/restaurant/api';
 import { authReducer, authSlice } from '~/features/auth';
+import { photoSlice, photoReducer } from '~/features/restaurant';
 
 import { RESET_STATE_ACTION_TYPE } from './actions/resetState';
 
@@ -18,6 +19,7 @@ const reducers = {
   [authSlice.name]: authReducer,
   [CATEGORY_API_REDUCER_KEY]: categoryApi.reducer,
   [PRODUCTS_API_REDUCER_KEY]: productsApi.reducer,
+  [photoSlice.name]: photoReducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);

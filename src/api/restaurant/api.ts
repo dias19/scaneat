@@ -12,6 +12,9 @@ import {
   RejectRestaurantResponse,
   VerifyRestaurantRequest,
   RejectRestaurantRequest,
+  GetCitiesResponse,
+  CreateRestaurantRequest,
+  CreateRestaurantResponse,
 } from './type';
 
 export const RESTAURANT_REDUCER_KEY = 'restaurantApi';
@@ -36,6 +39,9 @@ const restaurantApi = createApi({
         method: 'POST',
         body,
       }),
+    }),
+    getCities: builder.query<GetCitiesResponse, void>({
+      query: () => '/city',
     }),
     getRestaurant: builder.query<GetRestaurantResponse, GetRestaurantRequest>({
       query: (restaurantSlug) => `/restaurant/${restaurantSlug}`,
@@ -71,6 +77,13 @@ const restaurantApi = createApi({
         method: 'PATCH',
       }),
       invalidatesTags: [{ type: 'Restaurants', id: 'Restaurants' }],
+    }),
+    createRestaurant: builder.mutation<CreateRestaurantResponse, CreateRestaurantRequest>({
+      query: (body) => ({
+        url: '/restaurant',
+        method: 'POST',
+        body,
+      }),
     }),
   }),
 });

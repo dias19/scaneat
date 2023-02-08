@@ -6,6 +6,7 @@ import { ProtectedRoute } from '~/components/protected-route';
 import { AuthRoutes } from '~/pages/auth';
 import { ManagementRoutes } from '~/pages/management';
 import { MiscRoutes } from '~/pages/misc';
+import { RestaurantRoutes } from '~/pages/restaurant';
 import { lazyImport } from '~/utils/lazyImport';
 
 const { Page404 } = lazyImport(() => import('~/pages/misc/Page404'), 'Page404');
@@ -14,6 +15,7 @@ export function AppRoutes() {
   return (
     <BrowserRouter basename={import.meta.env.VITE_PUBLIC_URL}>
       <Routes>
+        {RestaurantRoutes}
         {MiscRoutes}
         {AuthRoutes}
         <Route path="/management" element={<ProtectedRoute />}>

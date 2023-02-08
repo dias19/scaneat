@@ -20,7 +20,7 @@ export function Page({ children, meta, title }: Props) {
         <style>{'body { background-color: #F4F6F8; }'}</style>
       </Helmet>
 
-      <Box>{children}</Box>
+      <Box height="100%">{children}</Box>
     </>
   );
 }
