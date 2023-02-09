@@ -11,6 +11,30 @@ import { RestaurantCreationConfirmation } from './restaurant-creation-confirmati
 import { RestaurantDetailsForm } from './restaurant-details-form';
 import { RestaurantOwnerForm } from './restaurant-owner-form';
 
+export interface RestaurantForm {
+  restaurant: {
+    photoId: number;
+    photoUrl: string;
+    name: string;
+    phone: string;
+    cityId: number;
+    address: string;
+    hasTakeAway: boolean;
+    hasDelivery: boolean;
+  };
+}
+
+export interface OwnerForm {
+  restaurantOwner: {
+    name: string;
+    surname: string;
+    email: string;
+    phone: string;
+  };
+}
+
+export type CreateRestaurantForm = OwnerForm & RestaurantForm;
+
 const schema = yup.object().shape({
   restaurantOwner: yup.object().shape({
     name: yup.string().required('Введите свое имя'),
@@ -55,7 +79,7 @@ type FormsProp={
 export function RestaurantForms({ activeStep, setActiveStep }:FormsProp) {
   const isLaptop = useResponsive('up', 'sm');
 
-  const methods = useForm({
+  const methods = useForm<CreateRestaurantForm>({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues,

@@ -13,7 +13,7 @@ export function RestaurantDetailsPage() {
 
   const skip = typeof (slug) === 'undefined';
 
-  const { data: restaurant = [], isLoading, isError } = restaurantApi
+  const { data: restaurant, isLoading, isError } = restaurantApi
     .endpoints.getRestaurant.useQuery(slug as string, {
       skip,
     });
@@ -23,7 +23,7 @@ export function RestaurantDetailsPage() {
       <CircularLoader isLoading={isLoading} />
       {(!isLoading && !isError)
        && (
-       <ManagementStackLayout title={restaurant[0].name}>
+       <ManagementStackLayout title={restaurant?.name}>
          <RestaurantDetails />
        </ManagementStackLayout>
        )}

@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form';
 
 import miscApi from '~/api/misc/api';
 
-import { RestaurantForm } from '../../type';
+import { RestaurantForm } from './restaurant-forms';
 
 export function RestaurantDetailsConfirmation() {
   const methods = useFormContext<RestaurantForm>();
@@ -51,8 +51,9 @@ export function RestaurantDetailsConfirmation() {
           Онлайн заказ:
         </Typography>
         <Typography variant="body2">
-          {restaurantData.hasDelivery ? 'Доставка, ' : null}
-          {restaurantData.hasTakeAway ? 'Самовывоз' : null}
+          {restaurantData.hasDelivery && 'Доставка'}
+          {(restaurantData.hasDelivery && restaurantData.hasTakeAway) && ', '}
+          {restaurantData.hasTakeAway && 'Самовывоз'}
         </Typography>
       </Box>
     </Stack>

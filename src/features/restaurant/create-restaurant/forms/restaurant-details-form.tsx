@@ -10,7 +10,7 @@ import { RHFSelect, RHFSwitch, RHFTextField } from '~/components/hook-form';
 import { RHFPhoneField } from '~/components/hook-form/rhf-phone-field';
 import { PostPhoto } from '~/features/misc';
 
-import { RestaurantForm } from '../../type';
+import { RestaurantForm } from './restaurant-forms';
 
 type FormProps = {
   handleBack: () => void;

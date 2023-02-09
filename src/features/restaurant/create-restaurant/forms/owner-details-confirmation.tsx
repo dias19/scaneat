@@ -3,7 +3,7 @@ import React from 'react';
 import { Stack, Box, Typography } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 
-import { OwnerForm } from '../../type';
+import { OwnerForm } from './restaurant-forms';
 
 export function OwnerDetailsConfirmation() {
   const methods = useFormContext<OwnerForm>();

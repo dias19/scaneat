@@ -15,10 +15,9 @@ export interface Restaurant {
   verificationStatus: boolean;
   originalUrl: string;
 }
-
 export type GetRestaurantsResponse = Restaurant[];
 
-export type GetRestaurantResponse = Restaurant[];
+export type GetRestaurantResponse = Restaurant;
 
 export type VerifyRestaurantResponse = Restaurant;
 
@@ -53,4 +52,4 @@ export interface CreateRestaurantRequest {
   };
 }
 
-export type CreateRestaurantResponse=Restaurant[]
+export type CreateRestaurantResponse=Restaurant

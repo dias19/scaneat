@@ -32,10 +32,10 @@ export function RestaurantProductForm({
 }: FormProps) {
   const defaultValues = {
     name: product?.name || '',
-    price: Number(product?.price) || 0,
+    price: Number(product?.price),
     description: product?.description || '',
-    photoId: Number(product?.photoId) || 0,
-    photoUrl: (product?.originalUrl) || '',
+    photoId: product?.photoId,
+    photoUrl: product?.originalUrl || '',
   };
 
   const methods = useForm<ProductFormData>({
@@ -54,7 +54,7 @@ export function RestaurantProductForm({
 
   const photoUrl = watch('photoUrl');
 
-  const isPhotoUploaded = photoId !== 0;
+  const isPhotoUploaded = !!photoId;
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>

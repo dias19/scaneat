@@ -10,9 +10,9 @@ import { toast } from 'react-toastify';
 import restaurantApi from '~/api/restaurant/api';
 import { PATH_RESTAURANTS } from '~/routes/paths';
 
-import { CreateRestaurantForm } from '../../type';
 import { OwnerDetailsConfirmation } from './owner-details-confirmation';
 import { RestaurantDetailsConfirmation } from './restaurant-details-confirmation';
+import { CreateRestaurantForm } from './restaurant-forms';
 
 type ConfirmationFormProps = {
   handleBack: () => void;
