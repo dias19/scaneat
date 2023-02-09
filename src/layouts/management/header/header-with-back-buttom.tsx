@@ -21,7 +21,13 @@ export function BackButtonHeader({ title }:HeaderProps) {
           sx={{ width: '24px', height: '24px' }}
         />
       </IconButton>
-      <Typography variant="h6" sx={{ flexGrow: 1 }} align="center">
+      <Typography
+        variant="h6"
+        sx={{
+          width: '100%',
+        }}
+        align="center"
+      >
         {title}
       </Typography>
     </BoxStyle>

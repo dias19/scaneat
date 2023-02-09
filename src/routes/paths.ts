@@ -38,6 +38,10 @@ export const PATH_PAGE = {
   page500: '/500',
 };
 
+export const PATH_RESTAURANTS = {
+  createRestaurant: '/create-restaurant',
+  successfulCreation: '/creation-successful',
+};
 export const PATH_TICKETS = {
   root: ROOTS_TICKETS,
 };

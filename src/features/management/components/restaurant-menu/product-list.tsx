@@ -61,7 +61,7 @@ export function RestaurantProductList() {
             )}
 
             {!isCategoryEmpty && (
-              <Box sx={{ mt: 3 }}>
+              <Box sx={{ mt: 3, mr: 2, ml: 2 }}>
                 {products
                   .filter((product) => !product.isDeleted)
                   .map((product) => (

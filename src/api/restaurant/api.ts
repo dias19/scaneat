@@ -3,15 +3,15 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithLogout } from '..';
 import {
   GetRestaurantsResponse,
-  PostPhotoResponse,
   GetRestaurantResponse,
   GetRestaurantsRequest,
   GetRestaurantRequest,
-  PostPhotoRequest,
   VerifyRestaurantResponse,
   RejectRestaurantResponse,
   VerifyRestaurantRequest,
   RejectRestaurantRequest,
+  CreateRestaurantRequest,
+  CreateRestaurantResponse,
 } from './type';
 
 export const RESTAURANT_REDUCER_KEY = 'restaurantApi';
@@ -29,13 +29,6 @@ const restaurantApi = createApi({
           { type: 'Restaurants', id: 'Restaurants' },
         ]
         : [{ type: 'Restaurants', id: 'Restaurants' }]),
-    }),
-    postPhoto: builder.mutation<PostPhotoResponse, PostPhotoRequest>({
-      query: (body) => ({
-        url: '/photo',
-        method: 'POST',
-        body,
-      }),
     }),
     getRestaurant: builder.query<GetRestaurantResponse, GetRestaurantRequest>({
       query: (restaurantSlug) => `/restaurant/${restaurantSlug}`,
@@ -71,6 +64,13 @@ const restaurantApi = createApi({
         method: 'PATCH',
       }),
       invalidatesTags: [{ type: 'Restaurants', id: 'Restaurants' }],
+    }),
+    createRestaurant: builder.mutation<CreateRestaurantResponse, CreateRestaurantRequest>({
+      query: (body) => ({
+        url: '/restaurant',
+        method: 'POST',
+        body,
+      }),
     }),
   }),
 });
