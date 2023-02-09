@@ -10,8 +10,22 @@ import { RHFSelect, RHFSwitch, RHFTextField } from '~/components/hook-form';
 import { RHFPhoneField } from '~/components/hook-form/rhf-phone-field';
 import { PostPhoto } from '~/features/misc';
 
-import { RestaurantForm } from './restaurant-forms';
+import { Restaurant } from '../../type';
 
+export interface RestaurantForm {
+  restaurant: Pick<
+    Restaurant,
+    | 'photoId'
+    | 'name'
+    | 'phone'
+    | 'cityId'
+    | 'address'
+    | 'hasTakeAway'
+    | 'hasDelivery'
+  > & {
+    photoUrl: string,
+  }
+}
 type FormProps = {
   handleBack: () => void;
   handleNext: (schemaName: 'restaurantOwner' | 'restaurant') => void;

@@ -8,30 +8,8 @@ import { FormProvider } from '~/components/hook-form';
 import { useResponsive } from '~/hooks/useResponsive';
 
 import { RestaurantCreationConfirmation } from './restaurant-creation-confirmation';
-import { RestaurantDetailsForm } from './restaurant-details-form';
-import { RestaurantOwnerForm } from './restaurant-owner-form';
-
-export interface RestaurantForm {
-  restaurant: {
-    photoId: number;
-    photoUrl: string;
-    name: string;
-    phone: string;
-    cityId: number;
-    address: string;
-    hasTakeAway: boolean;
-    hasDelivery: boolean;
-  };
-}
-
-export interface OwnerForm {
-  restaurantOwner: {
-    name: string;
-    surname: string;
-    email: string;
-    phone: string;
-  };
-}
+import { RestaurantDetailsForm, RestaurantForm } from './restaurant-details-form';
+import { RestaurantOwnerForm, OwnerForm } from './restaurant-owner-form';
 
 export type CreateRestaurantForm = OwnerForm & RestaurantForm;
 

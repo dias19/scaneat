@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form';
 
 import miscApi from '~/api/misc/api';
 
-import { RestaurantForm } from './restaurant-forms';
+import { RestaurantForm } from './restaurant-details-form';
 
 export function RestaurantDetailsConfirmation() {
   const methods = useFormContext<RestaurantForm>();

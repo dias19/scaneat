@@ -7,6 +7,15 @@ import {
 import { RHFTextField } from '~/components/hook-form';
 import { RHFPhoneField } from '~/components/hook-form/rhf-phone-field';
 
+export interface OwnerForm {
+  restaurantOwner: {
+    name: string;
+    surname: string;
+    email: string;
+    phone: string;
+  };
+}
+
 type OwnerFormProps={
   handleNext: (schemaName:'restaurantOwner' | 'restaurant') => void
 }

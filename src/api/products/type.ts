@@ -4,7 +4,7 @@ export interface Product {
   description: string;
   createdAt: string;
   updatedAt: string;
-  price: string;
+  price: number;
   restaurantId: number;
   categoryId: number;
   originalUrl: string;
