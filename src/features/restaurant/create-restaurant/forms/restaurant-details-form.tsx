@@ -5,94 +5,77 @@ import {
 } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 
-import restaurantApi from '~/api/restaurant/api';
+import miscApi from '~/api/misc/api';
 import { RHFSelect, RHFSwitch, RHFTextField } from '~/components/hook-form';
 import { RHFPhoneField } from '~/components/hook-form/rhf-phone-field';
+import { PostPhoto } from '~/features/misc';
 
 import { RestaurantForm } from '../../type';
-import { PostPhoto } from '../post-photo';
 
-type FormProps={
-    handleBack: () => void,
-    handleNext: () => void
-}
+type FormProps = {
+  handleBack: () => void;
+  handleNext: (schemaName: 'restaurantOwner' | 'restaurant') => void;
+};
 
-export function RestaurantDetailsForm({ handleBack, handleNext } : FormProps) {
+export function RestaurantDetailsForm({ handleBack, handleNext }: FormProps) {
   const methods = useFormContext<RestaurantForm>();
 
-  const { formState: { isValid } } = methods;
+  const { watch } = methods;
 
-  const { data: cities = [] } = restaurantApi.endpoints.getCities.useQuery();
+  const { data: cities = [] } = miscApi.endpoints.getCities.useQuery();
+
+  const photoId = watch('restaurant.photoId');
+
+  const isPhotoUploaded = !!photoId;
+
+  const photoUrl = watch('restaurant.photoUrl');
 
   const goNext = () => {
-    handleNext();
+    handleNext('restaurant');
   };
 
   const goBack = () => {
     handleBack();
   };
+
   return (
     <BoxContainerStyle>
       <Box sx={{ flexGrow: 1, marginBottom: 3 }}>
         <Typography variant="h6" sx={{ mb: 2 }}>
           Введите данные заведения
         </Typography>
-        <PostPhoto />
+        <PostPhoto
+          isPhotoUploaded={isPhotoUploaded}
+          photoUrl={photoUrl}
+          photoIdPath="restaurant.photoId"
+          photoUrlPath="restaurant.photoUrl"
+        />
         <Stack spacing={2} sx={{ mt: 2 }}>
-          <RHFTextFieldStyle
-            name="restaurantName"
-            label="Имя"
-          />
-          <RHFPhoneFieldStyle
-            name="restaurantPhone"
-            label="Номер ресторана"
-          />
-          <RHFSelectStyle
-            name="cityId"
-            label="Город"
-          >
-            <option disabled value={0}>Выберите город</option>
+          <RHFTextFieldStyle name="restaurant.name" label="Имя" />
+          <RHFPhoneFieldStyle name="restaurant.phone" label="Номер ресторана" />
+          <RHFSelectStyle name="restaurant.cityId" label="Город" type="number">
+            <option hidden>Выберите город</option>
             {cities.map((city) => (
               <option key={city.id} value={Number(city.id)}>
                 {city.name}
               </option>
             ))}
           </RHFSelectStyle>
-          <RHFTextFieldStyle
-            name="address"
-            label="Адресс"
-          />
+          <RHFTextFieldStyle name="restaurant.address" label="Адресс" />
         </Stack>
         <Typography variant="subtitle1" sx={{ mt: 2 }}>
           Онлайн заказ
         </Typography>
         <Box display="flex" flexDirection="column">
-          <RHFSwitch
-            name="hasTakeAway"
-            label="Самовывоз"
-            color="success.main"
-          />
-          <RHFSwitch
-            name="hasDelivery"
-            label="Доставка"
-          />
+          <RHFSwitch name="restaurant.hasTakeAway" label="Самовывоз" color="success.main" />
+          <RHFSwitch name="restaurant.hasDelivery" label="Доставка" color="success" />
         </Box>
       </Box>
       <BoxButtonStyle>
-        <Button
-          variant="outlined"
-          sx={{ bgcolor: 'inherit' }}
-          onClick={goBack}
-          size="large"
-        >
+        <Button variant="outlined" sx={{ bgcolor: 'inherit' }} onClick={goBack} size="large">
           Назад
         </Button>
-        <Button
-          variant="contained"
-          disabled={!isValid}
-          onClick={goNext}
-          size="large"
-        >
+        <Button variant="contained" onClick={goNext} size="large">
           Подтвердить
         </Button>
       </BoxButtonStyle>

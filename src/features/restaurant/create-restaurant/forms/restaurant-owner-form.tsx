@@ -3,25 +3,19 @@ import React from 'react';
 import {
   Box, Button, Stack, styled, Typography,
 } from '@mui/material';
-import { useFormContext } from 'react-hook-form';
 
 import { RHFTextField } from '~/components/hook-form';
 import { RHFPhoneField } from '~/components/hook-form/rhf-phone-field';
 
-import { OwnerForm } from '../../type';
-
 type OwnerFormProps={
-  handleNext: () => void
+  handleNext: (schemaName:'restaurantOwner' | 'restaurant') => void
 }
 
 export function RestaurantOwnerForm({ handleNext }:OwnerFormProps) {
-  const methods = useFormContext<OwnerForm>();
-
-  const { formState: { isValid } } = methods;
-
   const goNext = () => {
-    handleNext();
+    handleNext('restaurantOwner');
   };
+
   return (
     <BoxContainerStyle>
       <Typography variant="h6" sx={{ mb: 2, mt: 3 }}>
@@ -29,26 +23,25 @@ export function RestaurantOwnerForm({ handleNext }:OwnerFormProps) {
       </Typography>
       <Stack spacing={2} sx={{ flexGrow: 1 }}>
         <RHFTextFieldStyle
-          name="name"
+          name="restaurantOwner.name"
           label="Имя"
         />
         <RHFTextFieldStyle
-          name="surname"
+          name="restaurantOwner.surname"
           label="Фамилия"
         />
         <RHFTextFieldStyle
-          name="email"
+          name="restaurantOwner.email"
           label="Почта"
         />
         <RHFPhoneFieldStyle
-          name="phone"
+          name="restaurantOwner.phone"
           label="Номер телефона"
         />
       </Stack>
       <Box>
         <ButtonStyle
           variant="contained"
-          disabled={!isValid}
           size="large"
           onClick={goNext}
         >

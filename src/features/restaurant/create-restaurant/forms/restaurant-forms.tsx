@@ -7,41 +7,45 @@ import * as yup from 'yup';
 import { FormProvider } from '~/components/hook-form';
 import { useResponsive } from '~/hooks/useResponsive';
 
-import { ConfirmationForm } from './confirmation-form';
+import { RestaurantCreationConfirmation } from './restaurant-creation-confirmation';
 import { RestaurantDetailsForm } from './restaurant-details-form';
 import { RestaurantOwnerForm } from './restaurant-owner-form';
 
-const ownerSchema = yup.object({
-  name: yup.string().required(),
-  surname: yup.string().required(),
-  email: yup.string().email().required(),
-  phone: yup.string().required(),
-});
-
-const restaurantSchema = yup.object({
-  restaurantName: yup.string().required(),
-  restaurantPhone: yup.string().required(),
-  cityId: yup.number().required(),
-  address: yup.string().required(),
-  hasTakeAway: yup.boolean().required(),
-  hasDelivery: yup.boolean().required(),
-  photoId: yup.number().required(),
+const schema = yup.object().shape({
+  restaurantOwner: yup.object().shape({
+    name: yup.string().required('Введите свое имя'),
+    surname: yup.string().required('Введите свою фамилию'),
+    email: yup.string().email('Укажите правильную почту').required('Введите почту'),
+    phone: yup.string().required('Введите свой номер телефона'),
+  }),
+  restaurant: yup.object().shape({
+    name: yup.string().required('Введите название ресторана'),
+    phone: yup.string().required('Введите номер телефона ресторана'),
+    cityId: yup.number().required('Выберите город'),
+    address: yup.string().required('Введите адрес ресторана'),
+    hasTakeAway: yup.boolean().required(),
+    hasDelivery: yup.boolean().required(),
+    photoId: yup.number().required(),
+    photoUrl: yup.string().required(),
+  }),
 });
 
 const defaultValues = {
-  name: '',
-  surname: '',
-  email: '',
-  phone: '',
-  restaurantName: '',
-  restaurantPhone: '',
-  cityId: 0,
-  address: '',
-  hasTakeAway: false,
-  hasDelivery: false,
-  photoId: 0,
+  restaurantOwner: {
+    name: '',
+    surname: '',
+    email: '',
+    phone: '',
+  },
+  restaurant: {
+    name: '',
+    phone: '',
+    address: '',
+    hasTakeAway: false,
+    hasDelivery: false,
+    photoUrl: '',
+  },
 };
-const createRestaurantSchema = [ownerSchema, restaurantSchema];
 
 type FormsProp={
     activeStep: number,
@@ -52,13 +56,16 @@ export function RestaurantForms({ activeStep, setActiveStep }:FormsProp) {
   const isLaptop = useResponsive('up', 'sm');
 
   const methods = useForm({
-    resolver: yupResolver(createRestaurantSchema[activeStep]),
+    resolver: yupResolver(schema),
     mode: 'all',
     defaultValues,
   });
 
-  const handleNext = () => {
-    setActiveStep((previousStep:number) => previousStep + 1);
+  const { trigger } = methods;
+
+  const handleNext = async (schemaName: 'restaurantOwner' | 'restaurant') => {
+    const isValid = await methods.trigger(schemaName);
+    if (isValid) setActiveStep((previousStep:number) => previousStep + 1);
   };
 
   const handleBack = () => {
@@ -88,7 +95,7 @@ export function RestaurantForms({ activeStep, setActiveStep }:FormsProp) {
       )}
       {activeStep === 2
         && (
-        <ConfirmationForm
+        <RestaurantCreationConfirmation
           handleBack={handleBack}
         />
         )}

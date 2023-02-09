@@ -18,12 +18,6 @@ export interface Restaurant {
 
 export type GetRestaurantsResponse = Restaurant[];
 
-export interface PostPhotoResponse {
-  photo: string;
-  id: number;
-  originalUrl: string;
-}
-
 export type GetRestaurantResponse = Restaurant[];
 
 export type VerifyRestaurantResponse = Restaurant;
@@ -34,20 +28,11 @@ export type GetRestaurantsRequest = string;
 
 export type GetRestaurantRequest = string;
 
-export type PostPhotoRequest = FormData;
-
 export type GetRestaurantQR = string;
 
 export type VerifyRestaurantRequest = number;
 
 export type RejectRestaurantRequest = number;
-
-export interface City {
-  id: number;
-  name: string;
-}
-
-export type GetCitiesResponse = City[];
 
 export interface CreateRestaurantRequest {
   restaurant: {

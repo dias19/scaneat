@@ -1,18 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi } from '@reduxjs/toolkit/query/react';
 
 import { baseQueryWithLogout } from '..';
 import {
   GetRestaurantsResponse,
-  PostPhotoResponse,
   GetRestaurantResponse,
   GetRestaurantsRequest,
   GetRestaurantRequest,
-  PostPhotoRequest,
   VerifyRestaurantResponse,
   RejectRestaurantResponse,
   VerifyRestaurantRequest,
   RejectRestaurantRequest,
-  GetCitiesResponse,
   CreateRestaurantRequest,
   CreateRestaurantResponse,
 } from './type';
@@ -32,16 +30,6 @@ const restaurantApi = createApi({
           { type: 'Restaurants', id: 'Restaurants' },
         ]
         : [{ type: 'Restaurants', id: 'Restaurants' }]),
-    }),
-    postPhoto: builder.mutation<PostPhotoResponse, PostPhotoRequest>({
-      query: (body) => ({
-        url: '/photo',
-        method: 'POST',
-        body,
-      }),
-    }),
-    getCities: builder.query<GetCitiesResponse, void>({
-      query: () => '/city',
     }),
     getRestaurant: builder.query<GetRestaurantResponse, GetRestaurantRequest>({
       query: (restaurantSlug) => `/restaurant/${restaurantSlug}`,

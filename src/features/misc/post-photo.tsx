@@ -6,14 +6,20 @@ import {
 import { useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
 
-import restaurantApi from '~/api/restaurant/api';
+import photoApi from '~/api/photo/api';
 import { Image } from '~/components/image';
-import { useAppSelector } from '~/store';
 
-export function PostPhoto() {
-  const [postPhoto] = restaurantApi.endpoints.postPhoto.useMutation();
+type PostPhotoProps={
+  isPhotoUploaded: boolean,
+  photoUrl:string,
+  photoIdPath: string,
+  photoUrlPath: string,
+}
 
-  const { photoId, photoUrl, photoUploaded } = useAppSelector((state) => state.photoSlice);
+export function PostPhoto({
+  isPhotoUploaded, photoUrl, photoIdPath, photoUrlPath,
+}: PostPhotoProps) {
+  const [postPhoto] = photoApi.endpoints.postPhoto.useMutation();
 
   const inputFileRef = useRef<HTMLInputElement>(null);
 
@@ -30,21 +36,22 @@ export function PostPhoto() {
     const formData = new FormData();
     if (!e.target.files) return;
     formData.append('image', e.target.files[0]);
-    await postPhoto(formData);
-    setValue('photoId', photoId);
+    const { originalUrl, id } = await postPhoto(formData).unwrap();
+    setValue(photoIdPath, id);
+    setValue(photoUrlPath, originalUrl);
   }
 
   return (
     <Box display="flex">
       {
-          !photoUploaded
+          !isPhotoUploaded
           && (
           <AvatarStyle
             alt="Photo"
           />
           )
         }
-      {photoUploaded && (
+      {isPhotoUploaded && (
       <Image
         style={{ height: 82, width: 82 }}
         url={photoUrl}
@@ -68,7 +75,7 @@ export function PostPhoto() {
           size="small"
         >
           {
-            photoUploaded ? 'Изменить фото ресторана' : 'Загрузите фото'
+            isPhotoUploaded ? 'Изменить фото' : 'Загрузите фото'
           }
         </ButtonStyle>
       </Box>

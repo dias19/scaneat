@@ -6,10 +6,11 @@ import {
 
 import authApi, { AUTH_API_REDUCER_KEY } from '~/api/auth/api';
 import categoryApi, { CATEGORY_API_REDUCER_KEY } from '~/api/category/api';
+import miscApi, { MISC_API_REDUCER_KEY } from '~/api/misc/api';
+import photoApi, { PHOTO_API_REDUCER_KEY } from '~/api/photo/api';
 import productsApi, { PRODUCTS_API_REDUCER_KEY } from '~/api/products/api';
 import restaurantApi, { RESTAURANT_REDUCER_KEY } from '~/api/restaurant/api';
 import { authReducer, authSlice } from '~/features/auth';
-import { photoSlice, photoReducer } from '~/features/restaurant';
 
 import { RESET_STATE_ACTION_TYPE } from './actions/resetState';
 
@@ -19,7 +20,8 @@ const reducers = {
   [authSlice.name]: authReducer,
   [CATEGORY_API_REDUCER_KEY]: categoryApi.reducer,
   [PRODUCTS_API_REDUCER_KEY]: productsApi.reducer,
-  [photoSlice.name]: photoReducer,
+  [PHOTO_API_REDUCER_KEY]: photoApi.reducer,
+  [MISC_API_REDUCER_KEY]: miscApi.reducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);
@@ -44,6 +46,8 @@ export const store = configureStore({
     authApi.middleware,
     categoryApi.middleware,
     productsApi.middleware,
+    miscApi.middleware,
+    photoApi.middleware,
   ),
 });
 

@@ -20,7 +20,6 @@ export function RHFSelect({ name, children, ...other }: Props) {
       render={({ field, fieldState: { error } }) => (
         <TextField
           {...field}
-          type="number"
           select
           fullWidth
           SelectProps={{ native: true }}

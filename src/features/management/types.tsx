@@ -3,6 +3,7 @@ export interface ProductFormData {
     price: number;
  description: string;
   photoId: number;
+  photoUrl: string;
  }
 
 export interface ProductData{
