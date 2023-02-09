@@ -5,8 +5,8 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-import { Restaurant } from '~/api/restaurant/type';
 import { Image } from '~/components/image';
+import { Restaurant } from '~/features/restaurant';
 import { PATH_MANAGEMENT } from '~/routes/paths';
 
 type Props={
