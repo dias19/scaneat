@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Box, styled, Typography } from '@mui/material';
 
-import categoryApi from '~/api/category/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
 
 import { CategoryFormData } from '../../types';
@@ -11,22 +10,12 @@ import { RestaurantCategoryForm } from './category-form';
 type AddCategoryProps = {
   open: boolean;
   setOpen: (state: boolean) => void;
-  restaurantId: number;
+  handleAdd: (data:CategoryFormData) => void
 };
 
-export function RestaurantCategoryAdd({ open, setOpen, restaurantId }: AddCategoryProps) {
-  const [addCategory] = categoryApi.endpoints.addCategory.useMutation();
-
-  const handleAdd = async (data:CategoryFormData) => {
-    await addCategory({
-      restaurantId,
-      isActive: true,
-      ...data,
-
-    });
-    setOpen(false);
-  };
-
+export function RestaurantCategoryAdd({
+  open, setOpen, handleAdd,
+}: AddCategoryProps) {
   return (
     <BottomDrawerStyle
       onClose={() => setOpen(false)}

@@ -1,15 +1,15 @@
 import React from 'react';
 
 import {
-  Box, Container, Typography,
+  Box, Container,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import restaurantApi from '~/api/restaurant/api';
-import { Iconify } from '~/components/Iconify';
 import { useResponsive } from '~/hooks/useResponsive';
 
+import { NavigateBack } from '../navigate-back';
 import ManagementNavigation from './management-navigation';
 import Profile from './profile';
 import { QrCodeRestaurant } from './qr-code';
@@ -33,16 +33,7 @@ export function RestaurantDetails() {
         isLaptop
         && (
           <Container>
-            <Box display="flex" alignItems="center" sx={{ mb: 3 }}>
-              <Iconify
-                icon="material-symbols:chevron-left-rounded"
-                width={24}
-                height={24}
-              />
-              <Typography>
-                Назад
-              </Typography>
-            </Box>
+            <NavigateBack />
             <Profile restaurant={restaurant} />
             <QrCodeRestaurant />
             <ManagementNavigation id={restaurant?.id} />

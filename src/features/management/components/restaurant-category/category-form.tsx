@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Stack } from '@mui/material';
+import {
+  Box, Button, Stack, styled,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -52,7 +54,7 @@ export function RestaurantCategoryForm({
           </Stack>
         </FormProvider>
       </Box>
-      <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap={1}>
+      <BoxButtonStyle>
         <Button variant="outlined" onClick={() => setOpen(false)}>
           Отменить
         </Button>
@@ -63,7 +65,17 @@ export function RestaurantCategoryForm({
         >
           {buttonTitle}
         </Button>
-      </Box>
+      </BoxButtonStyle>
     </Box>
   );
 }
+const BoxButtonStyle = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: theme.spacing(1),
+  [theme.breakpoints.up('sm')]: {
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'end',
+  },
+}));
