@@ -3,7 +3,6 @@ import React from 'react';
 import {
   Step, StepLabel, Stepper, styled, Typography,
 } from '@mui/material';
-import { toast } from 'react-toastify';
 
 const steps = [
   {
@@ -29,8 +28,6 @@ export function StepperLaptop({ activeStep, setActiveStep }: StepperLaptopProps)
   const handleStep = (step: number) => {
     if (activeStep > step) {
       setActiveStep!(step);
-    } else {
-      toast.warning('Заполните форму чтобы пройти дальше');
     }
   };
 
@@ -39,14 +36,24 @@ export function StepperLaptop({ activeStep, setActiveStep }: StepperLaptopProps)
       {steps.map((step, index) => (
         <StepStyle
           key={step.name}
+          sx={{ cursor: 'pointer' }}
         >
           <StepLabel
-            optional={
-              <Typography variant="caption">{step.description}</Typography>
-              }
+            optional={(
+              <Typography
+                variant="caption"
+              >
+                {step.description}
+              </Typography>
+            )}
             onClick={() => handleStep(index)}
           >
-            <Typography color="primary.light">{step.name}</Typography>
+            <Typography
+              color="primary.light"
+              sx={{ cursor: 'pointer' }}
+            >
+              {step.name}
+            </Typography>
           </StepLabel>
         </StepStyle>
       ))}

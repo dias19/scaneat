@@ -27,7 +27,7 @@ export function RestaurantOwnerForm({ handleNext }:OwnerFormProps) {
 
   return (
     <BoxContainerStyle>
-      <Typography variant="h6" sx={{ mb: 2, mt: 3 }}>
+      <Typography variant="h6" sx={{ mb: 3, mt: 3 }}>
         Введите ваши данные
       </Typography>
       <Stack spacing={2} sx={{ flexGrow: 1 }}>

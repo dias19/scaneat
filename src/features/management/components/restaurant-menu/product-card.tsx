@@ -24,7 +24,11 @@ export function RestaurantProductCard({ product }: ItemCardProps) {
           <ImageStyle
             url={product.originalUrl}
             alt={product.name}
-            style={{ height: 96, width: 96 }}
+            style={{
+              height: 96,
+              width: 96,
+              marginRight: 16,
+            }}
           />
           <Box display="flex" flexDirection="column" flexGrow={1}>
             <Box

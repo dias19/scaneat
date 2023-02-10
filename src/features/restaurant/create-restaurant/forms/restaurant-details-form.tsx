@@ -55,7 +55,7 @@ export function RestaurantDetailsForm({ handleBack, handleNext }: FormProps) {
   return (
     <BoxContainerStyle>
       <Box sx={{ flexGrow: 1, marginBottom: 3 }}>
-        <Typography variant="h6" sx={{ mb: 2 }}>
+        <Typography variant="h6" sx={{ mb: 3 }}>
           Введите данные заведения
         </Typography>
         <PostPhoto
@@ -65,7 +65,7 @@ export function RestaurantDetailsForm({ handleBack, handleNext }: FormProps) {
           photoUrlPath="restaurant.photoUrl"
         />
         <Stack spacing={2} sx={{ mt: 2 }}>
-          <RHFTextFieldStyle name="restaurant.name" label="Имя" />
+          <RHFTextFieldStyle name="restaurant.name" label="Название" />
           <RHFPhoneFieldStyle name="restaurant.phone" label="Номер ресторана" />
           <RHFSelectStyle name="restaurant.cityId" label="Город" type="number">
             <option hidden>Выберите город</option>
@@ -75,7 +75,7 @@ export function RestaurantDetailsForm({ handleBack, handleNext }: FormProps) {
               </option>
             ))}
           </RHFSelectStyle>
-          <RHFTextFieldStyle name="restaurant.address" label="Адресс" />
+          <RHFTextFieldStyle name="restaurant.address" label="Адрес" />
         </Stack>
         <Typography variant="subtitle1" sx={{ mt: 2 }}>
           Онлайн заказ

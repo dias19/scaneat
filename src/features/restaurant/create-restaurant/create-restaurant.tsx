@@ -21,7 +21,7 @@ export function CreateRestaurant() {
             ? (
               <Container>
                 <BoxLaptopStyle>
-                  <Box sx={{ height: '100%', marginTop: 9 }}>
+                  <Box sx={{ height: '100%', marginTop: 8 }}>
                     <StepperLaptop activeStep={activeStep} setActiveStep={setActiveStep} />
                   </Box>
                   <RestaurantForms activeStep={activeStep} setActiveStep={setActiveStep} />
@@ -54,6 +54,7 @@ const BoxFormStyle = styled(Box)(({ theme }) => ({
 const BoxMobileStyle = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
+  width: '100%',
   flexGrow: 1,
 });
 
@@ -61,7 +62,7 @@ const BoxContainerStyle = styled(Box)(({ theme }) => ({
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
-  [theme.breakpoints.up(768)]: {
+  [theme.breakpoints.up('sm')]: {
     display: 'flex',
     flexDirection: 'row',
   },

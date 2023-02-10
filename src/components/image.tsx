@@ -10,6 +10,7 @@ type ImageProps={
     style:{
         width: number,
         height: number,
+        marginRight?: number,
     }
 }
 
@@ -22,7 +23,6 @@ export function Image({ url, alt, style }:ImageProps) {
     />
   );
 }
-const ImageStyle = styled('img')(({ theme }) => ({
+const ImageStyle = styled('img')({
   borderRadius: 8,
-  marginRight: theme.spacing(2),
-}));
+});

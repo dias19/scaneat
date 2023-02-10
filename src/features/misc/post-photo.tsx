@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
 import {
-  Box, Avatar, Typography, Button,
+  Box, Avatar, Typography, Button, CircularProgress,
 } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
@@ -9,17 +9,20 @@ import styled from 'styled-components';
 import photoApi from '~/api/photo/api';
 import { Image } from '~/components/image';
 
-type PostPhotoProps={
-  isPhotoUploaded: boolean,
-  photoUrl:string,
-  photoIdPath: string,
-  photoUrlPath: string,
-}
+type PostPhotoProps = {
+  isPhotoUploaded: boolean;
+  photoUrl: string;
+  photoIdPath: string;
+  photoUrlPath: string;
+};
 
 export function PostPhoto({
-  isPhotoUploaded, photoUrl, photoIdPath, photoUrlPath,
+  isPhotoUploaded,
+  photoUrl,
+  photoIdPath,
+  photoUrlPath,
 }: PostPhotoProps) {
-  const [postPhoto] = photoApi.endpoints.postPhoto.useMutation();
+  const [postPhoto, { isLoading }] = photoApi.endpoints.postPhoto.useMutation();
 
   const inputFileRef = useRef<HTMLInputElement>(null);
 
@@ -43,20 +46,18 @@ export function PostPhoto({
 
   return (
     <Box display="flex">
-      {
-          !isPhotoUploaded
-          && (
-          <AvatarStyle
-            alt="Photo"
-          />
-          )
-        }
-      {isPhotoUploaded && (
-      <Image
-        style={{ height: 82, width: 82 }}
-        url={photoUrl}
-        alt="Продукт"
-      />
+      {!isPhotoUploaded && !isLoading && <AvatarStyle alt="Photo" />}
+      {isLoading && <CircularProgress sx={{ mr: 2 }} />}
+      {(isPhotoUploaded && !isLoading) && (
+        <Image
+          style={{
+            height: 82,
+            width: 82,
+            marginRight: 16,
+          }}
+          url={photoUrl}
+          alt="Продукт"
+        />
       )}
       <Box display="flex" flexDirection="column">
         <Typography sx={{ flexGrow: 1 }} variant="body2">
@@ -66,17 +67,11 @@ export function PostPhoto({
           type="file"
           ref={inputFileRef}
           style={{ display: 'none' }}
+          accept="image/png, image/gif, image/jpeg"
           onChange={(e) => handleFileSubmit(e)}
         />
-        <ButtonStyle
-          color="info"
-          variant="text"
-          onClick={handleClick}
-          size="small"
-        >
-          {
-            isPhotoUploaded ? 'Изменить фото' : 'Загрузите фото'
-          }
+        <ButtonStyle color="info" variant="text" onClick={handleClick} size="small">
+          {isPhotoUploaded ? 'Изменить фото' : 'Загрузите фото'}
         </ButtonStyle>
       </Box>
     </Box>

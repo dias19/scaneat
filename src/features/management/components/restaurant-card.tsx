@@ -9,13 +9,11 @@ import { Image } from '~/components/image';
 import { Restaurant } from '~/features/restaurant';
 import { PATH_MANAGEMENT } from '~/routes/paths';
 
-type Props={
-   restaurant: Restaurant
-}
+type Props = {
+  restaurant: Restaurant;
+};
 
-export function RestaurantCard({
-  restaurant,
-}:Props) {
+export function RestaurantCard({ restaurant }: Props) {
   return (
     <Card>
       <CardActionArea component={Link} to={PATH_MANAGEMENT.restaurantDetails(restaurant.slug)}>
@@ -23,12 +21,14 @@ export function RestaurantCard({
           <Image
             url={restaurant.originalUrl}
             alt={restaurant.name}
-            style={{ height: 96, width: 96 }}
+            style={{
+              height: 96,
+              width: 96,
+              marginRight: 16,
+            }}
           />
           <Box>
-            <Typography variant="h6">
-              {restaurant.name}
-            </Typography>
+            <Typography variant="h6">{restaurant.name}</Typography>
             <Typography variant="caption" sx={{ color: 'grey.600' }} component="p">
               {restaurant.address}
             </Typography>
