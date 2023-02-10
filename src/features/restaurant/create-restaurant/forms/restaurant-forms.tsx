@@ -80,7 +80,7 @@ export function RestaurantForms({ activeStep, setActiveStep }:FormsProp) {
       sx={{
         backgroundColor: isLaptop ? 'grey.200' : 'white',
         height: !isLaptop ? '100%' : 'auto',
-        width: isLaptop ? '383px' : '100%',
+        width: isLaptop ? 383 : '100%',
       }}
     >
       {activeStep === 0

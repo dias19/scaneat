@@ -42,7 +42,7 @@ const BoxStyle = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   marginRight: theme.spacing(2),
   marginLeft: theme.spacing(2),
-  [theme.breakpoints.up(768)]: {
+  [theme.breakpoints.up('sm')]: {
     marginTop: theme.spacing(9),
   },
 }));

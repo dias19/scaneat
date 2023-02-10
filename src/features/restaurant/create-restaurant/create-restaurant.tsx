@@ -62,7 +62,7 @@ const BoxContainerStyle = styled(Box)(({ theme }) => ({
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
-  [theme.breakpoints.up(768)]: {
+  [theme.breakpoints.up('sm')]: {
     display: 'flex',
     flexDirection: 'row',
   },

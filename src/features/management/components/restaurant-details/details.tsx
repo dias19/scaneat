@@ -15,7 +15,7 @@ import { RestaurantSales } from './sales';
 export function RestaurantDetails() {
   const { slug } = useParams();
 
-  const skip = typeof slug === 'undefined';
+  const skip = !slug;
 
   const { data: restaurant } = restaurantsApi.endpoints.getRestaurant.useQuery(slug as string, {
     skip,
