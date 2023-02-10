@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 
 import {
-  Card,
-  CardActionArea,
-  Typography,
-  Box,
-  IconButton,
-  CardContent,
-  styled,
+  Box, Card, CardActionArea, CardContent, IconButton, styled, Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,15 +10,18 @@ import { PATH_MANAGEMENT } from '~/routes/paths';
 
 import { Category } from '../../types';
 import { ModifyActionBottomDrawer } from '../modify-action-bottom-drawer';
-import { RestaurantCategoryDelete } from './category-delete';
-import { RestaurantCategoryEdit } from './category-edit';
+import { RestaurantCategoryDeleteMobile } from './category-delete-mobile';
+import { RestaurantCategoryEditMobile } from './category-edit-mobile';
 
-type CategoryCardProps = {
-  category: Category;
-  restaurantId?: number;
-};
+type CardMobileProps={
+    category: Category,
+    restaurantId: number,
+}
 
-export function RestaurantCategoryCard({ category, restaurantId }: CategoryCardProps) {
+export function CategoryCardMobile({
+  category,
+  restaurantId,
+}:CardMobileProps) {
   const [cardDisableRipple, setCardDisableRipple] = useState(false);
 
   const [actionsOpen, setActionsOpen] = useState(false);
@@ -34,10 +31,11 @@ export function RestaurantCategoryCard({ category, restaurantId }: CategoryCardP
   const [deleteOpen, setDeleteOpen] = useState(false);
 
   const navigate = useNavigate();
+
   const handleNavigate = () => {
     navigate(
       PATH_MANAGEMENT
-        .menuItems(restaurantId, Number(category.id)),
+        .menuItems(restaurantId, category.id),
       { state: { categoryName: category.name } },
     );
   };
@@ -77,8 +75,12 @@ export function RestaurantCategoryCard({ category, restaurantId }: CategoryCardP
         setOpenEdit={setEditOpen}
         title={category.name}
       />
-      <RestaurantCategoryEdit editOpen={editOpen} setEditOpen={setEditOpen} category={category} />
-      <RestaurantCategoryDelete
+      <RestaurantCategoryEditMobile
+        editOpen={editOpen}
+        setEditOpen={setEditOpen}
+        category={category}
+      />
+      <RestaurantCategoryDeleteMobile
         deleteOpen={deleteOpen}
         setDeleteOpen={setDeleteOpen}
         category={category}

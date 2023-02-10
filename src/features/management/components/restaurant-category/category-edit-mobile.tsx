@@ -9,13 +9,17 @@ import { BottomDrawer } from '~/components/bottom-drawer';
 import { Category, CategoryFormData } from '../../types';
 import { RestaurantCategoryForm } from './category-form';
 
-type CategoryEditProps={
-    editOpen: boolean,
-    setEditOpen: (state: boolean) => void,
-    category:Category
-}
+type CategoryEditProps = {
+  editOpen: boolean;
+  setEditOpen: (state: boolean) => void;
+  category: Category;
+};
 
-export function RestaurantCategoryEdit({ editOpen, setEditOpen, category }: CategoryEditProps) {
+export function RestaurantCategoryEditMobile({
+  editOpen,
+  setEditOpen,
+  category,
+}: CategoryEditProps) {
   const [editCategory] = categoryApi.endpoints.editCategory.useMutation();
 
   const parameters = useParams();

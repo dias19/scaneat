@@ -1,28 +1,29 @@
 import React from 'react';
 
-import { Box, styled, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-import { BottomDrawer } from '~/components/bottom-drawer';
+import { DialogForm } from '~/components/Dialog';
 
 import { CategoryFormData } from '../../types';
 import { RestaurantCategoryForm } from './category-form';
 
-type AddCategoryProps = {
-  open: boolean;
-  setOpen: (state: boolean) => void;
-  handleAdd: (data:CategoryFormData) => void
-};
+type AddRestaurantProps={
+    open: boolean,
+    setOpen: (state: boolean) => void,
+    handleAdd: (data: CategoryFormData) => void,
+}
 
-export function RestaurantCategoryAdd({
-  open, setOpen, handleAdd,
-}: AddCategoryProps) {
+export function RestaurantCategoryAddLaptop({
+  setOpen, open, handleAdd,
+}: AddRestaurantProps) {
   return (
-    <BottomDrawerStyle
+    <DialogForm
+      open={open}
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
-      open={open}
       title="Создать категорию"
       hasCloser
+      maxWidth="sm"
     >
       <Box display="flex" flexDirection="column" height="100%">
         <Typography variant="subtitle2">Создайте категорию</Typography>
@@ -37,11 +38,6 @@ export function RestaurantCategoryAdd({
           />
         </Box>
       </Box>
-    </BottomDrawerStyle>
+    </DialogForm>
   );
 }
-const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
-  '.MuiDrawer-paper': {
-    height: `calc(100% - ${theme.spacing(3)})`,
-  },
-}));

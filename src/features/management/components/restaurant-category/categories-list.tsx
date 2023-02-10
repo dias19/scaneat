@@ -11,15 +11,15 @@ import { useParams } from 'react-router-dom';
 
 import categoryApi from '~/api/category/api';
 import { CircularLoader } from '~/components/Circular Loader';
-import { DialogForm } from '~/components/Dialog';
 import { useResponsive } from '~/hooks/useResponsive';
 import { BOTTOM_NAVIGATION } from '~/layouts/management/constants';
 
 import { CategoryFormData } from '../../types';
 import { NavigateBack } from '../navigate-back';
-import { RestaurantCategoryAdd } from './category-add';
-import { RestaurantCategoryCard } from './category-card';
-import { RestaurantCategoryForm } from './category-form';
+import { RestaurantCategoryAddLaptop } from './category-add-laptop';
+import { RestaurantCategoryAddMobile } from './category-add-mobile';
+import { CategoryCardLaptop } from './category-card-laptop';
+import { CategoryCardMobile } from './category-card-mobile';
 
 export function RestaurantCategories() {
   const parameters = useParams();
@@ -55,7 +55,7 @@ export function RestaurantCategories() {
       {(!isError && !isLoading && !isLaptop) && (
       <BoxStyle>
         {categories.filter((category) => !category.isDeleted).map((category) => (
-          <RestaurantCategoryCard
+          <CategoryCardMobile
             key={category.id}
             category={category}
             restaurantId={restaurantId}
@@ -66,7 +66,7 @@ export function RestaurantCategories() {
             Добавить Категорию
           </Button>
         </BoxButtonStyle>
-        <RestaurantCategoryAdd
+        <RestaurantCategoryAddMobile
           open={addOpen}
           setOpen={setAddOpen}
           handleAdd={handleAdd}
@@ -84,40 +84,24 @@ export function RestaurantCategories() {
           </Button>
           <Box sx={{ mt: 3, width: 358 }}>
             {categories.filter((category) => !category.isDeleted).map((category) => (
-              <RestaurantCategoryCard
+              <CategoryCardLaptop
                 key={category.id}
                 category={category}
                 restaurantId={restaurantId}
               />
             ))}
-            <DialogForm
+            <RestaurantCategoryAddLaptop
               open={addOpen}
-              onClose={() => setAddOpen(false)}
-              onOpen={() => setAddOpen(true)}
-              title="Создать категорию"
-              hasCloser
-              maxWidth="sm"
-            >
-              <Box display="flex" flexDirection="column" height="100%">
-                <Typography variant="subtitle2">Создайте категорию</Typography>
-                <Typography variant="body2" color="grey.600">
-                  Укажите название категории
-                </Typography>
-                <Box sx={{ flexGrow: 1, mt: 2 }}>
-                  <RestaurantCategoryForm
-                    buttonTitle="Создать"
-                    setOpen={setAddOpen}
-                    onSubmit={handleAdd}
-                  />
-                </Box>
-              </Box>
-            </DialogForm>
+              setOpen={setAddOpen}
+              handleAdd={handleAdd}
+            />
           </Box>
         </Container>
       )}
     </>
   );
 }
+
 const BoxButtonStyle = styled(Box)({
   display: 'flex',
   justifyContent: 'center',

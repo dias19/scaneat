@@ -14,7 +14,7 @@ type CategoryDeleteProps = {
   setDeleteOpen: (state: boolean) => void;
 };
 
-export function RestaurantCategoryDelete({
+export function RestaurantCategoryDeleteMobile({
   category,
   deleteOpen,
   setDeleteOpen,
