@@ -15,12 +15,11 @@ import { RestaurantSales } from './sales';
 export function RestaurantDetails() {
   const { slug } = useParams();
 
-  const skip = typeof (slug) === 'undefined';
+  const skip = typeof slug === 'undefined';
 
-  const { data: restaurant } = restaurantsApi
-    .endpoints.getRestaurant.useQuery(slug as string, {
-      skip,
-    });
+  const { data: restaurant } = restaurantsApi.endpoints.getRestaurant.useQuery(slug as string, {
+    skip,
+  });
 
   const [trigger] = restaurantsApi.endpoints.getRestaurantQR.useLazyQuery();
 
@@ -30,20 +29,18 @@ export function RestaurantDetails() {
         <Image
           url={restaurant?.originalUrl}
           alt={restaurant?.name}
-          style={{ height: 96, width: 96 }}
+          style={{
+            height: 96,
+            width: 96,
+            marginRight: 16,
+          }}
         />
         <Box display="flex" flexDirection="column">
-          <Typography variant="h6">
-            {restaurant?.name}
-          </Typography>
+          <Typography variant="h6">{restaurant?.name}</Typography>
           <Typography variant="caption" component="p" sx={{ color: 'grey.600' }}>
             {restaurant?.address}
           </Typography>
-          <Button
-            sx={{ mt: 1, px: 3, bgcolor: 'black' }}
-            variant="contained"
-            size="small"
-          >
+          <Button sx={{ mt: 1, px: 3, bgcolor: 'black' }} variant="contained" size="small">
             Редактировать
           </Button>
         </Box>
@@ -52,7 +49,7 @@ export function RestaurantDetails() {
         <CardActionArea onClick={() => trigger(slug as string)}>
           <CardContentStyle>
             <ImageStyle
-            // eslint-disable-next-line max-len
+              // eslint-disable-next-line max-len
               src="https://www.unitag.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ftemplate_classic.746b0922.png&w=3840&q=75"
               alt="QrCode"
               width="96px"
