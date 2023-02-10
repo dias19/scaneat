@@ -11,6 +11,7 @@ type ImageProps={
         width: number,
         height: number,
         marginRight?: number,
+        borderRadius?: number,
     }
 }
 
