@@ -8,28 +8,28 @@ import { Iconify } from '~/components/Iconify';
 import MenuPopover from '~/components/MenuPopover';
 
 type ModifyActionPopoverProps={
-    actionsOpen: boolean,
-    setActionsOpen: (state: boolean) => void,
-    setEditOpen: (state: boolean) => void,
-    setDeleteOpen: (state: boolean) => void,
-    anchorEl: Element | null,
+    open: boolean,
+    setOpen: (state: boolean) => void,
+    setOpenEdit: (state: boolean) => void,
+   setOpenDelete: (state: boolean) => void,
+    anchorEl?: Element | null,
 }
 
 export function ModifyActionPopover({
-  actionsOpen,
-  setActionsOpen,
-  setEditOpen,
-  setDeleteOpen,
+  open,
+  setOpen,
+  setOpenEdit,
+  setOpenDelete,
   anchorEl,
 }:ModifyActionPopoverProps) {
   return (
     <MenuPopover
-      open={actionsOpen}
-      onClose={() => setActionsOpen(false)}
+      open={open}
+      onClose={() => setOpen(false)}
       anchorEl={anchorEl}
     >
       <Card sx={{ boxShadow: 'none', mb: 2, width: 'auto' }}>
-        <CardActionArea onClick={() => setEditOpen(true)}>
+        <CardActionArea onClick={() => setOpenEdit(true)}>
           <CardContentStyle>
             <Iconify icon="material-symbols:edit" sx={{ width: 24, height: 24, mr: 1 }} />
             <Typography variant="body2">
@@ -39,7 +39,7 @@ export function ModifyActionPopover({
         </CardActionArea>
       </Card>
       <Card sx={{ boxShadow: 'none' }}>
-        <CardActionArea onClick={() => setDeleteOpen(true)}>
+        <CardActionArea onClick={() => setOpenDelete(true)}>
           <CardContentStyle>
             <Iconify icon="material-symbols:delete" sx={{ width: 24, height: 24, mr: 1 }} />
             <Typography variant="body2">

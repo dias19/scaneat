@@ -71,10 +71,10 @@ export function CategoryCardLaptop({ category, restaurantId }:CardMobileProps) {
         </CardActionArea>
       </Card>
       <ModifyActionPopover
-        actionsOpen={actionsOpen}
-        setActionsOpen={setActionsOpen}
-        setEditOpen={setEditOpen}
-        setDeleteOpen={setDeleteOpen}
+        open={actionsOpen}
+        setOpen={setActionsOpen}
+        setOpenEdit={setEditOpen}
+        setOpenDelete={setDeleteOpen}
         anchorEl={anchorEl}
       />
       <RestaurantCategoryEditLaptop

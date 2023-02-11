@@ -6,9 +6,10 @@ import {
 
 import { Iconify } from '~/components/Iconify';
 import { Image } from '~/components/image';
+import { useResponsive } from '~/hooks/useResponsive';
 
 import { Product } from '../../types';
-import { RestaurantProductActions } from './product-actions';
+import { RestaurantProductModifyActions } from './product-modify-actions';
 
 type ItemCardProps = {
   product: Product
@@ -17,9 +18,17 @@ type ItemCardProps = {
 export function RestaurantProductCard({ product }: ItemCardProps) {
   const [isMoreActive, setActiveMore] = useState(false);
 
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
+
+  const isLaptop = useResponsive('up', 'sm');
+
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (isLaptop && e.target instanceof Element) setAnchorEl(e.target);
+    setActiveMore(true);
+  };
   return (
     <>
-      <Card sx={{ mb: 2 }}>
+      <CardStyle>
         <CardContentStyle>
           <ImageStyle
             url={product.originalUrl}
@@ -48,7 +57,7 @@ export function RestaurantProductCard({ product }: ItemCardProps) {
                 {product.name}
 
               </Typography>
-              <IconButton onClick={() => setActiveMore(true)}>
+              <IconButton onClick={handleClick}>
                 <Iconify
                   icon="material-symbols:more-vert"
                   sx={{ width: 24, height: 24, color: 'grey.700' }}
@@ -74,11 +83,12 @@ export function RestaurantProductCard({ product }: ItemCardProps) {
             </Typography>
           </Box>
         </CardContentStyle>
-      </Card>
-      <RestaurantProductActions
+      </CardStyle>
+      <RestaurantProductModifyActions
         open={isMoreActive}
         setOpen={setActiveMore}
         product={product}
+        anchorEl={isLaptop ? anchorEl : null}
       />
     </>
   );
@@ -94,5 +104,12 @@ const CardContentStyle = styled(CardContent)(({ theme }) => ({
   padding: theme.spacing(2),
   '&:last-child': {
     paddingBottom: theme.spacing(2),
+  },
+}));
+
+const CardStyle = styled(Card)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+  [theme.breakpoints.up('sm')]: {
+    marginBottom: 0,
   },
 }));
