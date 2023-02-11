@@ -16,10 +16,8 @@ import { BOTTOM_NAVIGATION } from '~/layouts/management/constants';
 
 import { CategoryFormData } from '../../types';
 import { NavigateBack } from '../navigate-back';
-import { RestaurantCategoryAddLaptop } from './category-add-laptop';
-import { RestaurantCategoryAddMobile } from './category-add-mobile';
-import { CategoryCardLaptop } from './category-card-laptop';
-import { CategoryCardMobile } from './category-card-mobile';
+import { RestaurantCategoryAdd } from './category-add';
+import { CategoryCard } from './category-card';
 
 export function RestaurantCategories() {
   const parameters = useParams();
@@ -55,7 +53,7 @@ export function RestaurantCategories() {
       {(!isError && !isLoading && !isLaptop) && (
       <BoxStyle>
         {categories.filter((category) => !category.isDeleted).map((category) => (
-          <CategoryCardMobile
+          <CategoryCard
             key={category.id}
             category={category}
             restaurantId={restaurantId}
@@ -66,7 +64,7 @@ export function RestaurantCategories() {
             Добавить Категорию
           </Button>
         </BoxButtonStyle>
-        <RestaurantCategoryAddMobile
+        <RestaurantCategoryAdd
           open={addOpen}
           setOpen={setAddOpen}
           handleAdd={handleAdd}
@@ -84,13 +82,13 @@ export function RestaurantCategories() {
           </Button>
           <Box sx={{ mt: 3, width: 358 }}>
             {categories.filter((category) => !category.isDeleted).map((category) => (
-              <CategoryCardLaptop
+              <CategoryCard
                 key={category.id}
                 category={category}
                 restaurantId={restaurantId}
               />
             ))}
-            <RestaurantCategoryAddLaptop
+            <RestaurantCategoryAdd
               open={addOpen}
               setOpen={setAddOpen}
               handleAdd={handleAdd}

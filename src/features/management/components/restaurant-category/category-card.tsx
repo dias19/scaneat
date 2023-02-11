@@ -1,36 +1,42 @@
 import React, { useState } from 'react';
 
 import {
-  Card, CardActionArea, Typography, Box, IconButton, CardContent, styled,
+  Box, Card, CardActionArea, CardContent, IconButton, styled, Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { Iconify } from '~/components/Iconify';
+import { useResponsive } from '~/hooks/useResponsive';
 import { PATH_MANAGEMENT } from '~/routes/paths';
 
 import { Category } from '../../types';
-import { ModifyActionPopover } from '../modify-action-popover';
-import { RestaurantCategoryDeleteLaptop } from './category-delete-laptop';
-import { RestaurantCategoryEditLaptop } from './category-edit-laptop';
+import { RestaurantCategoryModifyActions } from './category-modify-actions';
 
 type CardMobileProps={
-    category: Category
+    category: Category,
     restaurantId: number,
 }
 
-export function CategoryCardLaptop({ category, restaurantId }:CardMobileProps) {
+export function CategoryCard({
+  category,
+  restaurantId,
+}:CardMobileProps) {
   const [cardDisableRipple, setCardDisableRipple] = useState(false);
 
   const [actionsOpen, setActionsOpen] = useState(false);
-
-  const [editOpen, setEditOpen] = useState(false);
-
-  const [deleteOpen, setDeleteOpen] = useState(false);
 
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
 
   const navigate = useNavigate();
 
+  const isLaptop = useResponsive('up', 'sm');
+
+  const handleClick = (e : React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    setCardDisableRipple(true);
+    if (isLaptop && e.target instanceof Element) setAnchorEl(e.target);
+    setActionsOpen(true);
+  };
   const handleNavigate = () => {
     navigate(
       PATH_MANAGEMENT
@@ -46,7 +52,12 @@ export function CategoryCardLaptop({ category, restaurantId }:CardMobileProps) {
           onClick={handleNavigate}
         >
           <CardContentStyle>
-            <Typography>{category.name}</Typography>
+            <Typography>
+              {category.name}
+              {' ('}
+              {category.numberOfProducts}
+              )
+            </Typography>
             <Box
               sx={{
                 flexGrow: 1,
@@ -55,14 +66,7 @@ export function CategoryCardLaptop({ category, restaurantId }:CardMobileProps) {
               }}
             >
               <IconButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setCardDisableRipple(true);
-                  setActionsOpen(true);
-                  if (e.target instanceof Element) {
-                    setAnchorEl(e.target);
-                  }
-                }}
+                onClick={handleClick}
               >
                 <Iconify icon="material-symbols:more-vert" sx={{ width: 24, height: 24 }} />
               </IconButton>
@@ -70,29 +74,15 @@ export function CategoryCardLaptop({ category, restaurantId }:CardMobileProps) {
           </CardContentStyle>
         </CardActionArea>
       </Card>
-      <ModifyActionPopover
+      <RestaurantCategoryModifyActions
         open={actionsOpen}
         setOpen={setActionsOpen}
-        setOpenEdit={setEditOpen}
-        setOpenDelete={setDeleteOpen}
+        category={category}
         anchorEl={anchorEl}
-      />
-      <RestaurantCategoryEditLaptop
-        editOpen={editOpen}
-        category={category}
-        setEditOpen={setEditOpen}
-        setActionsOpen={setActionsOpen}
-      />
-      <RestaurantCategoryDeleteLaptop
-        deleteOpen={deleteOpen}
-        category={category}
-        setDeleteOpen={setDeleteOpen}
-        setActionsOpen={setActionsOpen}
       />
     </>
   );
 }
-
 const CardContentStyle = styled(CardContent)(({ theme }) => ({
   padding: theme.spacing(2),
   maxHeight: 56,

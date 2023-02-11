@@ -9,7 +9,7 @@ import productsApi from '~/api/products/api';
 import { CircularLoader } from '~/components/Circular Loader';
 import { BOTTOM_NAVIGATION } from '~/layouts/management/constants';
 
-import { RestaurantProductAddMobile } from './product-add-mobile';
+import { RestaurantProductAdd } from './product-add';
 import { RestaurantProductCard } from './product-card';
 
 interface LocationState {
@@ -55,7 +55,7 @@ export function RestaurantProductsListMobile() {
               Добавить блюдо
             </Button>
           </BoxStyle>
-          <RestaurantProductAddMobile open={addDish} setOpen={setAddDish} category={categoryName} />
+          <RestaurantProductAdd open={addDish} setOpen={setAddDish} category={categoryName} />
         </>
         )}
 
@@ -71,7 +71,7 @@ export function RestaurantProductsListMobile() {
               Добавить блюдо
             </Button>
           </BoxStyle>
-          <RestaurantProductAddMobile open={addDish} setOpen={setAddDish} category={categoryName} />
+          <RestaurantProductAdd open={addDish} setOpen={setAddDish} category={categoryName} />
         </BoxProductsStyle>
         )}
       </>

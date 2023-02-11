@@ -11,7 +11,7 @@ import { BOTTOM_NAVIGATION } from '~/layouts/management/constants';
 
 import { Category } from '../../types';
 import { NavigateBack } from '../navigate-back';
-import { RestaurantProductAddLaptop } from './product-add-laptop';
+import { RestaurantProductAdd } from './product-add';
 import { RestaurantProductCard } from './product-card';
 
 interface LocationState {
@@ -63,7 +63,7 @@ export function RestaurantProductsListLaptop() {
               Добавить блюдо
             </Button>
           </BoxStyle>
-          <RestaurantProductAddLaptop
+          <RestaurantProductAdd
             open={addDish}
             setOpen={setAddDish}
           />
@@ -89,7 +89,7 @@ export function RestaurantProductsListLaptop() {
                 .map((product) => (
                   <RestaurantProductCard key={product.id} product={product} />
                 ))}
-              <RestaurantProductAddLaptop
+              <RestaurantProductAdd
                 open={addDish}
                 setOpen={setAddDish}
               />
@@ -101,6 +101,7 @@ export function RestaurantProductsListLaptop() {
     </Container>
   );
 }
+
 const BoxStyle = styled(Box)(({ theme }) => ({
   bottom: BOTTOM_NAVIGATION.BOTTOM_NAVIGATION_HEIGHT + 16,
   marginTop: theme.spacing(3),
