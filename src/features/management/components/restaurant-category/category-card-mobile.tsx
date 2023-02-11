@@ -36,7 +36,7 @@ export function CategoryCardMobile({
     navigate(
       PATH_MANAGEMENT
         .menuItems(restaurantId, category.id),
-      { state: { categoryName: category.name } },
+      { state: { category } },
     );
   };
   return (
@@ -47,7 +47,12 @@ export function CategoryCardMobile({
           onClick={handleNavigate}
         >
           <CardContentStyle>
-            <Typography>{category.name}</Typography>
+            <Typography>
+              {category.name}
+              {' ('}
+              {category.numberOfProducts}
+              )
+            </Typography>
             <Box
               sx={{
                 flexGrow: 1,

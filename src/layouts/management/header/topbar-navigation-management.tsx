@@ -17,6 +17,7 @@ export function ManagementTopbarNavigation() {
       {
         NAVIGATION_BUTTONS.slice(0).reverse().map((button) => (
           <Typography
+            key={button.route}
             sx={{
               mr: 2,
               cursor: 'pointer',

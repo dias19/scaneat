@@ -35,7 +35,7 @@ export function CategoryCardLaptop({ category, restaurantId }:CardMobileProps) {
     navigate(
       PATH_MANAGEMENT
         .menuItems(restaurantId, category.id),
-      { state: { categoryName: category.name } },
+      { state: { category } },
     );
   };
   return (

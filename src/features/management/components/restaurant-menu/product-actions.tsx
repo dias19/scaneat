@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { ProductData } from '../../types';
+import { Product } from '../../types';
 import { ModifyActionBottomDrawer } from '../modify-action-bottom-drawer';
 import { RestaurantProductDelete } from './product-delete';
 import { RestaurantProductEdit } from './product-edit';
@@ -8,7 +8,7 @@ import { RestaurantProductEdit } from './product-edit';
 type EditDishProps = {
   open: boolean;
   setOpen: (state: boolean) => void;
-  product: ProductData
+  product: Product
 };
 export function RestaurantProductActions({
   open, setOpen, product,

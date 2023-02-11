@@ -12,8 +12,6 @@ export * from './components/restaurant-details/orders';
 
 export * from './components/restaurant-details/employees';
 
-export * from './components/restaurant-menu/product-list';
-
 export * from './components/restaurants-list';
 
 export * from './components/restaurant-status/restaurant-status';
@@ -25,3 +23,9 @@ export * from './components/restaurant-status/restaurant-status-rejected';
 export * from './components/restaurant-status/restaurant-status-accepted';
 
 export * from './components/modify-action-bottom-drawer';
+
+export * from './types';
+
+export * from './components/restaurant-menu/products-list-mobile';
+
+export * from './components/restaurant-menu/products-list-laptop';

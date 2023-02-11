@@ -16,7 +16,7 @@ type AddProductProp = {
   category?: string;
 };
 
-export function RestaurantProductAdd({ open, setOpen, category }: AddProductProp) {
+export function RestaurantProductAddMobile({ open, setOpen, category }: AddProductProp) {
   const [addProduct] = productsApi.endpoints.addProduct.useMutation();
 
   const parameters = useParams();
@@ -26,10 +26,12 @@ export function RestaurantProductAdd({ open, setOpen, category }: AddProductProp
   const categoryId = parseInt(parameters.categoryId as string, 10);
 
   const onSubmit = async (data: ProductFormData) => {
+    const { photoUrl, ...productData } = data;
+
     await addProduct({
       restaurantId,
       categoryId,
-      ...data,
+      ...productData,
     });
     setOpen(false);
   };

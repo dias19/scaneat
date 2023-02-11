@@ -3,10 +3,11 @@ export interface ProductFormData {
   price: number;
   description: string;
   photoId: number;
+  unitPrice: number,
   photoUrl: string;
 }
 
-export interface ProductData {
+export interface Product {
   name: string;
   id: number;
   description: string;
@@ -17,6 +18,8 @@ export interface ProductData {
   categoryId: number;
   originalUrl: string;
   photoId: number;
+  isDeleted: boolean;
+  unitPrice: number,
 }
 
 export interface Category {
@@ -25,6 +28,7 @@ export interface Category {
   isActive: boolean;
   id: number;
   isDeleted: boolean;
+  numberOfProducts: string,
 }
 
 export interface CategoryFormData {

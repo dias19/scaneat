@@ -1,10 +1,4 @@
-export interface Category {
-  name: string;
-  description: string;
-  isActive: boolean;
-  id: number;
-  isDeleted: boolean;
-}
+import { Category } from '~/features/management';
 
 export type GetCategoriesResponse = Category[];
 

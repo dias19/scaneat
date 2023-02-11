@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import productsApi from '~/api/products/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
 
-import { ProductData, ProductFormData } from '../../types';
+import { Product, ProductFormData } from '../../types';
 import { RestaurantProductForm } from './product-form';
 
 type EditDishProps={
@@ -14,7 +14,7 @@ type EditDishProps={
     onCloseEditDish: VoidFunction,
     onOpenEditDish: VoidFunction,
     title?: string,
-   product: ProductData,
+   product: Product,
 }
 
 export function RestaurantProductEdit({

@@ -7,11 +7,11 @@ import {
 import { Iconify } from '~/components/Iconify';
 import { Image } from '~/components/image';
 
-import { ProductData } from '../../types';
+import { Product } from '../../types';
 import { RestaurantProductActions } from './product-actions';
 
 type ItemCardProps = {
-  product: ProductData
+  product: Product
 };
 
 export function RestaurantProductCard({ product }: ItemCardProps) {
@@ -36,7 +36,18 @@ export function RestaurantProductCard({ product }: ItemCardProps) {
               alignItems="center"
               sx={{ justifyContent: 'space-between' }}
             >
-              <Typography variant="h6">{product.name}</Typography>
+              <Typography
+                variant="h6"
+                sx={{
+                  display: '-webkit-box',
+                  overflow: 'hidden',
+                  WebkitBoxOrient: 'vertical',
+                  WebkitLineClamp: 1,
+                }}
+              >
+                {product.name}
+
+              </Typography>
               <IconButton onClick={() => setActiveMore(true)}>
                 <Iconify
                   icon="material-symbols:more-vert"
@@ -44,7 +55,18 @@ export function RestaurantProductCard({ product }: ItemCardProps) {
                 />
               </IconButton>
             </Box>
-            <Typography variant="caption" component="p" color="grey.600">
+            <Typography
+              variant="caption"
+              component="p"
+              color="grey.600"
+              sx={{
+                flexGrow: 1,
+                display: '-webkit-box',
+                overflow: 'hidden',
+                WebkitBoxOrient: 'vertical',
+                WebkitLineClamp: 2,
+              }}
+            >
               {product.description}
             </Typography>
             <Typography variant="body2" component="p">
