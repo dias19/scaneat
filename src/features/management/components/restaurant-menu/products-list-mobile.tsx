@@ -40,12 +40,14 @@ export function RestaurantProductsListMobile() {
 
   const isCategoryEmpty = products.length === 0;
 
+  const isShown = !isError && !isLoading && !isCategoryEmpty;
+
+  const isShownEmpty = !isError && !isLoading && isCategoryEmpty;
+
   return (
     <>
       <CircularLoader isLoading={isLoading} />
-      {!isError && !isLoading && (
-      <>
-        {isCategoryEmpty && (
+      {isShownEmpty && (
         <>
           <Typography variant="h6" align="center">
             Нету созданных товаров
@@ -57,9 +59,8 @@ export function RestaurantProductsListMobile() {
           </BoxStyle>
           <RestaurantProductAdd open={addDish} setOpen={setAddDish} category={categoryName} />
         </>
-        )}
-
-        {!isCategoryEmpty && (
+      )}
+      {isShown && (
         <BoxProductsStyle sx={{ mt: 3, mr: 2, ml: 2 }}>
           {products
             .filter((product) => !product.isDeleted)
@@ -73,8 +74,6 @@ export function RestaurantProductsListMobile() {
           </BoxStyle>
           <RestaurantProductAdd open={addDish} setOpen={setAddDish} category={categoryName} />
         </BoxProductsStyle>
-        )}
-      </>
       )}
     </>
   );

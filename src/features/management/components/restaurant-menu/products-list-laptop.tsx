@@ -41,19 +41,21 @@ export function RestaurantProductsListLaptop() {
   });
 
   const isCategoryEmpty = products.length === 0;
+
+  const isShownEmpty = !isError && !isLoading && isCategoryEmpty;
+
+  const isShown = !isError && !isLoading && !isCategoryEmpty;
   return (
     <Container>
       <CircularLoader isLoading={isLoading} />
-      {!isError && !isLoading && (
       <Box display="flex" flexDirection="column" sx={{ mt: 3 }}>
         <NavigateBack />
-        {isCategoryEmpty && (
+        {isShownEmpty && (
         <>
           <Typography>
             {category.name}
-            {' ('}
-            {category.numberOfProducts}
-            )
+            {' '}
+            {`(${category.numberOfProducts})`}
           </Typography>
           <Typography variant="h6" align="center">
             Нету созданных товаров
@@ -70,13 +72,12 @@ export function RestaurantProductsListLaptop() {
         </>
         )}
 
-        {!isCategoryEmpty && (
+        {isShown && (
           <>
             <Typography variant="h6">
               {category.name}
-              {' ('}
-              {category.numberOfProducts}
-              )
+              {' '}
+              {`(${category.numberOfProducts})`}
             </Typography>
             <BoxStyle>
               <Button variant="contained" size="large" onClick={() => setAddDish(true)}>
@@ -97,7 +98,6 @@ export function RestaurantProductsListLaptop() {
           </>
         )}
       </Box>
-      )}
     </Container>
   );
 }

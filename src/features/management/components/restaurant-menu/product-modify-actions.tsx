@@ -24,30 +24,24 @@ export function RestaurantProductModifyActions({
   const isLaptop = useResponsive('up', 'sm');
   return (
     <>
-      {
-      isLaptop
-        && (
-          <ModifyActionPopover
-            open={open}
-            setOpen={setOpen}
-            setOpenEdit={setOpenEditProduct}
-            setOpenDelete={setOpenDeleteProduct}
-            anchorEl={anchorEl}
-          />
-        )
-}
-      {
-      !isLaptop
-       && (
-       <ModifyActionBottomDrawer
-         open={open}
-         setOpen={setOpen}
-         setOpenDelete={setOpenDeleteProduct}
-         setOpenEdit={setOpenEditProduct}
-         title={product.name}
-       />
-       )
-        }
+      { isLaptop && (
+      <ModifyActionPopover
+        open={open}
+        setOpen={setOpen}
+        setOpenEdit={setOpenEditProduct}
+        setOpenDelete={setOpenDeleteProduct}
+        anchorEl={anchorEl}
+      />
+      )}
+      { !isLaptop && (
+      <ModifyActionBottomDrawer
+        open={open}
+        setOpen={setOpen}
+        setOpenDelete={setOpenDeleteProduct}
+        setOpenEdit={setOpenEditProduct}
+        title={product.name}
+      />
+      )}
       <RestaurantProductDelete
         openDeleteProduct={openDeleteProduct}
         onCloseDeleteProduct={() => setOpenDeleteProduct(false)}

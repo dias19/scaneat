@@ -11,13 +11,13 @@ import { useResponsive } from '~/hooks/useResponsive';
 import { Product, ProductFormData } from '../../types';
 import { RestaurantProductForm } from './product-form';
 
-type EditDishProps={
-    openEditDish: boolean,
-    onCloseEditDish: VoidFunction,
-    onOpenEditDish: VoidFunction,
-    title: string,
-   product: Product,
-}
+type EditDishProps = {
+  openEditDish: boolean;
+  onCloseEditDish: VoidFunction;
+  onOpenEditDish: VoidFunction;
+  title: string;
+  product: Product;
+};
 
 export function RestaurantProductEdit({
   openEditDish,
@@ -32,7 +32,7 @@ export function RestaurantProductEdit({
 
   const restaurantId = parseInt(parameters.restaurantId as string, 10);
 
-  const onSubmit = async (data:ProductFormData) => {
+  const handleSubmit = async (data: ProductFormData) => {
     await editProduct({ restaurantId, productId: product.id, ...data });
     onCloseEditDish();
   };
@@ -40,44 +40,26 @@ export function RestaurantProductEdit({
   const isLaptop = useResponsive('up', 'sm');
   return (
     <>
-      {
-      !isLaptop && (
-      <BottomDrawerStyle
-        open={openEditDish}
-        onClose={onCloseEditDish}
-        onOpen={onOpenEditDish}
-        title={title}
-        hasCloser
-      >
-        <Box display="flex" flexDirection="column" sx={{ height: '100%' }}>
-          <RestaurantProductForm
-            product={product}
-            onSubmit={onSubmit}
-            buttonName="Редактировать"
-            setOpen={() => onCloseEditDish()}
-          />
-        </Box>
-      </BottomDrawerStyle>
-      )
-    }
-      {
-      isLaptop && (
-        <DialogForm
-          open={openEditDish}
-          onClose={onCloseEditDish}
-          onOpen={onOpenEditDish}
+      {!isLaptop && (
+        <ProductEditMobile
+          openEditDish={openEditDish}
+          onCloseEditDish={onCloseEditDish}
+          onOpenEditDish={onOpenEditDish}
           title={title}
-          hasCloser
-        >
-          <RestaurantProductForm
-            product={product}
-            onSubmit={onSubmit}
-            buttonName="Редактировать"
-            setOpen={() => onCloseEditDish()}
-          />
-        </DialogForm>
-      )
-    }
+          product={product}
+          handleSubmit={handleSubmit}
+        />
+      )}
+      {isLaptop && (
+        <ProductEditLaptop
+          openEditDish={openEditDish}
+          onCloseEditDish={onCloseEditDish}
+          onOpenEditDish={onOpenEditDish}
+          title={title}
+          product={product}
+          handleSubmit={handleSubmit}
+        />
+      )}
     </>
   );
 }
@@ -87,3 +69,61 @@ const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
     height: `calc(100% - ${theme.spacing(3)})`,
   },
 }));
+
+type EditProps = EditDishProps & {
+  handleSubmit: (data: ProductFormData) => void;
+};
+
+function ProductEditLaptop({
+  openEditDish,
+  onCloseEditDish,
+  onOpenEditDish,
+  title,
+  product,
+  handleSubmit,
+}: EditProps) {
+  return (
+    <DialogForm
+      open={openEditDish}
+      onClose={onCloseEditDish}
+      onOpen={onOpenEditDish}
+      title={title}
+      hasCloser
+    >
+      <RestaurantProductForm
+        product={product}
+        onSubmit={handleSubmit}
+        buttonName="Редактировать"
+        setOpen={() => onCloseEditDish()}
+      />
+    </DialogForm>
+  );
+}
+
+function ProductEditMobile({
+  openEditDish,
+  onCloseEditDish,
+  onOpenEditDish,
+  title,
+  product,
+  handleSubmit,
+}: EditProps) {
+  return (
+    <BottomDrawerStyle
+      open={openEditDish}
+      onClose={onCloseEditDish}
+      onOpen={onOpenEditDish}
+      title={title}
+      hasCloser
+    >
+      <Box display="flex" flexDirection="column" sx={{ height: '100%' }}>
+        <RestaurantProductForm
+          product={product}
+          onSubmit={handleSubmit}
+          buttonName="Редактировать"
+          setOpen={() => onCloseEditDish()}
+        />
+      </Box>
+    </BottomDrawerStyle>
+  );
+}

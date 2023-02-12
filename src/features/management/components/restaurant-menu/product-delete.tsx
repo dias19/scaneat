@@ -40,88 +40,28 @@ export function RestaurantProductDelete({
 
   return (
     <>
-      {
-      !isLaptop
-      && (
-      <BottomDrawer
-        open={openDeleteProduct}
-        onClose={onCloseDeleteProduct}
-        onOpen={onOpenDeleteProduct}
-        title={title}
-        hasCloser
-      >
-        <Box display="flex" flexDirection="column">
-          <Typography variant="subtitle2">
-            Вы уверены что хотите удалить блюдо
-            {' '}
-            {title}
-            ?
-
-          </Typography>
-          <Typography variant="caption" component="p" color="grey.600" sx={{ mb: 3 }}>
-            После удалении вы не сможете вернуть это блюдо
-          </Typography>
-          <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap={1}>
-            <Button variant="outlined" sx={{ mr: 1 }} size="large" onClick={onCloseDeleteProduct}>
-              Отмена
-            </Button>
-            <Button
-              variant="contained"
-              size="large"
-              onClick={handleDelete}
-            >
-              Удалить
-            </Button>
-          </Box>
-        </Box>
-      </BottomDrawer>
-      )
-    }
-      {
-      isLaptop
-      && (
-      <DialogForm
-        open={openDeleteProduct}
-        onClose={onCloseDeleteProduct}
-        onOpen={onOpenDeleteProduct}
-        title={title}
-        hasCloser
-        maxWidth="xs"
-      >
-        <Box>
-          <Typography variant="subtitle2">
-            Вы уверены что хотите удалить блюдо
-            {' '}
-            {title}
-          </Typography>
-          <Typography variant="caption" component="p" color="grey.600" sx={{ mb: 3 }}>
-            После удалении вы не сможете вернуть это блюдо
-          </Typography>
-          <BoxButtonStyle>
-            <Button
-              variant="outlined"
-              sx={{ mr: 1 }}
-              size="large"
-              onClick={onCloseDeleteProduct}
-            >
-              Отмена
-            </Button>
-            <Button
-              variant="contained"
-              size="large"
-              onClick={handleDelete}
-              color="error"
-            >
-              Удалить
-            </Button>
-          </BoxButtonStyle>
-        </Box>
-      </DialogForm>
-      )
-    }
+      {!isLaptop && (
+        <RestaurantProductDeleteMobile
+          openDeleteProduct={openDeleteProduct}
+          onCloseDeleteProduct={onCloseDeleteProduct}
+          onOpenDeleteProduct={onOpenDeleteProduct}
+          title={title}
+          handleDelete={handleDelete}
+        />
+      )}
+      {isLaptop && (
+        <RestaurantProductDeleteLaptop
+          openDeleteProduct={openDeleteProduct}
+          onCloseDeleteProduct={onCloseDeleteProduct}
+          onOpenDeleteProduct={onOpenDeleteProduct}
+          title={title}
+          handleDelete={handleDelete}
+        />
+      )}
     </>
   );
 }
+
 const BoxButtonStyle = styled(Box)(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
@@ -132,3 +72,89 @@ const BoxButtonStyle = styled(Box)(({ theme }) => ({
     justifyContent: 'end',
   },
 }));
+
+type DeleteProps = Pick<
+  DeleteDishProps,
+  'onCloseDeleteProduct' |
+  'title' |
+  'openDeleteProduct' |
+  'onOpenDeleteProduct'
+> & {
+  handleDelete: VoidFunction;
+};
+
+function RestaurantProductDeleteLaptop({
+  openDeleteProduct,
+  onCloseDeleteProduct,
+  onOpenDeleteProduct,
+  title,
+  handleDelete,
+}: DeleteProps) {
+  return (
+    <DialogForm
+      open={openDeleteProduct}
+      onClose={onCloseDeleteProduct}
+      onOpen={onOpenDeleteProduct}
+      title={title}
+      hasCloser
+      maxWidth="xs"
+    >
+      <Box>
+        <Typography variant="subtitle2">
+          Вы уверены что хотите удалить блюдо
+          {' '}
+          {title}
+        </Typography>
+        <Typography variant="caption" component="p" color="grey.600" sx={{ mb: 3 }}>
+          После удалении вы не сможете вернуть это блюдо
+        </Typography>
+        <BoxButtonStyle>
+          <Button variant="outlined" sx={{ mr: 1 }} size="large" onClick={onCloseDeleteProduct}>
+            Отмена
+          </Button>
+          <Button variant="contained" size="large" onClick={handleDelete} color="error">
+            Удалить
+          </Button>
+        </BoxButtonStyle>
+      </Box>
+    </DialogForm>
+  );
+}
+
+function RestaurantProductDeleteMobile({
+  openDeleteProduct,
+  onCloseDeleteProduct,
+  onOpenDeleteProduct,
+  title,
+  handleDelete,
+}: DeleteProps) {
+  return (
+    <BottomDrawer
+      open={openDeleteProduct}
+      onClose={onCloseDeleteProduct}
+      onOpen={onOpenDeleteProduct}
+      title={title}
+      hasCloser
+    >
+      <Box display="flex" flexDirection="column">
+        <Typography variant="subtitle2">
+          Вы уверены что хотите удалить блюдо
+          {' '}
+          {title}
+          ?
+        </Typography>
+        <Typography variant="caption" component="p" color="grey.600" sx={{ mb: 3 }}>
+          После удалении вы не сможете вернуть это блюдо
+        </Typography>
+        <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap={1}>
+          <Button variant="outlined" sx={{ mr: 1 }} size="large" onClick={onCloseDeleteProduct}>
+            Отмена
+          </Button>
+          <Button variant="contained" size="large" onClick={handleDelete}>
+            Удалить
+          </Button>
+        </Box>
+      </Box>
+    </BottomDrawer>
+  );
+}

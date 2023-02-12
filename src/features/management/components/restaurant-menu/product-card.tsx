@@ -23,7 +23,7 @@ export function RestaurantProductCard({ product }: ItemCardProps) {
   const isLaptop = useResponsive('up', 'sm');
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    if (isLaptop && e.target instanceof Element) setAnchorEl(e.target);
+    if (isLaptop) setAnchorEl(e.target as Element);
     setActiveMore(true);
   };
   return (
@@ -33,11 +33,6 @@ export function RestaurantProductCard({ product }: ItemCardProps) {
           <ImageStyle
             url={product.originalUrl}
             alt={product.name}
-            style={{
-              height: 96,
-              width: 96,
-              marginRight: 16,
-            }}
           />
           <Box display="flex" flexDirection="column" flexGrow={1}>
             <Box
@@ -45,40 +40,30 @@ export function RestaurantProductCard({ product }: ItemCardProps) {
               alignItems="center"
               sx={{ justifyContent: 'space-between' }}
             >
-              <Typography
+              <TypographyOneLineStyle
                 variant="h6"
-                sx={{
-                  display: '-webkit-box',
-                  overflow: 'hidden',
-                  WebkitBoxOrient: 'vertical',
-                  WebkitLineClamp: 1,
-                }}
               >
                 {product.name}
 
-              </Typography>
-              <IconButton onClick={handleClick}>
+              </TypographyOneLineStyle>
+              <IconButton onClick={handleClick} sx={{ padding: 0 }}>
                 <Iconify
                   icon="material-symbols:more-vert"
                   sx={{ width: 24, height: 24, color: 'grey.700' }}
                 />
               </IconButton>
             </Box>
-            <Typography
+            <TypographyOneLineStyle
               variant="caption"
               component="p"
-              color="grey.600"
               sx={{
-                flexGrow: 1,
-                display: '-webkit-box',
-                overflow: 'hidden',
-                WebkitBoxOrient: 'vertical',
                 WebkitLineClamp: 2,
+                marginTop: 1.5,
               }}
             >
               {product.description}
-            </Typography>
-            <Typography variant="body2" component="p">
+            </TypographyOneLineStyle>
+            <Typography variant="body2" sx={{ mt: 0.5 }}>
               {product.price}
             </Typography>
           </Box>
@@ -94,11 +79,6 @@ export function RestaurantProductCard({ product }: ItemCardProps) {
   );
 }
 
-const ImageStyle = styled(Image)({
-  width: 96,
-  height: 96,
-});
-
 const CardContentStyle = styled(CardContent)(({ theme }) => ({
   display: 'flex',
   padding: theme.spacing(2),
@@ -112,4 +92,17 @@ const CardStyle = styled(Card)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     marginBottom: 0,
   },
+}));
+
+const TypographyOneLineStyle = styled(Typography)({
+  display: '-webkit-box',
+  overflow: 'hidden',
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 1,
+}) as typeof Typography;
+
+const ImageStyle = styled(Image)(({ theme }) => ({
+  height: 96,
+  minWidth: 96,
+  marginRight: theme.spacing(2),
 }));
