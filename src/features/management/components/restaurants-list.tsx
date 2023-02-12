@@ -15,10 +15,14 @@ export function RestaurantsList() {
     .endpoints.getRestaurants.useQuery('accepted');
 
   const isLaptop = useResponsive('up', 'sm');
+
+  const isShownMobile = !isLoading && !isError && !isLaptop;
+
+  const isShownLaptop = !isLoading && !isError && isLaptop;
   return (
     <>
       <CircularLoader isLoading={isLoading} />
-      {(!isLoading && !isError && !isLaptop)
+      {isShownMobile
      && (
      <BoxStyle>
        <Typography variant="h6" sx={{ marginBottom: 3 }}>
@@ -31,7 +35,7 @@ export function RestaurantsList() {
        </BoxRestaurantStyle>
      </BoxStyle>
      )}
-      {(!isLoading && !isError && isLaptop)
+      {isShownLaptop
      && (
      <Container>
        <Typography sx={{ mt: 8, mb: 5 }} variant="subtitle1">

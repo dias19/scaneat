@@ -20,6 +20,7 @@ type Props = DialogProps & {
   onClose: VoidFunction;
   hasCloser: boolean;
 };
+
 export function DialogForm({
   open, onClose, children, title, onOpen, hasCloser, ...drawerProps
 }: Props) {
