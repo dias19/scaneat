@@ -5,17 +5,19 @@ import { useParams } from 'react-router-dom';
 
 import productsApi from '~/api/products/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
+import { DialogForm } from '~/components/Dialog';
+import { useResponsive } from '~/hooks/useResponsive';
 
-import { ProductData, ProductFormData } from '../../types';
+import { Product, ProductFormData } from '../../types';
 import { RestaurantProductForm } from './product-form';
 
-type EditDishProps={
-    openEditDish: boolean,
-    onCloseEditDish: VoidFunction,
-    onOpenEditDish: VoidFunction,
-    title?: string,
-   product: ProductData,
-}
+type EditDishProps = {
+  openEditDish: boolean;
+  onCloseEditDish: VoidFunction;
+  onOpenEditDish: VoidFunction;
+  title: string;
+  product: Product;
+};
 
 export function RestaurantProductEdit({
   openEditDish,
@@ -30,11 +32,82 @@ export function RestaurantProductEdit({
 
   const restaurantId = parseInt(parameters.restaurantId as string, 10);
 
-  const onSubmit = async (data:ProductFormData) => {
+  const handleSubmit = async (data: ProductFormData) => {
     await editProduct({ restaurantId, productId: product.id, ...data });
     onCloseEditDish();
   };
 
+  const isLaptop = useResponsive('up', 'sm');
+  return (
+    <>
+      {!isLaptop && (
+        <ProductEditMobile
+          openEditDish={openEditDish}
+          onCloseEditDish={onCloseEditDish}
+          onOpenEditDish={onOpenEditDish}
+          title={title}
+          product={product}
+          handleSubmit={handleSubmit}
+        />
+      )}
+      {isLaptop && (
+        <ProductEditLaptop
+          openEditDish={openEditDish}
+          onCloseEditDish={onCloseEditDish}
+          onOpenEditDish={onOpenEditDish}
+          title={title}
+          product={product}
+          handleSubmit={handleSubmit}
+        />
+      )}
+    </>
+  );
+}
+
+const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
+  '.MuiDrawer-paper': {
+    height: `calc(100% - ${theme.spacing(3)})`,
+  },
+}));
+
+type EditProps = EditDishProps & {
+  handleSubmit: (data: ProductFormData) => void;
+};
+
+function ProductEditLaptop({
+  openEditDish,
+  onCloseEditDish,
+  onOpenEditDish,
+  title,
+  product,
+  handleSubmit,
+}: EditProps) {
+  return (
+    <DialogForm
+      open={openEditDish}
+      onClose={onCloseEditDish}
+      onOpen={onOpenEditDish}
+      title={title}
+      hasCloser
+    >
+      <RestaurantProductForm
+        product={product}
+        onSubmit={handleSubmit}
+        buttonName="Редактировать"
+        setOpen={() => onCloseEditDish()}
+      />
+    </DialogForm>
+  );
+}
+
+function ProductEditMobile({
+  openEditDish,
+  onCloseEditDish,
+  onOpenEditDish,
+  title,
+  product,
+  handleSubmit,
+}: EditProps) {
   return (
     <BottomDrawerStyle
       open={openEditDish}
@@ -46,7 +119,7 @@ export function RestaurantProductEdit({
       <Box display="flex" flexDirection="column" sx={{ height: '100%' }}>
         <RestaurantProductForm
           product={product}
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
           buttonName="Редактировать"
           setOpen={() => onCloseEditDish()}
         />
@@ -54,9 +127,3 @@ export function RestaurantProductEdit({
     </BottomDrawerStyle>
   );
 }
-
-const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
-  '.MuiDrawer-paper': {
-    height: `calc(100% - ${theme.spacing(3)})`,
-  },
-}));

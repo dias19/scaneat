@@ -6,6 +6,8 @@ import styled from 'styled-components';
 
 import productsApi from '~/api/products/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
+import { DialogForm } from '~/components/Dialog';
+import { useResponsive } from '~/hooks/useResponsive';
 
 import { ProductFormData } from '../../types';
 import { RestaurantProductForm } from './product-form';
@@ -25,15 +27,76 @@ export function RestaurantProductAdd({ open, setOpen, category }: AddProductProp
 
   const categoryId = parseInt(parameters.categoryId as string, 10);
 
-  const onSubmit = async (data: ProductFormData) => {
+  const isLaptop = useResponsive('up', 'sm');
+
+  const handleAdd = async (data: ProductFormData) => {
+    const { photoUrl, ...productData } = data;
+
     await addProduct({
       restaurantId,
       categoryId,
-      ...data,
+      ...productData,
     });
     setOpen(false);
   };
 
+  return (
+    <>
+      {!isLaptop && (
+        <ProductAddMobile
+          open={open}
+          setOpen={setOpen}
+          category={category}
+          handleAdd={handleAdd}
+        />
+      )}
+
+      {isLaptop && (
+        <ProductAddLaptop
+          open={open}
+          setOpen={setOpen}
+          handleAdd={handleAdd}
+        />
+      )}
+    </>
+  );
+}
+const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
+  '.MuiDrawer-paper': {
+    height: `calc(100% - ${theme.spacing(3)})`,
+  },
+}));
+
+type AddPropsLaptop=Pick<AddProductProp, 'open' | 'setOpen'> & {
+  handleAdd: (data:ProductFormData) => void
+}
+
+function ProductAddLaptop({
+  open,
+  setOpen,
+  handleAdd,
+}:AddPropsLaptop) {
+  return (
+    <DialogForm
+      open={open}
+      onClose={() => setOpen(false)}
+      onOpen={() => setOpen(true)}
+      title="Добавить блюдо"
+      hasCloser
+    >
+      <RestaurantProductForm onSubmit={handleAdd} setOpen={setOpen} buttonName="Создать" />
+    </DialogForm>
+  );
+}
+
+type AddPropsMobile=AddProductProp & Pick<AddPropsLaptop, 'handleAdd'>
+
+function ProductAddMobile({
+  open,
+  setOpen,
+  category,
+  handleAdd,
+}:AddPropsMobile) {
   return (
     <BottomDrawerStyle
       open={open}
@@ -52,18 +115,9 @@ export function RestaurantProductAdd({ open, setOpen, category }: AddProductProp
           Заполните поля для нового блюда
         </Typography>
         <Box sx={{ flexGrow: 1 }}>
-          <RestaurantProductForm
-            setOpen={setOpen}
-            onSubmit={onSubmit}
-            buttonName="Создать"
-          />
+          <RestaurantProductForm setOpen={setOpen} onSubmit={handleAdd} buttonName="Создать" />
         </Box>
       </Box>
     </BottomDrawerStyle>
   );
 }
-const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
-  '.MuiDrawer-paper': {
-    height: `calc(100% - ${theme.spacing(3)})`,
-  },
-}));

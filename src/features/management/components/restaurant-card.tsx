@@ -18,16 +18,11 @@ export function RestaurantCard({ restaurant }: Props) {
     <Card>
       <CardActionArea component={Link} to={PATH_MANAGEMENT.restaurantDetails(restaurant.slug)}>
         <CardContentStyle>
-          <Image
+          <ImageStyle
             url={restaurant.originalUrl}
             alt={restaurant.name}
-            style={{
-              height: 96,
-              width: 96,
-              marginRight: 16,
-            }}
           />
-          <Box>
+          <Box sx={{ flexGrow: 1 }}>
             <Typography variant="h6">{restaurant.name}</Typography>
             <Typography variant="caption" sx={{ color: 'grey.600' }} component="p">
               {restaurant.address}
@@ -45,4 +40,11 @@ const CardContentStyle = styled(CardContent)(({ theme }) => ({
   minHeight: 128,
   padding: theme.spacing(2),
   display: 'flex',
+}));
+
+const ImageStyle = styled(Image)(({ theme }) => ({
+  height: 96,
+  width: 96,
+  marginRight: theme.spacing(2),
+  flexShrink: 0,
 }));

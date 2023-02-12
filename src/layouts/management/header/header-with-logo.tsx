@@ -3,11 +3,21 @@ import React from 'react';
 import { Box, styled } from '@mui/material';
 
 import { Logo } from '~/assets/logo';
+import { useResponsive } from '~/hooks/useResponsive';
+
+import { ManagementTopbarNavigation } from './topbar-navigation-management';
 
 export function LogoHeader() {
+  const isLaptop = useResponsive('up', 'sm');
   return (
     <BoxStyle>
       <Logo />
+      {
+        isLaptop
+        && (
+          <ManagementTopbarNavigation />
+        )
+      }
     </BoxStyle>
   );
 }

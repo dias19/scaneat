@@ -1,16 +1,5 @@
-export interface Product {
-  name: string;
-  id: number;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-  price: number;
-  restaurantId: number;
-  categoryId: number;
-  originalUrl: string;
-  photoId: number;
-  isDeleted: boolean;
-}
+import { Product } from '~/features/management';
+
 export type GetProductsResponse = Product[];
 
 export interface AddProductRequest {

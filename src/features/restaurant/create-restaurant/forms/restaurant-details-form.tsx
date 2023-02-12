@@ -4,6 +4,7 @@ import {
   Box, Button, Stack, Typography, styled,
 } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import miscApi from '~/api/misc/api';
 import { RHFSelect, RHFSwitch, RHFTextField } from '~/components/hook-form';
@@ -45,6 +46,9 @@ export function RestaurantDetailsForm({ handleBack, handleNext }: FormProps) {
   const photoUrl = watch('restaurant.photoUrl');
 
   const goNext = () => {
+    if (!isPhotoUploaded) {
+      toast.warning('Выберите пожалуйста фото');
+    }
     handleNext('restaurant');
   };
 

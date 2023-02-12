@@ -44,17 +44,15 @@ export function PostPhoto({
     setValue(photoUrlPath, originalUrl);
   }
 
+  const isPhotoShown = isPhotoUploaded && !isLoading;
+
+  const isPhotoDefault = !isPhotoUploaded && !isLoading;
   return (
     <Box display="flex">
-      {!isPhotoUploaded && !isLoading && <AvatarStyle alt="Photo" />}
+      {isPhotoDefault && <AvatarStyle alt="Photo" />}
       {isLoading && <CircularProgress sx={{ mr: 2 }} />}
-      {(isPhotoUploaded && !isLoading) && (
-        <Image
-          style={{
-            height: 82,
-            width: 82,
-            marginRight: 16,
-          }}
+      {isPhotoShown && (
+        <ImageStyle
           url={photoUrl}
           alt="Продукт"
         />
@@ -87,5 +85,11 @@ const AvatarStyle = styled(Avatar)(({ theme }) => ({
   height: 82,
   width: 82,
   borderRadius: theme.spacing(1),
+  marginRight: theme.spacing(2),
+}));
+
+const ImageStyle = styled(Image)(({ theme }) => ({
+  height: 82,
+  width: 82,
   marginRight: theme.spacing(2),
 }));

@@ -58,31 +58,23 @@ const { RestaurantStatusPending } = lazyImport(
 );
 export const ManagementRoutes = [
 
-  <Route element={<ManagementLogoLayout />} key="management-layout">
+  <Route path="profile" element={<ManagerProfilePage />} key="profile" />,
 
-    <Route path="profile" element={<ManagerProfilePage />} key="profile" />
-    ,
+  <Route path="add" element={<AddRestaurantPage />} key="add" />,
 
-    <Route path="add" element={<AddRestaurantPage />} key="add" />
-    ,
-
-    <Route path="restaurants" element={<MyRestaurantsPage />} key="restaurants" />
-    ,
-
-  </Route>,
+  <Route path="restaurants" element={<MyRestaurantsPage />} key="restaurants" />,
 
   <Route
     path="restaurants/:slug"
     element={<RestaurantDetailsPage />}
     key="restaurant-details"
   />,
-  <Route element={<ManagementStackLayout title="Меню" />} key="restaurant-menu">
-    <Route
-      path="restaurants/:restaurantId/menu"
-      element={<RestaurantMenuPage />}
-      key="restaurant-menu"
-    />
-  </Route>,
+  <Route
+    path="restaurants/:restaurantId/menu"
+    element={<RestaurantMenuPage />}
+    key="restaurant-menu"
+  />,
+
   <Route element={<ManagementStackLayout title="Заказы" />} key="restaurant-menu">
     <Route
       path="restaurants/:slug/orders"

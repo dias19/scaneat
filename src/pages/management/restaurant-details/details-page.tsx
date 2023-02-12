@@ -6,7 +6,8 @@ import restaurantApi from '~/api/restaurant/api';
 import { CircularLoader } from '~/components/Circular Loader';
 import { Page } from '~/components/Page';
 import { RestaurantDetails } from '~/features/management';
-import { ManagementStackLayout } from '~/layouts/management';
+import { useResponsive } from '~/hooks/useResponsive';
+import { ManagementLogoLayout, ManagementStackLayout } from '~/layouts/management';
 
 export function RestaurantDetailsPage() {
   const { slug } = useParams();
@@ -18,14 +19,25 @@ export function RestaurantDetailsPage() {
       skip,
     });
 
+  const isLaptop = useResponsive('up', 'sm');
+
+  const isShownLaptop = !isLoading && !isError && isLaptop;
+
+  const isShownMobile = !isLoading && !isError && !isLaptop;
   return (
     <Page title="Restaurant Details">
       <CircularLoader isLoading={isLoading} />
-      {(!isLoading && !isError)
+      {isShownMobile
        && (
        <ManagementStackLayout title={restaurant?.name}>
          <RestaurantDetails />
        </ManagementStackLayout>
+       )}
+      {isShownLaptop
+       && (
+       <ManagementLogoLayout>
+         <RestaurantDetails />
+       </ManagementLogoLayout>
        )}
     </Page>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  Box, Button, Stack,
+  Box, Button, Stack, styled,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -10,19 +10,20 @@ import * as yup from 'yup';
 import { FormProvider, RHFTextField } from '~/components/hook-form';
 import { PostPhoto } from '~/features/misc';
 
-import { ProductFormData, ProductData } from '../../types';
+import { ProductFormData, Product } from '../../types';
 
 type FormProps = {
   onSubmit: (data: ProductFormData) => void;
   setOpen: (state: boolean) => void;
   buttonName: string;
-  product?: ProductData
+  product?: Product
 };
 
 const AddDishSchema = yup.object({
   name: yup.string().required('Поля обязательное'),
   price: yup.number().required('Поля обязательное'),
   description: yup.string().required('Поля обязательное'),
+  unitPrice: yup.number().required('Поля обязательное'),
   photoId: yup.number().required(),
   photoUrl: yup.string().required(),
 });
@@ -35,6 +36,7 @@ export function RestaurantProductForm({
     price: Number(product?.price),
     description: product?.description || '',
     photoId: product?.photoId,
+    unitPrice: product?.unitPrice,
     photoUrl: product?.originalUrl || '',
   };
 
@@ -69,11 +71,12 @@ export function RestaurantProductForm({
             />
             <RHFTextField name="name" label="Название" />
             <RHFTextField name="price" label="Цена" />
+            <RHFTextField name="unitPrice" label="Себестоимость" />
             <RHFTextField name="description" label="Описание" multiline minRows={3} />
           </Stack>
         </FormProvider>
       </Box>
-      <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap={1}>
+      <BoxButtonStyle>
         <Button variant="outlined" onClick={() => setOpen(false)} size="large">
           Отменить
         </Button>
@@ -85,7 +88,17 @@ export function RestaurantProductForm({
         >
           {buttonName}
         </Button>
-      </Box>
+      </BoxButtonStyle>
     </Box>
   );
 }
+const BoxButtonStyle = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2,1fr)',
+  gap: theme.spacing(1),
+  [theme.breakpoints.up('sm')]: {
+    display: 'flex',
+    justifyContent: 'end',
+    marginTop: theme.spacing(3),
+  },
+}));
