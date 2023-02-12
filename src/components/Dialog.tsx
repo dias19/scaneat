@@ -40,14 +40,17 @@ export function DialogForm({
     </DialogStyle>
   );
 }
+
 const DialogStyle = styled(Dialog)(({ theme }) => ({
   padding: theme.spacing(2),
 }));
+
 const DialogTitleStyle = styled(DialogTitle)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(2),
 }));
+
 const DialogContent = styled(Box)(({ theme }) => ({
   paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),

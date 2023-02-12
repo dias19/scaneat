@@ -55,7 +55,6 @@ export function RestaurantCategories() {
   return (
     <>
       <CircularLoader isLoading={isLoading} />
-
       {isShownMobile && (
       <CategoryListMobile
         categories={categories}

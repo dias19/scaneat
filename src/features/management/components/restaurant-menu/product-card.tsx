@@ -89,8 +89,10 @@ const CardContentStyle = styled(CardContent)(({ theme }) => ({
 
 const CardStyle = styled(Card)(({ theme }) => ({
   marginBottom: theme.spacing(2),
+  width: 'auto',
   [theme.breakpoints.up('sm')]: {
     marginBottom: 0,
+    width: 'auto',
   },
 }));
 
@@ -103,6 +105,7 @@ const TypographyOneLineStyle = styled(Typography)({
 
 const ImageStyle = styled(Image)(({ theme }) => ({
   height: 96,
-  minWidth: 96,
+  width: 96,
   marginRight: theme.spacing(2),
+  flexShrink: 0,
 }));

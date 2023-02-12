@@ -46,4 +46,5 @@ const ImageStyle = styled(Image)(({ theme }) => ({
   height: 96,
   width: 96,
   marginRight: theme.spacing(2),
+  flexShrink: 0,
 }));
