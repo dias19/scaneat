@@ -19,60 +19,27 @@ export function RestaurantCategoryAdd({
   open, setOpen, handleAdd,
 }: AddCategoryProps) {
   const isLaptop = useResponsive('up', 'sm');
-
   return (
     <>
       {
       !isLaptop
       && (
-        <BottomDrawerStyle
-          onClose={() => setOpen(false)}
-          onOpen={() => setOpen(true)}
+        <CategoryAddMobile
           open={open}
-          title="Создать категорию"
-          hasCloser
-        >
-          <Box display="flex" flexDirection="column" height="100%">
-            <Typography variant="subtitle2">Создайте категорию</Typography>
-            <Typography variant="body2" color="grey.600">
-              Укажите название категории
-            </Typography>
-            <Box sx={{ flexGrow: 1, mt: 2 }}>
-              <RestaurantCategoryForm
-                buttonTitle="Создать"
-                setOpen={setOpen}
-                onSubmit={handleAdd}
-              />
-            </Box>
-          </Box>
-        </BottomDrawerStyle>
+          setOpen={setOpen}
+          handleAdd={handleAdd}
+        />
+
       )
     }
       {
       isLaptop
       && (
-        <DialogForm
+        <CategoryAddLaptop
           open={open}
-          onClose={() => setOpen(false)}
-          onOpen={() => setOpen(true)}
-          title="Создать категорию"
-          hasCloser
-          maxWidth="sm"
-        >
-          <Box display="flex" flexDirection="column" height="100%">
-            <Typography variant="subtitle2">Создайте категорию</Typography>
-            <Typography variant="body2" color="grey.600">
-              Укажите название категории
-            </Typography>
-            <Box sx={{ flexGrow: 1, mt: 2 }}>
-              <RestaurantCategoryForm
-                buttonTitle="Создать"
-                setOpen={setOpen}
-                onSubmit={handleAdd}
-              />
-            </Box>
-          </Box>
-        </DialogForm>
+          setOpen={setOpen}
+          handleAdd={handleAdd}
+        />
       )
     }
     </>
@@ -84,3 +51,64 @@ const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
     height: `calc(100% - ${theme.spacing(3)})`,
   },
 }));
+
+function CategoryAddMobile({
+  open,
+  setOpen,
+  handleAdd,
+}:AddCategoryProps) {
+  return (
+    <BottomDrawerStyle
+      onClose={() => setOpen(false)}
+      onOpen={() => setOpen(true)}
+      open={open}
+      title="Создать категорию"
+      hasCloser
+    >
+      <Box display="flex" flexDirection="column" height="100%">
+        <Typography variant="subtitle2">Создайте категорию</Typography>
+        <Typography variant="body2" color="grey.600">
+          Укажите название категории
+        </Typography>
+        <Box sx={{ flexGrow: 1, mt: 2 }}>
+          <RestaurantCategoryForm
+            buttonTitle="Создать"
+            setOpen={setOpen}
+            onSubmit={handleAdd}
+          />
+        </Box>
+      </Box>
+    </BottomDrawerStyle>
+  );
+}
+
+function CategoryAddLaptop({
+  open,
+  setOpen,
+  handleAdd,
+}:AddCategoryProps) {
+  return (
+    <DialogForm
+      open={open}
+      onClose={() => setOpen(false)}
+      onOpen={() => setOpen(true)}
+      title="Создать категорию"
+      hasCloser
+      maxWidth="sm"
+    >
+      <Box display="flex" flexDirection="column" height="100%">
+        <Typography variant="subtitle2">Создайте категорию</Typography>
+        <Typography variant="body2" color="grey.600">
+          Укажите название категории
+        </Typography>
+        <Box sx={{ flexGrow: 1, mt: 2 }}>
+          <RestaurantCategoryForm
+            buttonTitle="Создать"
+            setOpen={setOpen}
+            onSubmit={handleAdd}
+          />
+        </Box>
+      </Box>
+    </DialogForm>
+  );
+}

@@ -54,9 +54,8 @@ export function CategoryCard({
           <CardContentStyle>
             <Typography>
               {category.name}
-              {' ('}
-              {category.numberOfProducts}
-              )
+              {' '}
+              {`(${category.numberOfProducts})`}
             </Typography>
             <Box
               sx={{

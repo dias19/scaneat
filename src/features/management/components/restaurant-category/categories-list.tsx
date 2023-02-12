@@ -14,7 +14,7 @@ import { CircularLoader } from '~/components/Circular Loader';
 import { useResponsive } from '~/hooks/useResponsive';
 import { BOTTOM_NAVIGATION } from '~/layouts/management/constants';
 
-import { CategoryFormData } from '../../types';
+import { Category, CategoryFormData } from '../../types';
 import { NavigateBack } from '../navigate-back';
 import { RestaurantCategoryAdd } from './category-add';
 import { CategoryCard } from './category-card';
@@ -35,7 +35,12 @@ export function RestaurantCategories() {
   } = categoryApi.endpoints.getCategories.useQuery(Number(restaurantId), {
     skip,
   });
+
   const isLaptop = useResponsive('up', 'sm');
+
+  const isShownLaptop = !isError && !isLoading && isLaptop;
+
+  const isShownMobile = !isError && !isLoading && !isLaptop;
 
   const handleAdd = async (data:CategoryFormData) => {
     await addCategory({
@@ -50,51 +55,25 @@ export function RestaurantCategories() {
   return (
     <>
       <CircularLoader isLoading={isLoading} />
-      {(!isError && !isLoading && !isLaptop) && (
-      <BoxStyle>
-        {categories.filter((category) => !category.isDeleted).map((category) => (
-          <CategoryCard
-            key={category.id}
-            category={category}
-            restaurantId={restaurantId}
-          />
-        ))}
-        <BoxButtonStyle>
-          <Button variant="contained" size="large" onClick={() => setAddOpen(true)}>
-            Добавить Категорию
-          </Button>
-        </BoxButtonStyle>
-        <RestaurantCategoryAdd
-          open={addOpen}
-          setOpen={setAddOpen}
+
+      {isShownMobile && (
+      <CategoryListMobile
+        categories={categories}
+        addOpen={addOpen}
+        setAddOpen={setAddOpen}
+        restaurantId={restaurantId}
+        handleAdd={handleAdd}
+      />
+      )}
+
+      {isShownLaptop && (
+        <CategoryListLaptop
+          categories={categories}
+          addOpen={addOpen}
+          setAddOpen={setAddOpen}
+          restaurantId={restaurantId}
           handleAdd={handleAdd}
         />
-      </BoxStyle>
-      )}
-      {(!isError && !isLoading && isLaptop) && (
-        <Container sx={{ mt: 3 }}>
-          <NavigateBack />
-          <Typography variant="h6" sx={{ mb: 3 }}>
-            Категории меню
-          </Typography>
-          <Button variant="contained" size="large" onClick={() => setAddOpen(true)}>
-            Добавить Категорию
-          </Button>
-          <Box sx={{ mt: 3, width: 358 }}>
-            {categories.filter((category) => !category.isDeleted).map((category) => (
-              <CategoryCard
-                key={category.id}
-                category={category}
-                restaurantId={restaurantId}
-              />
-            ))}
-            <RestaurantCategoryAdd
-              open={addOpen}
-              setOpen={setAddOpen}
-              handleAdd={handleAdd}
-            />
-          </Box>
-        </Container>
       )}
     </>
   );
@@ -115,3 +94,77 @@ const BoxStyle = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(4),
   borderRadius: theme.spacing(1),
 }));
+
+type CategoryProps={
+  categories: Category[],
+  setAddOpen: (state: boolean) => void,
+  addOpen: boolean,
+  handleAdd: (data: CategoryFormData) => void,
+  restaurantId: number,
+}
+
+function CategoryListLaptop({
+  categories,
+  setAddOpen,
+  addOpen,
+  handleAdd,
+  restaurantId,
+}:CategoryProps) {
+  return (
+    <Container sx={{ mt: 3 }}>
+      <NavigateBack />
+      <Typography variant="h6" sx={{ mb: 3 }}>
+        Категории меню
+      </Typography>
+      <Button variant="contained" size="large" onClick={() => setAddOpen(true)}>
+        Добавить Категорию
+      </Button>
+      <Box sx={{ mt: 3, width: 358 }}>
+        {categories.filter((category) => !category.isDeleted).map((category) => (
+          <CategoryCard
+            key={category.id}
+            category={category}
+            restaurantId={restaurantId}
+          />
+        ))}
+        <RestaurantCategoryAdd
+          open={addOpen}
+          setOpen={setAddOpen}
+          handleAdd={handleAdd}
+        />
+      </Box>
+    </Container>
+  );
+}
+
+function CategoryListMobile(
+  {
+    categories,
+    setAddOpen,
+    addOpen,
+    handleAdd,
+    restaurantId,
+  }:CategoryProps,
+) {
+  return (
+    <BoxStyle>
+      {categories.filter((category) => !category.isDeleted).map((category) => (
+        <CategoryCard
+          key={category.id}
+          category={category}
+          restaurantId={restaurantId}
+        />
+      ))}
+      <BoxButtonStyle>
+        <Button variant="contained" size="large" onClick={() => setAddOpen(true)}>
+          Добавить Категорию
+        </Button>
+      </BoxButtonStyle>
+      <RestaurantCategoryAdd
+        open={addOpen}
+        setOpen={setAddOpen}
+        handleAdd={handleAdd}
+      />
+    </BoxStyle>
+  );
+}

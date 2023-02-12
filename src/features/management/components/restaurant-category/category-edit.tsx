@@ -15,7 +15,7 @@ type CategoryEditProps = {
   editOpen: boolean;
   setEditOpen: (state: boolean) => void;
   category: Category;
-  setActionsOpen: (state: boolean) => void,
+  setActionsOpen: (state: boolean) => void;
 };
 
 export function RestaurantCategoryEdit({
@@ -32,7 +32,7 @@ export function RestaurantCategoryEdit({
 
   const restaurantId = parseInt(parameters.restaurantId as string, 10);
 
-  async function onSubmit(data: CategoryFormData) {
+  const handleCategoryEdit = async (data: CategoryFormData) => {
     await editCategory({
       restaurantId,
       categoryId: category.id,
@@ -41,59 +41,84 @@ export function RestaurantCategoryEdit({
     });
     setEditOpen(false);
     setActionsOpen(false);
-  }
+  };
   return (
     <>
-      {
-      !isLaptop
-      && (
-      <BottomDrawerStyle
-        open={editOpen}
-        onClose={() => setEditOpen(false)}
-        onOpen={() => setEditOpen(true)}
-        title={category.name}
-        hasCloser
-      >
-        <RestaurantCategoryForm
-          onSubmit={(data: CategoryFormData) => onSubmit(data)}
-          setOpen={setEditOpen}
-          buttonTitle="Редактировать"
+      {!isLaptop && (
+        <CategoryEditMobile
+          editOpen={editOpen}
+          setEditOpen={setEditOpen}
           category={category}
+          handleCategoryEdit={handleCategoryEdit}
         />
-      </BottomDrawerStyle>
-      )
-}
-      {
-  isLaptop
-  && (
-  <DialogForm
-    open={editOpen}
-    onClose={() => setEditOpen(false)}
-    onOpen={() => setEditOpen(true)}
-    title={category.name}
-    hasCloser
-    maxWidth="sm"
-  >
-    <Box display="flex" flexDirection="column" height="100%">
-      <Typography variant="subtitle2">Создайте категорию</Typography>
-      <Typography variant="body2" color="grey.600">
-        Укажите название категории
-      </Typography>
-      <Box sx={{ flexGrow: 1, mt: 2 }}>
-        <RestaurantCategoryForm
-          onSubmit={(data: CategoryFormData) => onSubmit(data)}
-          setOpen={setEditOpen}
-          buttonTitle="Редактировать"
+      )}
+      {isLaptop && (
+        <CategoryEditLaptop
+          editOpen={editOpen}
+          setEditOpen={setEditOpen}
           category={category}
+          handleCategoryEdit={handleCategoryEdit}
         />
-      </Box>
-    </Box>
-  </DialogForm>
-  )
-}
+      )}
     </>
   );
 }
+
+type EditProps = Pick<CategoryEditProps, 'category' | 'editOpen' | 'setEditOpen'> & {
+  handleCategoryEdit: (data: CategoryFormData) => void;
+};
+
+function CategoryEditLaptop({
+  editOpen, category, setEditOpen, handleCategoryEdit,
+}: EditProps) {
+  return (
+    <DialogForm
+      open={editOpen}
+      onClose={() => setEditOpen(false)}
+      onOpen={() => setEditOpen(true)}
+      title={category.name}
+      hasCloser
+      maxWidth="sm"
+    >
+      <Box display="flex" flexDirection="column" height="100%">
+        <Typography variant="subtitle2">Создайте категорию</Typography>
+        <Typography variant="body2" color="grey.600">
+          Укажите название категории
+        </Typography>
+        <Box sx={{ flexGrow: 1, mt: 2 }}>
+          <RestaurantCategoryForm
+            onSubmit={handleCategoryEdit}
+            setOpen={setEditOpen}
+            buttonTitle="Редактировать"
+            category={category}
+          />
+        </Box>
+      </Box>
+    </DialogForm>
+  );
+}
+
+function CategoryEditMobile({
+  editOpen, category, setEditOpen, handleCategoryEdit,
+}: EditProps) {
+  return (
+    <BottomDrawerStyle
+      open={editOpen}
+      onClose={() => setEditOpen(false)}
+      onOpen={() => setEditOpen(true)}
+      title={category.name}
+      hasCloser
+    >
+      <RestaurantCategoryForm
+        onSubmit={handleCategoryEdit}
+        setOpen={setEditOpen}
+        buttonTitle="Редактировать"
+        category={category}
+      />
+    </BottomDrawerStyle>
+  );
+}
+
 const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
   '.MuiDrawer-paper': {
     height: `calc(100% - ${theme.spacing(3)})`,

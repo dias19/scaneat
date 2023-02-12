@@ -24,33 +24,33 @@ export function RestaurantCategoryModifyActions({
   const isLaptop = useResponsive('up', 'sm');
   return (
     <>
-      {
-      isLaptop
-        ? (
-          <ModifyActionPopover
-            open={open}
-            setOpen={setOpen}
-            setOpenEdit={setEditOpen}
-            setOpenDelete={setDeleteOpen}
-            anchorEl={anchorEl}
-          />
-        )
-        : (
-          <ModifyActionBottomDrawer
-            open={open}
-            setOpen={setOpen}
-            setOpenDelete={setEditOpen}
-            setOpenEdit={setDeleteOpen}
-            title={category.name}
-          />
-        )
-    }
+      {isLaptop && (
+      <ModifyActionPopover
+        open={open}
+        setOpen={setOpen}
+        setOpenEdit={setEditOpen}
+        setOpenDelete={setDeleteOpen}
+        anchorEl={anchorEl}
+      />
+      )}
+
+      {!isLaptop && (
+      <ModifyActionBottomDrawer
+        open={open}
+        setOpen={setOpen}
+        setOpenDelete={setEditOpen}
+        setOpenEdit={setDeleteOpen}
+        title={category.name}
+      />
+      )}
+
       <RestaurantCategoryDelete
         category={category}
         deleteOpen={deleteOpen}
         setDeleteOpen={setDeleteOpen}
         setActionsOpen={setOpen}
       />
+
       <RestaurantCategoryEdit
         category={category}
         setEditOpen={setEditOpen}
