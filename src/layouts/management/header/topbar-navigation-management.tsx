@@ -15,7 +15,7 @@ export function ManagementTopbarNavigation() {
   return (
     <BoxStyle>
       {
-        NAVIGATION_BUTTONS.slice(0).reverse().map((button) => (
+        NAVIGATION_BUTTONS.map((button) => (
           <Typography
             key={button.route}
             sx={{

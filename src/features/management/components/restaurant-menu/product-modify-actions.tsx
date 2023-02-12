@@ -26,7 +26,7 @@ export function RestaurantProductModifyActions({
     <>
       {
       isLaptop
-        ? (
+        && (
           <ModifyActionPopover
             open={open}
             setOpen={setOpen}
@@ -35,16 +35,19 @@ export function RestaurantProductModifyActions({
             anchorEl={anchorEl}
           />
         )
-        : (
-          <ModifyActionBottomDrawer
-            open={open}
-            setOpen={setOpen}
-            setOpenDelete={setOpenDeleteProduct}
-            setOpenEdit={setOpenEditProduct}
-            title={product.name}
-          />
-        )
-    }
+}
+      {
+      !isLaptop
+       && (
+       <ModifyActionBottomDrawer
+         open={open}
+         setOpen={setOpen}
+         setOpenDelete={setOpenDeleteProduct}
+         setOpenEdit={setOpenEditProduct}
+         title={product.name}
+       />
+       )
+        }
       <RestaurantProductDelete
         openDeleteProduct={openDeleteProduct}
         onCloseDeleteProduct={() => setOpenDeleteProduct(false)}

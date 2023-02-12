@@ -25,8 +25,6 @@ export function RestaurantDetails() {
     skip,
   });
 
-  const [trigger] = restaurantApi.endpoints.getRestaurantQR.useLazyQuery();
-
   return (
     <BoxStyle>
       {

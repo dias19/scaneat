@@ -22,19 +22,17 @@ export function RestaurantMenuItemsPage() {
 
   return (
     <Page title="Menu Items">
-      {
-          !isLaptop
-            ? (
-              <ManagementStackLayout title={category.name}>
-                <RestaurantProductsListMobile />
-              </ManagementStackLayout>
-            )
-            : (
-              <ManagementLogoLayout>
-                <RestaurantProductsListLaptop />
-              </ManagementLogoLayout>
-            )
-      }
+      {!isLaptop && (
+        <ManagementStackLayout title={category.name}>
+          <RestaurantProductsListMobile />
+        </ManagementStackLayout>
+      )}
+
+      {isLaptop && (
+        <ManagementLogoLayout>
+          <RestaurantProductsListLaptop />
+        </ManagementLogoLayout>
+      )}
     </Page>
   );
 }

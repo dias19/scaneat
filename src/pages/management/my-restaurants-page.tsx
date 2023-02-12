@@ -6,10 +6,10 @@ import { ManagementLogoLayout } from '~/layouts/management';
 
 export function MyRestaurantsPage() {
   return (
-    <Page title="My Restaurants">
-      <ManagementLogoLayout>
+    <ManagementLogoLayout>
+      <Page title="My Restaurants">
         <RestaurantsList />
-      </ManagementLogoLayout>
-    </Page>
+      </Page>
+    </ManagementLogoLayout>
   );
 }

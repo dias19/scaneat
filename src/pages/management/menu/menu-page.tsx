@@ -9,13 +9,14 @@ export function RestaurantMenuPage() {
   const isLaptop = useResponsive('up', 'sm');
   return (
     <Page title="Restaurant Menu">
-      {(!isLaptop)
+      {!isLaptop
      && (
      <ManagementStackLayout title="Меню">
        <RestaurantCategories />
      </ManagementStackLayout>
      )}
-      {(isLaptop)
+
+      {isLaptop
      && (
      <ManagementLogoLayout>
        <RestaurantCategories />

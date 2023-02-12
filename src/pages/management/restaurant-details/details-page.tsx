@@ -20,16 +20,20 @@ export function RestaurantDetailsPage() {
     });
 
   const isLaptop = useResponsive('up', 'sm');
+
+  const isShownLaptop = !isLoading && !isError && isLaptop;
+
+  const isShownMobile = !isLoading && !isError && !isLaptop;
   return (
     <Page title="Restaurant Details">
       <CircularLoader isLoading={isLoading} />
-      {(!isLoading && !isError && !isLaptop)
+      {isShownMobile
        && (
        <ManagementStackLayout title={restaurant?.name}>
          <RestaurantDetails />
        </ManagementStackLayout>
        )}
-      {(!isLoading && !isError && isLaptop)
+      {isShownLaptop
        && (
        <ManagementLogoLayout>
          <RestaurantDetails />
