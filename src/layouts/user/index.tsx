@@ -11,6 +11,7 @@ const MainStyle = styled('main', {
   shouldForwardProp: (prop) => prop !== 'collapseClick',
 })(({ theme }) => ({
   paddingBottom: BOTTOM_NAVIGATION.BOTTOM_NAVIGATION_HEIGHT,
+  backgroundColor: '#F4F6F8',
   paddingTop: HEADER.HEADER_HEIGHT,
   [theme.breakpoints.up('lg')]: {
     paddingLeft: 16,

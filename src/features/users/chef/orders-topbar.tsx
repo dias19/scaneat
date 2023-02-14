@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 
 import { styled, Tab, Tabs } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { CHEF_STATUSES } from '../contants';
 
 export function ChefOrdersTopbar() {
-  const [status, setStatus] = useState(CHEF_STATUSES[0].name);
+  const { pathname } = useLocation();
+
+  const [status, setStatus] = useState(pathname);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setStatus(newValue);
@@ -21,7 +23,7 @@ export function ChefOrdersTopbar() {
       {CHEF_STATUSES.map((orderStatus) => (
         <TabStyle
           label={orderStatus.name}
-          value={orderStatus.name}
+          value={orderStatus.route}
           key={orderStatus.name}
           to={orderStatus.route}
           component={Link}
