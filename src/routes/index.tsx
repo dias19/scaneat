@@ -22,7 +22,7 @@ export function AppRoutes() {
         <Route path="/management" element={<ProtectedRoute />} key="management">
           {ManagementRoutes}
         </Route>
-        <Route path="/user" key="user">
+        <Route path="/user" element={<ProtectedRoute />} key="user">
           {UserRoutes}
         </Route>
         <Route path="*" element={<Page404 />} key="404" />

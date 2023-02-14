@@ -10,7 +10,7 @@ type OrderCardProps = {
   order: Order;
   hasButton: boolean;
   buttonTitle?: string;
-  onSubmit: VoidFunction;
+  onSubmit?: VoidFunction;
 };
 
 export function OrderCard({

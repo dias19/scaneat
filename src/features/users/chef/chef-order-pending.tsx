@@ -2,25 +2,19 @@ import React from 'react';
 
 import { Box } from '@mui/material';
 
+import ordersApi from '~/api/orders/api';
+
 import { OrderCard } from './order-card';
 
 export function ChefOrderPending() {
-  const orders = [
-    {
-      user: 'Kainar Masujima',
-      date: '12.02.23 18:36',
-      order:
-      'Заказ: Карааге 2 штук, Бургер 3 штук, Курица в белом соусе 1 штук, Пицца пеперони 1 штук ..',
-      price: '20000',
-    },
-    {
-      user: 'Kainar Masujima',
-      date: '12.02.23 18:36',
-      order:
-      'Заказ: Карааге 2 штук, Бургер 3 штук, Курица в белом соусе 1 штук, Пицца пеперони 1 штук ..',
-      price: '20000',
-    },
-  ];
+  const { data: orders = [] } = ordersApi
+    .endpoints.getChefOrders.useQuery({ restaurantId: 12, status: 'pending' });
+
+  const [editChefOrder] = ordersApi.endpoints.editChefOrder.useMutation();
+
+  const startOrder = async (id:number) => {
+    await editChefOrder({ restaurantId: 12, orderId: id, body: 'processing' });
+  };
   return (
     <Box sx={{ m: 2 }}>
       {
@@ -29,7 +23,7 @@ export function ChefOrderPending() {
          order={order}
          hasButton
          buttonTitle="В работу"
-         onSubmit={() => console.log('done')}
+         onSubmit={() => startOrder(order.id)}
        />
      ))
     }
