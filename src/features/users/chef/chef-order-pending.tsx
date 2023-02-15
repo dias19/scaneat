@@ -13,13 +13,14 @@ export function ChefOrderPending() {
   const [editChefOrder] = ordersApi.endpoints.editChefOrder.useMutation();
 
   const startOrder = async (id:number) => {
-    await editChefOrder({ restaurantId: 12, orderId: id, body: 'processing' });
+    await editChefOrder({ restaurantId: 12, orderId: id, body: { status: 'processing' } });
   };
   return (
     <Box sx={{ m: 2 }}>
       {
      orders.map((order) => (
        <OrderCard
+         key={order.id}
          order={order}
          hasButton
          buttonTitle="В работу"

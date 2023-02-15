@@ -8,7 +8,7 @@ import { OrderCard } from './order-card';
 
 export function ChefOrderDone() {
   const { data: orders = [] } = ordersApi
-    .endpoints.getChefOrders.useQuery({ restaurantId: 12, status: 'done' });
+    .endpoints.getChefOrders.useQuery({ restaurantId: 12, status: 'ready' });
   return (
     <Box sx={{ m: 2, bgcolor: '#F4F6F8;' }}>
       {
@@ -16,7 +16,6 @@ export function ChefOrderDone() {
        <OrderCard
          order={order}
          hasButton={false}
-         onSubmit={() => console.log('done')}
        />
      ))
     }

@@ -1,10 +1,10 @@
 import React from 'react';
 
 import {
-  Box, Button, Card, CardActionArea, CardContent, styled, Typography,
+  Box, Button, Card, styled, Typography,
 } from '@mui/material';
 
-import { Order } from '../type';
+import { Order, ProductsSelected } from '../type';
 
 type OrderCardProps = {
   order: Order;
@@ -16,40 +16,48 @@ type OrderCardProps = {
 export function OrderCard({
   order, hasButton, buttonTitle, onSubmit,
 }: OrderCardProps) {
+  function CheckForLastIndex(index: number, products: ProductsSelected[]) {
+    return index !== products.length - 1;
+  }
   return (
-    <Card sx={{ mb: 2 }}>
-      <CardActionArea>
-        <CardContentStyle>
-          <Box display="flex" justifyContent="space-between">
-            <Typography variant="subtitle2">{order.user}</Typography>
-            <Typography variant="caption" color="grey.600">{order.date}</Typography>
-          </Box>
-          <Typography variant="body2" color="grey.600" sx={{ mt: 0.5 }}>{order.order}</Typography>
-          <Typography variant="body2" sx={{ mt: 1 }}>
-            Итого:
+    <CardStyle>
+      <Box display="flex" justifyContent="space-between">
+        <Typography variant="subtitle2">Someone</Typography>
+        <Typography variant="caption" color="grey.600">
+          Somedate
+        </Typography>
+      </Box>
+      <Typography variant="body2" color="grey.600" sx={{ mt: 0.5 }}>
+        {order.products.map((product, index, products) => (
+          <Typography variant="caption" key={product.name}>
+            {product.name}
             {' '}
-            {order.price}
-            {' '}
-            тг
+            {product.quantity}
+            {CheckForLastIndex(index, products) ? ' штук, ' : ' штук'}
           </Typography>
-          {
-            hasButton
-            && (
-            <Box alignSelf="end">
-              <Button variant="contained" size="small" onClick={onSubmit} sx={{ px: 6 }}>
-                {buttonTitle}
-              </Button>
-            </Box>
-            )
-          }
-        </CardContentStyle>
-      </CardActionArea>
-    </Card>
+        ))}
+      </Typography>
+      <Typography variant="body2" sx={{ mt: 1 }}>
+        Итого:
+        {' '}
+        {order.total}
+        {' '}
+        тг
+      </Typography>
+      {hasButton && (
+        <Box alignSelf="end">
+          <Button variant="contained" size="small" onClick={onSubmit} sx={{ px: 6 }}>
+            {buttonTitle}
+          </Button>
+        </Box>
+      )}
+    </CardStyle>
   );
 }
 
-const CardContentStyle = styled(CardContent)(({ theme }) => ({
+const CardStyle = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   padding: theme.spacing(2),
+  marginBottom: theme.spacing(2),
 }));

@@ -19,7 +19,7 @@ const { ChefOrderDone } = lazyImport(() => import('~/features/users'), 'ChefOrde
 
 export const UserRoutes = [
   <Route path="profile" element={<ProfilePage />} key="profile" />,
-  <Route path="chef">
+  <Route path="chef" key="chef-routes">
     <Route path="orders" element={<ChefListOrdersPage />} key="chef-list-orders">
       <Route index element={<ChefOrderPending />} key="chef-list-pending" />
       ,

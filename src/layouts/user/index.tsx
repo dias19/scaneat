@@ -12,6 +12,7 @@ const MainStyle = styled('main', {
 })(({ theme }) => ({
   paddingBottom: BOTTOM_NAVIGATION.BOTTOM_NAVIGATION_HEIGHT,
   backgroundColor: '#F4F6F8',
+  height: '100vh',
   paddingTop: HEADER.HEADER_HEIGHT,
   [theme.breakpoints.up('lg')]: {
     paddingLeft: 16,

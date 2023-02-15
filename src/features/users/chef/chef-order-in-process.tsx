@@ -13,7 +13,7 @@ export function ChefOrderInProcess() {
   const [editChefOrder] = ordersApi.endpoints.editChefOrder.useMutation();
 
   const finishOrder = async (id:number) => {
-    await editChefOrder({ restaurantId: 12, orderId: id, body: 'ready' });
+    await editChefOrder({ restaurantId: 12, orderId: id, body: { status: 'ready' } });
   };
 
   return (

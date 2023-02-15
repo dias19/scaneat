@@ -1,22 +1,18 @@
-export type GetChefOrdersRequest= {
-    restaurantId: number,
-    status: string,
+import { Order } from '~/features/users';
+
+export type GetChefOrdersRequest = {
+  restaurantId: number;
+  status: string;
 };
 
-export interface OrderType{
-    user: string,
-    date: string,
-    order:string,
-    price: string,
-    id: number,
-}
+export type GetChefOrdersResponse = Order[];
 
-export type GetChefOrdersResponse= OrderType[]
+export type EditChefOrderResponse = void;
 
-export type EditChefOrderResponse=void;
-
-export interface EditChefOrderRequest{
-    restaurantId: number,
-    orderId: number,
-    body: 'idle' | 'canceled' | 'pending' | 'processing' | 'ready' | 'on_delivery' | 'completed'
+export interface EditChefOrderRequest {
+  restaurantId: number;
+  orderId: number;
+  body: {
+    status: 'idle' | 'canceled' | 'pending' | 'processing' | 'ready' | 'on_delivery' | 'completed';
+  };
 }
