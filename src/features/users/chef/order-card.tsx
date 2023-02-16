@@ -3,7 +3,6 @@ import React from 'react';
 import {
   Box, Button, Card, styled, Typography,
 } from '@mui/material';
-import moment from 'moment';
 
 import { Order, ProductsSelected } from '../type';
 
@@ -23,9 +22,9 @@ export function OrderCard({
   return (
     <CardStyle>
       <Box display="flex" justifyContent="space-between">
-        <Typography variant="subtitle2">{order.user.name}</Typography>
+        <Typography variant="subtitle2">Someone</Typography>
         <Typography variant="caption" color="grey.600">
-          {moment(order.createdAt).format('DD.MM.YYYY, HH:mm')}
+          Somedate
         </Typography>
       </Box>
       <Typography variant="body2" color="grey.600" sx={{ mt: 0.5 }}>

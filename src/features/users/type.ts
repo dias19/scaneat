@@ -15,9 +15,4 @@ export type Order ={
     status: string,
     total:string,
     type:string,
-    createdAt: string,
-    user: {
-        name: string,
-        phone: string,
-    }
 }
