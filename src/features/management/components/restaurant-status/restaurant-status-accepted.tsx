@@ -8,7 +8,8 @@ import restaurantApi from '~/api/restaurant/api';
 import { Image } from '~/components/image';
 
 export function RestaurantStatusAccepted() {
-  const { data: restaurants = [] } = restaurantApi.endpoints.getRestaurants.useQuery('accepted');
+  const { data: restaurants = [] } = restaurantApi
+    .endpoints.getRestaurantsByStatus.useQuery('accepted');
 
   const isEmpty = restaurants.length === 0;
   return (

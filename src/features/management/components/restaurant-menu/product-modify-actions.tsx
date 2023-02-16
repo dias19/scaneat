@@ -28,8 +28,8 @@ export function RestaurantProductModifyActions({
       <ModifyActionPopover
         open={open}
         setOpen={setOpen}
-        setOpenEdit={setOpenEditProduct}
-        setOpenDelete={setOpenDeleteProduct}
+        setEditOpen={setOpenEditProduct}
+        setDeleteOpen={setOpenDeleteProduct}
         anchorEl={anchorEl}
       />
       )}
@@ -37,8 +37,8 @@ export function RestaurantProductModifyActions({
       <ModifyActionBottomDrawer
         open={open}
         setOpen={setOpen}
-        setOpenDelete={setOpenDeleteProduct}
-        setOpenEdit={setOpenEditProduct}
+        setDeleteOpen={setOpenDeleteProduct}
+        setEditOpen={setOpenEditProduct}
         title={product.name}
       />
       )}

@@ -33,7 +33,7 @@ export function RestaurantDetails() {
           <Container>
             <NavigateBack />
             <Profile restaurant={restaurant} />
-            <QrCodeRestaurant />
+            <QrCodeRestaurant restaurantId={restaurant?.id} />
             <ManagementNavigation id={restaurant?.id} />
             <Box sx={{ paddingBottom: 2, overflow: 'hidden' }}>
               <RestaurantSales />

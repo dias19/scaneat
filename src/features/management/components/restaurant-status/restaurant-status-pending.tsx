@@ -9,7 +9,7 @@ import { Image } from '~/components/image';
 
 export function RestaurantStatusPending() {
   const { data: restaurants = [] } = restaurantApi
-    .endpoints.getRestaurants.useQuery('pending');
+    .endpoints.getRestaurantsByStatus.useQuery('pending');
 
   const [verifyRestaurant] = restaurantApi.endpoints.verifyRestaurant.useMutation();
 

@@ -10,7 +10,7 @@ import { Image } from '~/components/image';
 
 export function RestaurantStatusRejected() {
   const { data: restaurants = [] } = restaurantApi
-    .endpoints.getRestaurants.useQuery('rejected');
+    .endpoints.getRestaurantsByStatus.useQuery('rejected');
 
   const isEmpty = restaurants.length === 0;
 

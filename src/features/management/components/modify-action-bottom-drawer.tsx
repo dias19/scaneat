@@ -10,22 +10,22 @@ import { Iconify } from '../../../components/Iconify';
 type BottomDrawerEditProps={
     open: boolean,
     setOpen: (state: boolean)=> void,
-    setOpenEdit: (state: boolean)=> void,
-    setOpenDelete: (state: boolean)=> void,
+    setEditOpen: (state: boolean)=> void,
+    setDeleteOpen: (state: boolean)=> void,
     title: string,
 }
 
 export function ModifyActionBottomDrawer({
-  open, setOpen, setOpenEdit, setOpenDelete, title,
+  open, setOpen, setEditOpen, setDeleteOpen, title,
 }:BottomDrawerEditProps) {
   const handleEdit = () => {
     setOpen(false);
-    setOpenEdit(true);
+    setEditOpen(true);
   };
 
   const handleDelete = () => {
     setOpen(false);
-    setOpenDelete(true);
+    setDeleteOpen(true);
   };
 
   return (

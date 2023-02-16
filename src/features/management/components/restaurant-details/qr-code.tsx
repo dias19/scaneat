@@ -3,21 +3,22 @@ import React from 'react';
 import {
   Card, CardActionArea, Box, Typography, styled, CardContent,
 } from '@mui/material';
-import { useParams } from 'react-router-dom';
 
 import restaurantApi from '~/api/restaurant/api';
 import { useResponsive } from '~/hooks/useResponsive';
 
-export function QrCodeRestaurant() {
-  const { slug } = useParams();
+type QrCodeProps={
+  restaurantId?: number
+}
 
+export function QrCodeRestaurant({ restaurantId }:QrCodeProps) {
   const isLaptop = useResponsive('up', 'sm');
 
   const [trigger] = restaurantApi.endpoints.getRestaurantQR.useLazyQuery();
 
   return (
     <Card sx={{ mt: 3, width: isLaptop ? 358 : 'auto' }}>
-      <CardActionArea onClick={() => trigger(slug as string)}>
+      <CardActionArea onClick={() => trigger(restaurantId!)}>
         <CardContentStyle>
           <ImageStyle
           // eslint-disable-next-line max-len

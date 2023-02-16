@@ -19,22 +19,12 @@ export function RestaurantStatus() {
       <Box sx={{ width: '100%' }}>
         <TabsStyle value={value} onChange={handleChange} variant="fullWidth">
           {MANAGEMENT_RESTAURANT_STATUS.map((status) => (
-            <Tab
+            <TabStyle
               key={`restaurant-status-${status.name}`}
               value={status.name}
               label={status.name}
               to={status.route}
               component={Link}
-              sx={{
-                padding: 2,
-                '&:nth-child(1)': {
-                  marginRight: 0,
-                },
-                '&:nth-child(2)': {
-                  marginRight: 0,
-                },
-                fontSize: 12,
-              }}
             />
           ))}
         </TabsStyle>
@@ -48,3 +38,14 @@ const TabsStyle = styled(Tabs)({
   maxWidth: '100%',
   display: 'grid',
 });
+
+const TabStyle = styled(Tab)(({ theme }) => ({
+  padding: theme.spacing(2),
+  '&:nth-child(1)': {
+    marginRight: 0,
+  },
+  '&:nth-child(2)': {
+    marginRight: 0,
+  },
+  fontSize: 12,
+})) as typeof Tab;

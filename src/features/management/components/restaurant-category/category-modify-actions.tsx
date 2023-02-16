@@ -28,8 +28,8 @@ export function RestaurantCategoryModifyActions({
       <ModifyActionPopover
         open={open}
         setOpen={setOpen}
-        setOpenEdit={setEditOpen}
-        setOpenDelete={setDeleteOpen}
+        setEditOpen={setEditOpen}
+        setDeleteOpen={setDeleteOpen}
         anchorEl={anchorEl}
       />
       )}
@@ -38,8 +38,8 @@ export function RestaurantCategoryModifyActions({
       <ModifyActionBottomDrawer
         open={open}
         setOpen={setOpen}
-        setOpenDelete={setEditOpen}
-        setOpenEdit={setDeleteOpen}
+        setDeleteOpen={setDeleteOpen}
+        setEditOpen={setEditOpen}
         title={category.name}
       />
       )}
