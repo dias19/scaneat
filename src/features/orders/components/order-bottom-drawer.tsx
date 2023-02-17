@@ -16,6 +16,7 @@ type OrderBottomDrawerProps={
     buttonTitle?: string,
     handleSubmit?: () => void,
 }
+
 export function OrderBottomDrawer({
   order,
   open,
@@ -28,6 +29,7 @@ export function OrderBottomDrawer({
     handleSubmit?.();
     setOpen(false);
   };
+
   return (
     <BottomDrawer
       open={open}

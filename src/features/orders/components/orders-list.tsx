@@ -2,17 +2,21 @@ import React from 'react';
 
 import { Box, Typography } from '@mui/material';
 
-import ordersApi from '~/api/orders/api';
 import { CircularLoader } from '~/components/Circular Loader';
 
+import { useGetOrders } from '../hooks/useGetOrders';
+import { useOrderButtonGroup } from '../hooks/useOrderButtonGroup';
 import { OrderCard } from './order-card';
 
-export function ChefOrderDone() {
-  const {
-    data: orders = [],
-    isLoading,
-    isError,
-  } = ordersApi.endpoints.getChefOrders.useQuery({ restaurantId: 12, status: 'ready' });
+type OrdersListProps={
+  status: string,
+  onSubmit: (id: number) => void,
+}
+
+export function OrdersList({ status, onSubmit }:OrdersListProps) {
+  const { orders, isLoading, isError } = useGetOrders(status);
+
+  const { hasButtons, buttonTitle } = useOrderButtonGroup(status);
 
   const isOrdersEmpty = orders.length === 0;
 
@@ -20,15 +24,21 @@ export function ChefOrderDone() {
 
   const isShownEmpty = !isLoading && !isError && isOrdersEmpty;
 
+  const handleSubmit = (id: number) => {
+    onSubmit(id);
+  };
   return (
-    <Box sx={{ m: 2, bgcolor: '#F4F6F8;' }}>
+    <Box sx={{ m: 2 }}>
       <CircularLoader isLoading={isLoading} />
       {isShown && (
         <>
           {orders.map((order) => (
             <OrderCard
+              key={order.id}
               order={order}
-              hasButton={false}
+              hasButton={hasButtons}
+              buttonTitle={buttonTitle}
+              onSubmit={() => handleSubmit(order.id)}
             />
           ))}
         </>
@@ -36,7 +46,7 @@ export function ChefOrderDone() {
       {
         isShownEmpty && (
           <Typography align="center">
-            Нету выполненных заказов
+            Нету новых заказов
           </Typography>
         )
       }

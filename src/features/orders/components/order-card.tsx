@@ -18,7 +18,7 @@ type OrderCardProps = {
 export function OrderCard({
   order, hasButton, buttonTitle, onSubmit,
 }: OrderCardProps) {
-  function CheckForLastIndex(index: number, products: ProductsSelected[]) {
+  function checkForLastIndex(index: number, products: ProductsSelected[]) {
     return index !== products.length - 1;
   }
 
@@ -53,7 +53,7 @@ export function OrderCard({
                   {product.name}
                   {' '}
                   {product.quantity}
-                  {CheckForLastIndex(index, products) ? ' штук, ' : ' штук'}
+                  {checkForLastIndex(index, products) ? ' штук, ' : ' штук'}
                 </Typography>
               ))}
             </Typography>
@@ -95,5 +95,4 @@ const CardContentStyle = styled(CardContent)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   padding: theme.spacing(2),
-  marginBottom: theme.spacing(2),
 }));
