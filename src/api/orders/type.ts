@@ -1,4 +1,4 @@
-import { Order } from '~/features/users';
+import { Order, OrderStatus } from '~/features/orders';
 
 export type GetChefOrdersRequest = {
   restaurantId: number;
@@ -12,7 +12,5 @@ export type EditChefOrderResponse = void;
 export interface EditChefOrderRequest {
   restaurantId: number;
   orderId: number;
-  body: {
-    status: 'idle' | 'canceled' | 'pending' | 'processing' | 'ready' | 'on_delivery' | 'completed';
-  };
+  body: OrderStatus,
 }
