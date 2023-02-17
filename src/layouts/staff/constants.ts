@@ -1,6 +1,6 @@
 import { PATH_USERS } from '~/routes/paths';
 
-export const NAVIGATION_BUTTONS_CHEF = [
+export const CHEF_NAVIGATION_ITEMS = [
   {
     activeIcon: 'material-symbols:list-alt-rounded',
     defaultIcon: 'material-symbols:list-alt-outline',
