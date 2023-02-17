@@ -1,27 +1,17 @@
-import { useEffect, useState } from 'react';
-
 interface ButtonGroupProps {
     buttonTitle: string;
     hasButtons: boolean;
   }
 
 export function useOrderButtonGroup(status:string): ButtonGroupProps {
-  const [hasButtons, setHasButtons] = useState(false);
+  const hasButtons = status === 'processing' || status === 'pending';
 
-  const [buttonTitle, setHasButtonTitle] = useState('');
+  const BUTTON_TITLE = {
+    pending: 'В работу',
+    processing: 'Готово',
+  };
 
-  useEffect(() => {
-    if (status === 'pending') {
-      setHasButtons(true);
-      setHasButtonTitle('В работу');
-    } else if (status === 'processing') {
-      setHasButtons(true);
-      setHasButtonTitle('Готово');
-    } else {
-      setHasButtons(false);
-      setHasButtonTitle('');
-    }
-  }, [status]);
+  const buttonTitle = (BUTTON_TITLE as any)[status];
 
   return {
     hasButtons,

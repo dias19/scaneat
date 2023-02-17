@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Box, Typography } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 
 import { CircularLoader } from '~/components/Circular Loader';
+import { HEADER } from '~/layouts/management/constants';
 
 import { useGetOrders } from '../hooks/useGetOrders';
 import { useOrderButtonGroup } from '../hooks/useOrderButtonGroup';
@@ -11,10 +12,11 @@ import { OrderCard } from './order-card';
 type OrdersListProps={
   status: string,
   onSubmit: (id: number) => void,
+  restaurantId: number,
 }
 
-export function OrdersList({ status, onSubmit }:OrdersListProps) {
-  const { orders, isLoading, isError } = useGetOrders(status);
+export function OrdersList({ status, onSubmit, restaurantId }:OrdersListProps) {
+  const { orders, isLoading, isError } = useGetOrders(status, restaurantId);
 
   const { hasButtons, buttonTitle } = useOrderButtonGroup(status);
 
@@ -28,7 +30,7 @@ export function OrdersList({ status, onSubmit }:OrdersListProps) {
     onSubmit(id);
   };
   return (
-    <Box sx={{ m: 2 }}>
+    <BoxStyle>
       <CircularLoader isLoading={isLoading} />
       {isShown && (
         <>
@@ -50,6 +52,11 @@ export function OrdersList({ status, onSubmit }:OrdersListProps) {
           </Typography>
         )
       }
-    </Box>
+    </BoxStyle>
   );
 }
+const BoxStyle = styled(Box)(({ theme }) => ({
+  marginTop: `calc(${HEADER.HEADER_HEIGHT}px + ${theme.spacing(2)})`,
+  marginRight: theme.spacing(2),
+  marginLeft: theme.spacing(2),
+}));

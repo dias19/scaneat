@@ -28,13 +28,13 @@ type LayoutProps = {
   staffRole: 'chef';
 };
 
-export function RestaurantStaffLayot({ children, staffRole }: LayoutProps) {
+export function RestaurantStaffLayout({ children, staffRole }: LayoutProps) {
   const isLaptop = useResponsive('up', 'sm');
 
   const isChef = staffRole === 'chef';
   return (
     <>
-      {!isLaptop && isChef && <LogoHeader />}
+      {!isLaptop && <LogoHeader />}
       <MainStyle>{children || <Outlet />}</MainStyle>
       {!isLaptop && isChef && <BottomNavigationChef />}
     </>
