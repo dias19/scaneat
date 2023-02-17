@@ -4,8 +4,7 @@ function path(root: string, sublink: string) {
 
 const ROOTS_AUTH = '';
 const ROOTS_MANAGEMENT = '/management';
-const ROOTS_USERS = '/user';
-const ROOTS_TICKETS = '/tickets';
+const ROOTS_STAFF = '/staff';
 
 export const PATH_AUTH = {
   root: ROOTS_AUTH,
@@ -43,13 +42,8 @@ export const PATH_RESTAURANTS = {
   createRestaurant: '/create-restaurant',
   successfulCreation: '/creation-successful',
 };
-export const PATH_TICKETS = {
-  root: ROOTS_TICKETS,
-};
 
 export const PATH_USERS = {
-  listOrdersChef: path(ROOTS_USERS, '/chef/orders'),
-  inProcessOrdersChef: path(ROOTS_USERS, '/chef/orders/processing'),
-  doneOrdersChef: path(ROOTS_USERS, '/chef/orders/done'),
-  profile: path(ROOTS_USERS, '/profile'),
+  listOrdersChef: path(ROOTS_STAFF, '/chef/orders'),
+  profile: path(ROOTS_STAFF, '/profile'),
 };
