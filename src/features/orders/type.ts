@@ -22,7 +22,7 @@ export type Order = {
   };
 };
 
-export type Status =
+export type OrderStatus =
   | 'idle'
   | 'canceled'
   | 'pending'
@@ -30,11 +30,3 @@ export type Status =
   | 'ready'
   | 'on_delivery'
   | 'completed';
-
-export type ChefStatusesType={
-    label: string,
-    status: Status
-}[]
-export type OrderStatus = {
-  status: Status;
-};

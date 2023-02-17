@@ -26,10 +26,10 @@ const ordersApi = createApi({
         : [{ type: 'Orders', id: 'Orders' }]),
     }),
     editChefOrder: builder.mutation<EditChefOrderResponse, EditChefOrderRequest>({
-      query: ({ restaurantId, orderId, body }) => ({
+      query: ({ restaurantId, orderId, status }) => ({
         url: `/chef/restaurant/${restaurantId}/order/${orderId}`,
         method: 'PATCH',
-        body,
+        body: { status },
       }),
       invalidatesTags: [{ type: 'Orders', id: 'Orders' }],
     }),

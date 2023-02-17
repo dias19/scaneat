@@ -12,5 +12,5 @@ export type EditChefOrderResponse = void;
 export interface EditChefOrderRequest {
   restaurantId: number;
   orderId: number;
-  body: OrderStatus,
+  status: OrderStatus,
 }
