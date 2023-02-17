@@ -2,7 +2,6 @@ interface ButtonGroupProps {
     buttonTitle: string;
     hasButtons: boolean;
   }
-
 export function useOrderButtonGroup(status:string): ButtonGroupProps {
   const hasButtons = status === 'processing' || status === 'pending';
 
@@ -11,7 +10,7 @@ export function useOrderButtonGroup(status:string): ButtonGroupProps {
     processing: 'Готово',
   };
 
-  const buttonTitle = (BUTTON_TITLE as any)[status];
+  const buttonTitle = (BUTTON_TITLE)[status as keyof typeof BUTTON_TITLE];
 
   return {
     hasButtons,
