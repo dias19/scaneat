@@ -17,6 +17,7 @@ export function Image({ url, alt, ...other }:CombinedProps) {
     <Box {...other}>
       <ImageStyle
         src={S3_BUCKET_URL + url}
+        loading="lazy"
         alt={alt}
       />
     </Box>

@@ -1,12 +1,15 @@
 import React from 'react';
 
 import { Page } from '~/components/Page';
-import { RestaurantStatus } from '~/features/management';
+import { RestaurantStatusTabs } from '~/features/management';
+import { ManagementLogoLayout } from '~/layouts/management';
 
 export function RestaurantStatusPage() {
   return (
-    <Page title="Статусы ресторанов">
-      <RestaurantStatus />
-    </Page>
+    <ManagementLogoLayout>
+      <Page title="Статусы ресторанов">
+        <RestaurantStatusTabs />
+      </Page>
+    </ManagementLogoLayout>
   );
 }
