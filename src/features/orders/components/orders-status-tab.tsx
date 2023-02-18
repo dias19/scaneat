@@ -7,14 +7,15 @@ import ordersApi from '~/api/orders/api';
 import { HEADER } from '~/layouts/management/constants';
 
 import { OrderStatus } from '../type';
+import { getNextStatus } from '../utils/get-next-status';
 import { OrdersList } from './orders-list';
 
-type ChefStatusesType={
+type ChefStatuses={
   label: string,
   status: OrderStatus
-}[]
+}
 
-const CHEF_STATUSES: ChefStatusesType = [
+const CHEF_STATUSES: ChefStatuses[] = [
   {
     label: 'В ожидании',
     status: 'pending',
@@ -36,17 +37,13 @@ export function OrderStatusTab() {
 
   const restaurantId = parseInt(parameters.restaurantId as string, 10);
 
-  const currentStatusIndex = CHEF_STATUSES.findIndex((chefStatus) => chefStatus.status === status);
-
-  const nextIndex = (currentStatusIndex + 1) % CHEF_STATUSES.length;
-
   const [editChefOrder] = ordersApi.endpoints.editChefOrder.useMutation();
 
   const handleChange = (event: React.SyntheticEvent, newValue: OrderStatus) => {
     setStatus(newValue);
   };
 
-  const nextStatus: OrderStatus = CHEF_STATUSES[nextIndex].status;
+  const nextStatus = getNextStatus(status);
 
   const editStatus = async (id: number) => {
     await editChefOrder({

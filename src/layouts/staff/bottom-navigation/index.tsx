@@ -14,7 +14,7 @@ export function BottomNavigationChef() {
     <BoxStyle>
       {CHEF_NAVIGATION_ITEMS.map((button) => (
         <BottomNavigationButtons
-          key={button.route}
+          key={`bottom-navigation-button-${button.activeIcon}`}
           activeIcon={button.activeIcon}
           defaultIcon={button.defaultIcon}
           route={button.route}

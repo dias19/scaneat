@@ -10,6 +10,7 @@ activeIcon: string,
 defaultIcon:string,
 route: string,
 }
+
 export function BottomNavigationButtons({ activeIcon, defaultIcon, route }:IconButtonProps) {
   const navigate = useNavigate();
   const { pathname } = useLocation();

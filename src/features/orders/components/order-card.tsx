@@ -5,7 +5,8 @@ import {
 } from '@mui/material';
 import moment from 'moment';
 
-import { Order, ProductsSelected } from '../type';
+import { Order } from '../type';
+import { OrderActionButtons } from './order-action-buttons';
 import { OrderBottomDrawer } from './order-bottom-drawer';
 
 type OrderCardProps = {
@@ -18,10 +19,6 @@ type OrderCardProps = {
 export function OrderCard({
   order, hasButton, buttonTitle, onSubmit,
 }: OrderCardProps) {
-  function checkForLastIndex(index: number, products: ProductsSelected[]) {
-    return index !== products.length - 1;
-  }
-
   const [disableRipple, setDisableRipple] = useState(false);
 
   const [open, setOpen] = useState(false);
@@ -36,6 +33,10 @@ export function OrderCard({
     setOpen(true);
   };
 
+  const productDetails = order.products.map(
+    (product) => `${product.name} ${product.quantity} штук`,
+  ).join(', ');
+
   return (
     <>
       <Card sx={{ mb: 2 }}>
@@ -48,14 +49,9 @@ export function OrderCard({
               </Typography>
             </Box>
             <Typography variant="body2" color="grey.600" sx={{ mt: 0.5 }}>
-              {order.products.map((product, index, products) => (
-                <Typography variant="caption" key={product.name}>
-                  {product.name}
-                  {' '}
-                  {product.quantity}
-                  {checkForLastIndex(index, products) ? ' штук, ' : ' штук'}
-                </Typography>
-              ))}
+              <Typography variant="caption">
+                {productDetails}
+              </Typography>
             </Typography>
             <Typography variant="body2" sx={{ mt: 1 }}>
               Итого:
@@ -65,16 +61,11 @@ export function OrderCard({
               тг
             </Typography>
             {hasButton && (
-            <Box alignSelf="end">
-              <Button
-                variant="contained"
-                size="small"
-                onClick={handleSubmit}
-                sx={{ px: 6 }}
-              >
-                {buttonTitle}
-              </Button>
-            </Box>
+              <Box alignSelf="end">
+                <Button variant="contained" size="small" onClick={handleSubmit} sx={{ px: 6 }}>
+                  {buttonTitle}
+                </Button>
+              </Box>
             )}
           </CardContentStyle>
         </CardActionArea>
@@ -83,10 +74,10 @@ export function OrderCard({
         open={open}
         setOpen={setOpen}
         order={order}
-        hasButtons={hasButton}
-        buttonTitle={buttonTitle}
-        handleSubmit={onSubmit}
-      />
+        hasButton={hasButton}
+      >
+        <OrderActionButtons setOpen={setOpen} buttonTitle={buttonTitle} onSubmit={onSubmit} />
+      </OrderBottomDrawer>
     </>
   );
 }

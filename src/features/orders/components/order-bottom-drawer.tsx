@@ -1,8 +1,9 @@
 import React from 'react';
 
 import {
-  Box, Button, Stack, Typography,
+  Box, Stack, styled, Typography,
 } from '@mui/material';
+import moment from 'moment';
 
 import { BottomDrawer } from '~/components/bottom-drawer';
 
@@ -12,24 +13,17 @@ type OrderBottomDrawerProps = {
   order: Order;
   open: boolean;
   setOpen: (state: boolean) => void;
-  hasButtons?: boolean;
-  buttonTitle?: string;
-  handleSubmit?: () => void;
+  hasButton?: boolean;
+  children?: React.ReactNode;
 };
 
 export function OrderBottomDrawer({
   order,
   open,
   setOpen,
-  hasButtons,
-  buttonTitle,
-  handleSubmit,
+  hasButton,
+  children,
 }: OrderBottomDrawerProps) {
-  const onSubmit = () => {
-    handleSubmit?.();
-    setOpen(false);
-  };
-
   return (
     <BottomDrawer
       open={open}
@@ -49,30 +43,23 @@ export function OrderBottomDrawer({
       <Stack sx={{ mt: 2 }} spacing={0.5}>
         <Box display="flex" justifyContent="space-between">
           <Typography variant="body2">Время</Typography>
-          <Typography variant="body2">{order.createdAt}</Typography>
+          <Typography variant="body2">
+            {moment(order.createdAt).format('HH:mm, DD.MM.YYYY')}
+          </Typography>
         </Box>
         <Box display="flex" justifyContent="space-between">
           <Typography variant="body2">Итого</Typography>
           <Typography variant="body2">{order.total}</Typography>
         </Box>
       </Stack>
-      {hasButtons && (
-        <Box
-          sx={{
-            mt: 3,
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2,1fr)',
-            gap: 1,
-          }}
-        >
-          <Button variant="outlined" size="large" onClick={() => setOpen(false)}>
-            Назад
-          </Button>
-          <Button variant="contained" size="large" onClick={onSubmit}>
-            {buttonTitle}
-          </Button>
-        </Box>
-      )}
+      {hasButton && <BoxButtonStyle>{children}</BoxButtonStyle>}
     </BottomDrawer>
   );
 }
+
+const BoxButtonStyle = styled(Box)(({ theme }) => ({
+  marginTop: theme.spacing(3),
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: theme.spacing(1),
+}));

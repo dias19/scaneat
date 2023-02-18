@@ -29,11 +29,12 @@ export function OrdersList({ status, onSubmit, restaurantId }:OrdersListProps) {
   const handleSubmit = (id: number) => {
     onSubmit(id);
   };
+
   return (
-    <BoxStyle>
+    <>
       <CircularLoader isLoading={isLoading} />
       {isShown && (
-        <>
+        <BoxStyle>
           {orders.map((order) => (
             <OrderCard
               key={order.id}
@@ -43,16 +44,18 @@ export function OrdersList({ status, onSubmit, restaurantId }:OrdersListProps) {
               onSubmit={() => handleSubmit(order.id)}
             />
           ))}
-        </>
+        </BoxStyle>
       )}
       {
         isShownEmpty && (
-          <Typography align="center">
-            Нету новых заказов
-          </Typography>
+          <BoxStyle>
+            <Typography align="center">
+              Нету новых заказов
+            </Typography>
+          </BoxStyle>
         )
       }
-    </BoxStyle>
+    </>
   );
 }
 const BoxStyle = styled(Box)(({ theme }) => ({
