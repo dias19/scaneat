@@ -23,7 +23,7 @@ export function RestaurantStatusCard({
   hasButton,
 }: CardWithStatusProps) {
   return (
-    <Card key={restaurant.id} sx={{ mb: 2 }}>
+    <CardStyle key={restaurant.id}>
       <CardContentStyle>
         <Box display="flex">
           <ImageStyle
@@ -37,10 +37,10 @@ export function RestaurantStatusCard({
             </Typography>
           </Box>
         </Box>
-        {hasButtons && <RestaurantPendingButtons restaurantId={restaurant.id} />}
         {hasButton && <RestaurantRejectedButton restaurantId={restaurant.id} />}
+        {hasButtons && <RestaurantPendingButtons restaurantId={restaurant.id} />}
       </CardContentStyle>
-    </Card>
+    </CardStyle>
   );
 }
 
@@ -56,4 +56,12 @@ const ImageStyle = styled(Image)(({ theme }) => ({
   height: 60,
   width: 60,
   marginRight: theme.spacing(2),
+}));
+
+const CardStyle = styled(Card)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+  [theme.breakpoints.up('sm')]: {
+    height: 'auto',
+    marginBottom: 0,
+  },
 }));
