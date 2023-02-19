@@ -3,24 +3,23 @@ import React from 'react';
 import { Button } from '@mui/material';
 
 type ActionButtonProps={
-    setOpen: (state: boolean) => void,
+    onOpen: VoidFunction,
+    onClose:VoidFunction,
     onSubmit?: VoidFunction,
     buttonTitle?: string,
 }
 
-export function OrderActionButtons({ setOpen, onSubmit, buttonTitle }:ActionButtonProps) {
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+export function OrderActionButtons({
+  onClose, onOpen, onSubmit, buttonTitle,
+}:ActionButtonProps) {
   const handleSubmit = () => {
     onSubmit?.();
-    setOpen(false);
+    onOpen();
   };
 
   return (
     <>
-      <Button variant="outlined" size="large" onClick={handleClose}>
+      <Button variant="outlined" size="large" onClick={onClose}>
         Назад
       </Button>
       <Button variant="contained" size="large" onClick={handleSubmit}>

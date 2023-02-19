@@ -33,9 +33,13 @@ export function OrderCard({
     setOpen(true);
   };
 
-  const productDetails = order.products.map(
-    (product) => `${product.name} ${product.quantity} штук`,
-  ).join(', ');
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const productDetails = order.products
+    .map((product) => `${product.name} ${product.quantity} штук`)
+    .join(', ');
 
   return (
     <>
@@ -49,9 +53,7 @@ export function OrderCard({
               </Typography>
             </Box>
             <Typography variant="body2" color="grey.600" sx={{ mt: 0.5 }}>
-              <Typography variant="caption">
-                {productDetails}
-              </Typography>
+              <Typography variant="caption">{productDetails}</Typography>
             </Typography>
             <Typography variant="body2" sx={{ mt: 1 }}>
               Итого:
@@ -70,13 +72,13 @@ export function OrderCard({
           </CardContentStyle>
         </CardActionArea>
       </Card>
-      <OrderBottomDrawer
-        open={open}
-        setOpen={setOpen}
-        order={order}
-        hasButton={hasButton}
-      >
-        <OrderActionButtons setOpen={setOpen} buttonTitle={buttonTitle} onSubmit={onSubmit} />
+      <OrderBottomDrawer open={open} setOpen={setOpen} order={order} hasButton={hasButton}>
+        <OrderActionButtons
+          onClose={handleClose}
+          onOpen={handleOpen}
+          buttonTitle={buttonTitle}
+          onSubmit={onSubmit}
+        />
       </OrderBottomDrawer>
     </>
   );

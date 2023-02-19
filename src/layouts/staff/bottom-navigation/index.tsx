@@ -27,7 +27,8 @@ export function BottomNavigationChef() {
 const BoxStyle = styled(Box)(({ theme }) => ({
   position: 'fixed',
   height: 56,
-  borderTop: '1px solid #E0E0E0',
+  borderTop: '1px solid',
+  borderColor: theme.palette.grey[300],
   backgroundColor: 'white',
   zIndex: theme.zIndex.managementBottomNavigation,
   bottom: 0,
