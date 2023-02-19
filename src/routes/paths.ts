@@ -4,7 +4,8 @@ function path(root: string, sublink: string) {
 
 const ROOTS_AUTH = '';
 const ROOTS_MANAGEMENT = '/management';
-const ROOTS_TICKETS = 'tickets';
+const ROOTS_USER = '/user';
+const ROOTS_RESTAURANT = '/restaurant';
 
 export const PATH_AUTH = {
   root: ROOTS_AUTH,
@@ -39,9 +40,11 @@ export const PATH_PAGE = {
 };
 
 export const PATH_RESTAURANTS = {
-  createRestaurant: '/create-restaurant',
-  successfulCreation: '/creation-successful',
+  createRestaurant: path(ROOTS_RESTAURANT, '/create-restaurant'),
+  successfulCreation: path(ROOTS_RESTAURANT, '/creation-successful'),
+  chefsOrders: (restaurantId: number) => path(ROOTS_RESTAURANT, `/${restaurantId}/chef-orders`),
 };
-export const PATH_TICKETS = {
-  root: ROOTS_TICKETS,
+
+export const PATH_USERS = {
+  profile: path(ROOTS_USER, '/profile'),
 };
