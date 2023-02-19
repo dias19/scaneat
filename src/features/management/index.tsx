@@ -10,7 +10,7 @@ export * from './components/restaurant-details/settings';
 
 export * from './components/restaurant-details/orders';
 
-export * from './components/restaurant-details/employees';
+export * from './components/restaurant-details/employees/employees';
 
 export * from './components/restaurants-list';
 

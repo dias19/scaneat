@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Route } from 'react-router-dom';
 
-import { ManagementStackLayout } from '~/layouts/management';
 import { lazyImport } from '~/utils/lazyImport';
 
 const { ManagerProfilePage } = lazyImport(
@@ -63,28 +62,21 @@ export const ManagementRoutes = [
     key="restaurant-menu"
   />,
 
-  <Route element={<ManagementStackLayout title="Заказы" />} key="restaurant-menu">
-    <Route
-      path="restaurants/:slug/orders"
-      element={<RestaurantDetailsOrdersPage />}
-      key="restaurant-orders"
-    />
-  </Route>,
-  <Route element={<ManagementStackLayout title="Работники" />} key="restaurant-menu">
-    <Route
-      path="restaurants/:slug/employees"
-      element={<RestaurantDetailsEmployeesPage />}
-      key="restaurant-employees"
-    />
-  </Route>,
-  <Route element={<ManagementStackLayout title="Работники" />} key="restaurant-menu">
-    <Route
-      path="restaurants/:slug/settings"
-      element={<RestaurantDetailsSettingsPage />}
-      key="restaurant-details"
-    />
-  </Route>,
-
+  <Route
+    path="restaurants/:restaurantId/orders"
+    element={<RestaurantDetailsOrdersPage />}
+    key="restaurant-orders"
+  />,
+  <Route
+    path="restaurants/:restaurantId/employees"
+    element={<RestaurantDetailsEmployeesPage />}
+    key="restaurant-employees"
+  />,
+  <Route
+    path="restaurants/:restaurantId/settings"
+    element={<RestaurantDetailsSettingsPage />}
+    key="restaurant-details"
+  />,
   <Route
     path="restaurants/:restaurantId/menu/:categoryId"
     element={<RestaurantMenuItemsPage />}
