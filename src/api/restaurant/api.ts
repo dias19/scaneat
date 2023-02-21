@@ -11,6 +11,7 @@ import {
   RejectRestaurantRequest,
   CreateRestaurantRequest,
   CreateRestaurantResponse,
+  GetRestaurantsByStatusRequest,
 } from './type';
 
 export const RESTAURANT_REDUCER_KEY = 'restaurantApi';
@@ -32,8 +33,8 @@ const restaurantApi = createApi({
     getRestaurant: builder.query<GetRestaurantResponse, GetRestaurantRequest>({
       query: (restaurantSlug) => `/restaurant/${restaurantSlug}`,
     }),
-    getRestaurantsByStatus: builder.query<GetRestaurantsResponse, GetRestaurantRequest>({
-      query: (status) => `/restaurant?status=${status}`,
+    getRestaurantsByStatus: builder.query<GetRestaurantsResponse, GetRestaurantsByStatusRequest>({
+      query: ({ status }) => `/restaurant?status=${status}`,
     }),
     getRestaurantQR: builder.query<any, number>({
       query(restaurantId) {

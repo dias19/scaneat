@@ -6,14 +6,15 @@ import { CircularLoader } from '~/components/Circular Loader';
 import { useResponsive } from '~/hooks/useResponsive';
 import { HEADER } from '~/layouts/management/constants';
 
+import { RestaurantStatus } from '../../types';
 import { useGetRestaurantsByStatus } from './hooks/useGetRestaurantsByStatus';
 import { RestaurantStatusCard } from './restaurant-status-card';
 
-type ListWithStatusProps = {
-  status: 'accepted' | 'pending' | 'rejected';
+type Props = {
+  status: RestaurantStatus
 };
 
-export function RestaurantStatusList({ status }: ListWithStatusProps) {
+export function RestaurantStatusList({ status }: Props) {
   const { restaurants, isLoading, isError } = useGetRestaurantsByStatus(status);
 
   const isRestaurantListEmpty = restaurants?.length === 0;
@@ -33,8 +34,7 @@ export function RestaurantStatusList({ status }: ListWithStatusProps) {
           {restaurants?.map((restaurant) => (
             <RestaurantStatusCard
               restaurant={restaurant}
-              hasButton={status === 'rejected' && true}
-              hasButtons={status === 'pending' && true}
+              status={status}
             />
           ))}
         </BoxCardStyle>

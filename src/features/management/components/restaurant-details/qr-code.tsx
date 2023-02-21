@@ -8,7 +8,7 @@ import restaurantApi from '~/api/restaurant/api';
 import { useResponsive } from '~/hooks/useResponsive';
 
 type QrCodeProps={
-  restaurantId?: number
+  restaurantId: number
 }
 
 export function QrCodeRestaurant({ restaurantId }:QrCodeProps) {
@@ -18,7 +18,7 @@ export function QrCodeRestaurant({ restaurantId }:QrCodeProps) {
 
   return (
     <Card sx={{ mt: 3, width: isLaptop ? 358 : 'auto' }}>
-      <CardActionArea onClick={() => trigger(restaurantId!)}>
+      <CardActionArea onClick={() => trigger(restaurantId)}>
         <CardContentStyle>
           <ImageStyle
           // eslint-disable-next-line max-len

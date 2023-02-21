@@ -8,19 +8,17 @@ import styled from 'styled-components';
 import { Image } from '~/components/image';
 import { Restaurant } from '~/features/restaurant';
 
-import RestaurantPendingButtons from './components/restaurant-pending-buttons';
-import { RestaurantRejectedButton } from './components/restaurant-rejected-buttons';
+import { RestaurantStatus } from '../../types';
+import RestaurantActionButtons from './components/restaurant-action-buttons';
 
 type CardWithStatusProps = {
   restaurant: Restaurant;
-  hasButtons: boolean;
-  hasButton: boolean;
+  status: RestaurantStatus
 };
 
 export function RestaurantStatusCard({
   restaurant,
-  hasButtons,
-  hasButton,
+  status,
 }: CardWithStatusProps) {
   return (
     <CardStyle key={restaurant.id}>
@@ -37,8 +35,10 @@ export function RestaurantStatusCard({
             </Typography>
           </Box>
         </Box>
-        {hasButton && <RestaurantRejectedButton restaurantId={restaurant.id} />}
-        {hasButtons && <RestaurantPendingButtons restaurantId={restaurant.id} />}
+        <RestaurantActionButtons
+          status={status}
+          restaurantId={restaurant.id}
+        />
       </CardContentStyle>
     </CardStyle>
   );

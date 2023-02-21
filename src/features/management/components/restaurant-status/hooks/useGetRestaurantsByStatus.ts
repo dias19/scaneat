@@ -1,11 +1,13 @@
 import restaurantApi from '~/api/restaurant/api';
 
-export function useGetRestaurantsByStatus(status: string) {
+import { RestaurantStatus } from '../../../types';
+
+export function useGetRestaurantsByStatus(status: RestaurantStatus) {
   const {
     data: restaurants,
     isLoading,
     isError,
-  } = restaurantApi.endpoints.getRestaurantsByStatus.useQuery(status);
+  } = restaurantApi.endpoints.getRestaurantsByStatus.useQuery({ status });
   return {
     restaurants,
     isLoading,

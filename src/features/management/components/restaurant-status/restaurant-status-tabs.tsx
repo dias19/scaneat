@@ -31,19 +31,66 @@ const MANAGER_STATUSES: ManagerStatuses[] = [
 ];
 
 export function RestaurantStatusTabs() {
-  const [value, setValue] = React.useState(MANAGER_STATUSES[0].name);
+  const [status, setValue] = React.useState(MANAGER_STATUSES[0].name);
 
   const handleChange = (event: React.SyntheticEvent, newValue: RestaurantStatus) => {
     setValue(newValue);
   };
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
 
   return (
     <Box sx={{ width: '100%' }}>
-      {isLaptop && <TabsDesktop value={value} handleChange={handleChange} />}
-      {!isLaptop && <TabsMobile value={value} handleChange={handleChange} />}
+      {isDesktop && <TabsDesktop status={status} handleChange={handleChange} />}
+      {!isDesktop && <TabsMobile status={status} handleChange={handleChange} />}
     </Box>
+  );
+}
+
+type TabsProps = {
+  status: RestaurantStatus;
+  handleChange: (event: React.SyntheticEvent, newValue: RestaurantStatus) => void;
+};
+
+function TabsDesktop({ status, handleChange }: TabsProps) {
+  return (
+    <Container>
+      <Box display="flex">
+        <TabsStyle
+          value={status}
+          indicatorColor="primary.light"
+          onChange={handleChange}
+          variant="standard"
+          orientation="vertical"
+        >
+          {MANAGER_STATUSES.map((restaurantStatus) => (
+            <TabStyle
+              key={`restaurant-status-${restaurantStatus.label}`}
+              value={restaurantStatus.name}
+              label={restaurantStatus.label}
+            />
+          ))}
+        </TabsStyle>
+        <RestaurantStatusList status={status} />
+      </Box>
+    </Container>
+  );
+}
+
+function TabsMobile({ status, handleChange }: TabsProps) {
+  return (
+    <>
+      <TabsStyle value={status} onChange={handleChange} variant="fullWidth">
+        {MANAGER_STATUSES.map((restaurantStatus) => (
+          <TabStyle
+            key={`restaurant-status-${restaurantStatus.label}`}
+            value={restaurantStatus.name}
+            label={restaurantStatus.label}
+          />
+        ))}
+      </TabsStyle>
+      <RestaurantStatusList status={status} />
+    </>
   );
 }
 
@@ -79,49 +126,3 @@ const TabStyle = styled(Tab)(({ theme }) => ({
     color: 'green',
   },
 })) as typeof Tab;
-
-type TabsProps = {
-  value: RestaurantStatus;
-  handleChange: (event: React.SyntheticEvent, newValue: RestaurantStatus) => void;
-};
-function TabsDesktop({ value, handleChange }: TabsProps) {
-  return (
-    <Container>
-      <Box display="flex">
-        <TabsStyle
-          value={value}
-          indicatorColor="primary.light"
-          onChange={handleChange}
-          variant="standard"
-          orientation="vertical"
-        >
-          {MANAGER_STATUSES.map((status) => (
-            <TabStyle
-              key={`restaurant-status-${status.label}`}
-              value={status.name}
-              label={status.label}
-            />
-          ))}
-        </TabsStyle>
-        <RestaurantStatusList status={value} />
-      </Box>
-    </Container>
-  );
-}
-
-function TabsMobile({ value, handleChange }: TabsProps) {
-  return (
-    <>
-      <TabsStyle value={value} onChange={handleChange} variant="fullWidth">
-        {MANAGER_STATUSES.map((status) => (
-          <TabStyle
-            key={`restaurant-status-${status.label}`}
-            value={status.name}
-            label={status.label}
-          />
-        ))}
-      </TabsStyle>
-      <RestaurantStatusList status={value} />
-    </>
-  );
-}
