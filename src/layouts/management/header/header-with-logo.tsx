@@ -8,12 +8,12 @@ import { useResponsive } from '~/hooks/useResponsive';
 import { ManagementTopbarNavigation } from './topbar-navigation-management';
 
 export function LogoHeader() {
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
   return (
     <BoxStyle>
       <Logo />
       {
-        isLaptop
+        isDesktop
         && (
           <ManagementTopbarNavigation />
         )

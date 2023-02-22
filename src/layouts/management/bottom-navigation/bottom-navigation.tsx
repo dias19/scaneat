@@ -10,11 +10,11 @@ import { NAVIGATION_BUTTONS } from '../constants';
 import { BottomNavigationButtons } from './BottomNavigationButtons';
 
 export function BottomNavigation() {
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {!isLaptop
+      {!isDesktop
         ? (
           <BoxStyle>
             {NAVIGATION_BUTTONS.map((button) => (

@@ -19,14 +19,14 @@ export function RestaurantStatusList({ status }: Props) {
 
   const isRestaurantListEmpty = restaurants?.length === 0;
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
 
   const isShownEmpty = !isLoading && !isError && isRestaurantListEmpty;
 
   const isShown = !isLoading && !isError && !isRestaurantListEmpty;
 
   return (
-    <BoxStyle sx={{ width: (isLaptop) ? '100%' : 'auto' }}>
+    <BoxStyle sx={{ width: (isDesktop) ? '100%' : 'auto' }}>
       <CircularLoader isLoading={isLoading} />
       {isShownEmpty && <Typography align="center"> Нету заявок ресторанов</Typography>}
       {isShown && (

@@ -6,17 +6,17 @@ import { useResponsive } from '~/hooks/useResponsive';
 import { ManagementStackLayout, ManagementLogoLayout } from '~/layouts/management';
 
 export function RestaurantMenuPage() {
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
   return (
     <Page title="Restaurant Menu">
-      {!isLaptop
+      {!isDesktop
      && (
      <ManagementStackLayout title="Меню">
        <RestaurantCategories />
      </ManagementStackLayout>
      )}
 
-      {isLaptop
+      {isDesktop
      && (
      <ManagementLogoLayout>
        <RestaurantCategories />

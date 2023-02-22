@@ -19,12 +19,12 @@ const steps = [
   },
 ];
 
-type StepperLaptopProps={
+type Props={
   activeStep: number,
   setActiveStep?: (page: number) => void
 }
 
-export function StepperLaptop({ activeStep, setActiveStep }: StepperLaptopProps) {
+export function StepperDesktop({ activeStep, setActiveStep }: Props) {
   const handleStep = (step: number) => {
     if (activeStep > step) {
       setActiveStep!(step);

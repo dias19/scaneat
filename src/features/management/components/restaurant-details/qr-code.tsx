@@ -12,12 +12,12 @@ type QrCodeProps={
 }
 
 export function QrCodeRestaurant({ restaurantId }:QrCodeProps) {
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
 
   const [trigger] = restaurantApi.endpoints.getRestaurantQR.useLazyQuery();
 
   return (
-    <Card sx={{ mt: 3, width: isLaptop ? 358 : 'auto' }}>
+    <Card sx={{ mt: 3, width: isDesktop ? 358 : 'auto' }}>
       <CardActionArea onClick={() => trigger(restaurantId)}>
         <CardContentStyle>
           <ImageStyle

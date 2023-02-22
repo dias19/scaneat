@@ -37,3 +37,7 @@ export interface CategoryFormData {
 }
 
 export type RestaurantStatus='pending' | 'accepted' | 'rejected'
+
+type Actions='edit' | 'delete'
+
+export type RestarauntModifyActions= Actions | null

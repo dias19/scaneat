@@ -22,4 +22,4 @@ export * from './types';
 
 export * from './components/restaurant-menu/products-list-mobile';
 
-export * from './components/restaurant-menu/products-list-laptop';
+export * from './components/restaurant-menu/products-list-desktop';

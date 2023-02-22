@@ -55,7 +55,7 @@ type FormsProp={
 }
 
 export function RestaurantForms({ activeStep, setActiveStep }:FormsProp) {
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
 
   const methods = useForm<CreateRestaurantForm>({
     resolver: yupResolver(schema),
@@ -78,9 +78,9 @@ export function RestaurantForms({ activeStep, setActiveStep }:FormsProp) {
     <FormProvider
       methods={methods}
       sx={{
-        backgroundColor: isLaptop ? 'grey.200' : 'white',
-        height: !isLaptop ? '100%' : 'auto',
-        width: isLaptop ? 383 : '100%',
+        backgroundColor: isDesktop ? 'grey.200' : 'white',
+        height: !isDesktop ? '100%' : 'auto',
+        width: isDesktop ? 383 : '100%',
       }}
     >
       {activeStep === 0
