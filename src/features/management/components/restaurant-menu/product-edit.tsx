@@ -8,24 +8,22 @@ import { BottomDrawer } from '~/components/bottom-drawer';
 import { DialogForm } from '~/components/Dialog';
 import { useResponsive } from '~/hooks/useResponsive';
 
-import { Product, ProductFormData } from '../../types';
+import { Product, ProductFormData, RestarauntModifyActions } from '../../types';
 import { RestaurantProductForm } from './product-form';
 
-type EditDishProps = {
-  openEditDish: boolean;
-  onCloseEditDish: VoidFunction;
-  onOpenEditDish: VoidFunction;
+type Props = {
+  editOpen: boolean;
+  handleAction: (action: RestarauntModifyActions)=>void,
   title: string;
   product: Product;
 };
 
 export function RestaurantProductEdit({
-  openEditDish,
-  onCloseEditDish,
-  onOpenEditDish,
+  editOpen,
+  handleAction,
   title,
   product,
-}: EditDishProps) {
+}: Props) {
   const [editProduct] = productsApi.endpoints.editProduct.useMutation();
 
   const parameters = useParams();
@@ -34,28 +32,35 @@ export function RestaurantProductEdit({
 
   const handleSubmit = async (data: ProductFormData) => {
     await editProduct({ restaurantId, productId: product.id, ...data });
-    onCloseEditDish();
+    handleAction(null);
   };
 
-  const isLaptop = useResponsive('up', 'sm');
+  const handleOpen = () => {
+    handleAction('edit');
+  };
+
+  const handleClose = () => {
+    handleAction(null);
+  };
+  const isDesktop = useResponsive('up', 'sm');
   return (
     <>
-      {!isLaptop && (
+      {!isDesktop && (
         <ProductEditMobile
-          openEditDish={openEditDish}
-          onCloseEditDish={onCloseEditDish}
-          onOpenEditDish={onOpenEditDish}
+          editOpen={editOpen}
           title={title}
+          onClose={handleClose}
+          onOpen={handleOpen}
           product={product}
           handleSubmit={handleSubmit}
         />
       )}
-      {isLaptop && (
-        <ProductEditLaptop
-          openEditDish={openEditDish}
-          onCloseEditDish={onCloseEditDish}
-          onOpenEditDish={onOpenEditDish}
+      {isDesktop && (
+        <ProductEditDesktop
+          editOpen={editOpen}
           title={title}
+          onClose={handleClose}
+          onOpen={handleOpen}
           product={product}
           handleSubmit={handleSubmit}
         />
@@ -64,29 +69,25 @@ export function RestaurantProductEdit({
   );
 }
 
-const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
-  '.MuiDrawer-paper': {
-    height: `calc(100% - ${theme.spacing(3)})`,
-  },
-}));
-
-type EditProps = EditDishProps & {
+type EditProps = Pick<Props, 'editOpen' | 'title' | 'product'> & {
   handleSubmit: (data: ProductFormData) => void;
+  onClose: VoidFunction,
+  onOpen: VoidFunction,
 };
 
-function ProductEditLaptop({
-  openEditDish,
-  onCloseEditDish,
-  onOpenEditDish,
+function ProductEditDesktop({
+  editOpen,
   title,
   product,
+  onClose,
+  onOpen,
   handleSubmit,
 }: EditProps) {
   return (
     <DialogForm
-      open={openEditDish}
-      onClose={onCloseEditDish}
-      onOpen={onOpenEditDish}
+      open={editOpen}
+      onClose={onClose}
+      onOpen={onOpen}
       title={title}
       hasCloser
     >
@@ -94,25 +95,25 @@ function ProductEditLaptop({
         product={product}
         onSubmit={handleSubmit}
         buttonName="Редактировать"
-        setOpen={() => onCloseEditDish()}
+        onCloseForm={onClose}
       />
     </DialogForm>
   );
 }
 
 function ProductEditMobile({
-  openEditDish,
-  onCloseEditDish,
-  onOpenEditDish,
+  editOpen: openEditDish,
   title,
   product,
+  onClose,
+  onOpen,
   handleSubmit,
 }: EditProps) {
   return (
     <BottomDrawerStyle
       open={openEditDish}
-      onClose={onCloseEditDish}
-      onOpen={onOpenEditDish}
+      onClose={onClose}
+      onOpen={onOpen}
       title={title}
       hasCloser
     >
@@ -121,9 +122,15 @@ function ProductEditMobile({
           product={product}
           onSubmit={handleSubmit}
           buttonName="Редактировать"
-          setOpen={() => onCloseEditDish()}
+          onCloseForm={onClose}
         />
       </Box>
     </BottomDrawerStyle>
   );
 }
+
+const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
+  '.MuiDrawer-paper': {
+    height: `calc(100% - ${theme.spacing(3)})`,
+  },
+}));

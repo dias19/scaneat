@@ -10,18 +10,18 @@ import { BottomDrawer } from '~/components/bottom-drawer';
 import { DialogForm } from '~/components/Dialog';
 import { useResponsive } from '~/hooks/useResponsive';
 
+import { RestarauntModifyActions } from '../../types';
+
 type DeleteDishProps = {
-  openDeleteProduct: boolean;
-  onCloseDeleteProduct: VoidFunction;
-  onOpenDeleteProduct: VoidFunction;
+  deleteOpen: boolean;
+  handleAction: (action: RestarauntModifyActions)=>void,
   title: string;
   productId: number;
 };
 
 export function RestaurantProductDelete({
-  openDeleteProduct,
-  onCloseDeleteProduct,
-  onOpenDeleteProduct,
+  deleteOpen,
+  handleAction,
   title,
   productId,
 }: DeleteDishProps) {
@@ -31,30 +31,37 @@ export function RestaurantProductDelete({
 
   const restaurantId = parseInt(parameters.restaurantId as string, 10);
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
 
   const handleDelete = async () => {
     await deleteProduct({ productId, restaurantId });
-    onCloseDeleteProduct();
+    handleAction(null);
   };
 
+  const handleOpen = () => {
+    handleAction('delete');
+  };
+
+  const handleClose = () => {
+    handleAction(null);
+  };
   return (
     <>
-      {!isLaptop && (
+      {!isDesktop && (
         <RestaurantProductDeleteMobile
-          openDeleteProduct={openDeleteProduct}
-          onCloseDeleteProduct={onCloseDeleteProduct}
-          onOpenDeleteProduct={onOpenDeleteProduct}
+          deleteOpen={deleteOpen}
           title={title}
+          onClose={handleClose}
+          onOpen={handleOpen}
           handleDelete={handleDelete}
         />
       )}
-      {isLaptop && (
-        <RestaurantProductDeleteLaptop
-          openDeleteProduct={openDeleteProduct}
-          onCloseDeleteProduct={onCloseDeleteProduct}
-          onOpenDeleteProduct={onOpenDeleteProduct}
+      {isDesktop && (
+        <RestaurantProductDeleteDesktop
           title={title}
+          deleteOpen={deleteOpen}
+          onClose={handleClose}
+          onOpen={handleOpen}
           handleDelete={handleDelete}
         />
       )}
@@ -62,39 +69,28 @@ export function RestaurantProductDelete({
   );
 }
 
-const BoxButtonStyle = styled(Box)(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: theme.spacing(1),
-  [theme.breakpoints.up('sm')]: {
-    marginTop: theme.spacing(2),
-    display: 'flex',
-    justifyContent: 'end',
-  },
-}));
-
 type DeleteProps = Pick<
   DeleteDishProps,
-  'onCloseDeleteProduct' |
   'title' |
-  'openDeleteProduct' |
-  'onOpenDeleteProduct'
+  'deleteOpen'
 > & {
   handleDelete: VoidFunction;
+  onOpen: VoidFunction,
+  onClose: VoidFunction,
 };
 
-function RestaurantProductDeleteLaptop({
-  openDeleteProduct,
-  onCloseDeleteProduct,
-  onOpenDeleteProduct,
+function RestaurantProductDeleteDesktop({
+  deleteOpen,
+  onClose,
+  onOpen,
   title,
   handleDelete,
 }: DeleteProps) {
   return (
     <DialogForm
-      open={openDeleteProduct}
-      onClose={onCloseDeleteProduct}
-      onOpen={onOpenDeleteProduct}
+      open={deleteOpen}
+      onClose={onClose}
+      onOpen={onOpen}
       title={title}
       hasCloser
       maxWidth="xs"
@@ -109,7 +105,7 @@ function RestaurantProductDeleteLaptop({
           После удалении вы не сможете вернуть это блюдо
         </Typography>
         <BoxButtonStyle>
-          <Button variant="outlined" sx={{ mr: 1 }} size="large" onClick={onCloseDeleteProduct}>
+          <Button variant="outlined" sx={{ mr: 1 }} size="large" onClick={onClose}>
             Отмена
           </Button>
           <Button variant="contained" size="large" onClick={handleDelete} color="error">
@@ -122,17 +118,17 @@ function RestaurantProductDeleteLaptop({
 }
 
 function RestaurantProductDeleteMobile({
-  openDeleteProduct,
-  onCloseDeleteProduct,
-  onOpenDeleteProduct,
+  deleteOpen,
+  onClose,
+  onOpen,
   title,
   handleDelete,
 }: DeleteProps) {
   return (
     <BottomDrawer
-      open={openDeleteProduct}
-      onClose={onCloseDeleteProduct}
-      onOpen={onOpenDeleteProduct}
+      open={deleteOpen}
+      onClose={onClose}
+      onOpen={onOpen}
       title={title}
       hasCloser
     >
@@ -147,7 +143,7 @@ function RestaurantProductDeleteMobile({
           После удалении вы не сможете вернуть это блюдо
         </Typography>
         <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap={1}>
-          <Button variant="outlined" sx={{ mr: 1 }} size="large" onClick={onCloseDeleteProduct}>
+          <Button variant="outlined" sx={{ mr: 1 }} size="large" onClick={onClose}>
             Отмена
           </Button>
           <Button variant="contained" size="large" onClick={handleDelete}>
@@ -158,3 +154,14 @@ function RestaurantProductDeleteMobile({
     </BottomDrawer>
   );
 }
+
+const BoxButtonStyle = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: theme.spacing(1),
+  [theme.breakpoints.up('sm')]: {
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'end',
+  },
+}));

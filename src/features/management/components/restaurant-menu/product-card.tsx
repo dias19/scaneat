@@ -11,20 +11,20 @@ import { useResponsive } from '~/hooks/useResponsive';
 import { Product } from '../../types';
 import { RestaurantProductModifyActions } from './product-modify-actions';
 
-type ItemCardProps = {
+type Props = {
   product: Product
 };
 
-export function RestaurantProductCard({ product }: ItemCardProps) {
-  const [isMoreActive, setActiveMore] = useState(false);
+export function RestaurantProductCard({ product }: Props) {
+  const [actionsOpen, setActionsOpen] = useState(false);
 
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    if (isLaptop) setAnchorEl(e.target as Element);
-    setActiveMore(true);
+    if (isDesktop) setAnchorEl(e.target as Element);
+    setActionsOpen(true);
   };
   return (
     <>
@@ -70,10 +70,11 @@ export function RestaurantProductCard({ product }: ItemCardProps) {
         </CardContentStyle>
       </CardStyle>
       <RestaurantProductModifyActions
-        open={isMoreActive}
-        setOpen={setActiveMore}
+        open={actionsOpen}
+        onClose={() => setActionsOpen(false)}
+        onOpen={() => setActionsOpen(true)}
         product={product}
-        anchorEl={isLaptop ? anchorEl : null}
+        anchorEl={isDesktop ? anchorEl : null}
       />
     </>
   );

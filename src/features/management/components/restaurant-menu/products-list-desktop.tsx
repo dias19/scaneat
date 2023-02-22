@@ -18,7 +18,7 @@ interface LocationState {
     category: Category;
   }
 
-export function RestaurantProductsListLaptop() {
+export function RestaurantProductsListDesktop() {
   const parameters = useParams();
 
   const restaurantId = parseInt(parameters.restaurantId as string, 10);
@@ -29,7 +29,7 @@ export function RestaurantProductsListLaptop() {
 
   const { category } = location.state as LocationState;
 
-  const [addDish, setAddDish] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
 
   const {
     data: products = [],
@@ -45,6 +45,15 @@ export function RestaurantProductsListLaptop() {
   const isShownEmpty = !isError && !isLoading && isCategoryEmpty;
 
   const isShown = !isError && !isLoading && !isCategoryEmpty;
+
+  const handleOpen = () => {
+    setAddOpen(true);
+  };
+
+  const handleClose = () => {
+    setAddOpen(false);
+  };
+
   return (
     <Container>
       <CircularLoader isLoading={isLoading} />
@@ -61,13 +70,14 @@ export function RestaurantProductsListLaptop() {
             Нету созданных товаров
           </Typography>
           <BoxStyle>
-            <Button variant="contained" size="large" onClick={() => setAddDish(true)}>
+            <Button variant="contained" size="large" onClick={() => setAddOpen(true)}>
               Добавить блюдо
             </Button>
           </BoxStyle>
           <RestaurantProductAdd
-            open={addDish}
-            setOpen={setAddDish}
+            open={addOpen}
+            onClose={handleClose}
+            onOpen={handleOpen}
           />
         </>
         )}
@@ -80,7 +90,7 @@ export function RestaurantProductsListLaptop() {
               {`(${category.numberOfProducts})`}
             </Typography>
             <BoxStyle>
-              <Button variant="contained" size="large" onClick={() => setAddDish(true)}>
+              <Button variant="contained" size="large" onClick={() => setAddOpen(true)}>
                 Добавить блюдо
               </Button>
             </BoxStyle>
@@ -91,8 +101,9 @@ export function RestaurantProductsListLaptop() {
                   <RestaurantProductCard key={product.id} product={product} />
                 ))}
               <RestaurantProductAdd
-                open={addDish}
-                setOpen={setAddDish}
+                open={addOpen}
+                onClose={handleClose}
+                onOpen={handleOpen}
               />
             </BoxProductsStyle>
           </>
