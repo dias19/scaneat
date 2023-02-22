@@ -7,32 +7,33 @@ import {
 import { Iconify } from '~/components/Iconify';
 import MenuPopover from '~/components/MenuPopover';
 
-type ModifyActionPopoverProps = {
+import { RestarauntModifyActions } from '../types';
+
+type Props = {
   open: boolean;
-  setOpen: (state: boolean) => void;
-  setEditOpen: (state: boolean) => void;
-  setDeleteOpen: (state: boolean) => void;
+  onClose: VoidFunction,
+  handleAction: (action: RestarauntModifyActions) => void,
   anchorEl?: Element | null;
 };
 
 export function ModifyActionPopover({
   open,
-  setOpen,
-  setEditOpen,
-  setDeleteOpen,
+  onClose,
+  handleAction,
   anchorEl,
-}: ModifyActionPopoverProps) {
+}: Props) {
   const handleEdit = () => {
-    setEditOpen(true);
-    setOpen(false);
+    handleAction('edit');
+    onClose();
   };
 
   const handleDelete = () => {
-    setDeleteOpen(true);
-    setOpen(false);
+    handleAction('delete');
+    onClose();
   };
+
   return (
-    <MenuPopover open={open} onClose={() => setOpen(false)} anchorEl={anchorEl}>
+    <MenuPopover open={open} onClose={onClose} anchorEl={anchorEl}>
       <Card sx={{ boxShadow: 'none', mb: 2, width: 'auto' }}>
         <CardActionArea
           onClick={handleEdit}
