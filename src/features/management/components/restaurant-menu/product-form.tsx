@@ -14,7 +14,7 @@ import { ProductFormData, Product } from '../../types';
 
 type FormProps = {
   onSubmit: (data: ProductFormData) => void;
-  setOpen: (state: boolean) => void;
+  onCloseForm: VoidFunction,
   buttonName: string;
   product?: Product
 };
@@ -29,7 +29,7 @@ const AddDishSchema = yup.object({
 });
 
 export function RestaurantProductForm({
-  onSubmit, setOpen, buttonName, product,
+  onSubmit, onCloseForm, buttonName, product,
 }: FormProps) {
   const defaultValues = {
     name: product?.name || '',
@@ -77,7 +77,7 @@ export function RestaurantProductForm({
         </FormProvider>
       </Box>
       <BoxButtonStyle>
-        <Button variant="outlined" onClick={() => setOpen(false)} size="large">
+        <Button variant="outlined" onClick={onCloseForm} size="large">
           Отменить
         </Button>
         <Button

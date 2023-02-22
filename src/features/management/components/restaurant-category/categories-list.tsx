@@ -36,11 +36,11 @@ export function RestaurantCategories() {
     skip,
   });
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
 
-  const isShownLaptop = !isError && !isLoading && isLaptop;
+  const isShownDesktop = !isError && !isLoading && isDesktop;
 
-  const isShownMobile = !isError && !isLoading && !isLaptop;
+  const isShownMobile = !isError && !isLoading && !isDesktop;
 
   const handleAdd = async (data:CategoryFormData) => {
     await addCategory({
@@ -52,6 +52,14 @@ export function RestaurantCategories() {
     setAddOpen(false);
   };
 
+  const handleOpen = () => {
+    setAddOpen(true);
+  };
+
+  const handleClose = () => {
+    setAddOpen(false);
+  };
+
   return (
     <>
       <CircularLoader isLoading={isLoading} />
@@ -59,22 +67,103 @@ export function RestaurantCategories() {
       <CategoryListMobile
         categories={categories}
         addOpen={addOpen}
-        setAddOpen={setAddOpen}
+        onClose={handleClose}
+        onOpen={handleOpen}
         restaurantId={restaurantId}
         handleAdd={handleAdd}
       />
       )}
 
-      {isShownLaptop && (
-        <CategoryListLaptop
+      {isShownDesktop && (
+        <CategoryListDesktop
           categories={categories}
           addOpen={addOpen}
-          setAddOpen={setAddOpen}
+          onClose={handleClose}
+          onOpen={handleOpen}
           restaurantId={restaurantId}
           handleAdd={handleAdd}
         />
       )}
     </>
+  );
+}
+
+type CategoryProps={
+  categories: Category[],
+  onClose: VoidFunction,
+  onOpen: VoidFunction,
+  addOpen: boolean,
+  handleAdd: (data: CategoryFormData) => void,
+  restaurantId: number,
+}
+
+function CategoryListDesktop({
+  categories,
+  onClose,
+  onOpen,
+  addOpen,
+  handleAdd,
+  restaurantId,
+}:CategoryProps) {
+  return (
+    <Container sx={{ mt: 3 }}>
+      <NavigateBack />
+      <Typography variant="h6" sx={{ mb: 3 }}>
+        Категории меню
+      </Typography>
+      <Button variant="contained" size="large" onClick={onOpen}>
+        Добавить Категорию
+      </Button>
+      <Box sx={{ mt: 3, width: 358 }}>
+        {categories.filter((category) => !category.isDeleted).map((category) => (
+          <CategoryCard
+            key={category.id}
+            category={category}
+            restaurantId={restaurantId}
+          />
+        ))}
+        <RestaurantCategoryAdd
+          open={addOpen}
+          onClose={onClose}
+          onOpen={onOpen}
+          handleAdd={handleAdd}
+        />
+      </Box>
+    </Container>
+  );
+}
+
+function CategoryListMobile(
+  {
+    categories,
+    onClose,
+    onOpen,
+    addOpen,
+    handleAdd,
+    restaurantId,
+  }:CategoryProps,
+) {
+  return (
+    <BoxStyle>
+      {categories.filter((category) => !category.isDeleted).map((category) => (
+        <CategoryCard
+          key={category.id}
+          category={category}
+          restaurantId={restaurantId}
+        />
+      ))}
+      <BoxButtonStyle>
+        <Button variant="contained" size="large" onClick={onOpen}>
+          Добавить Категорию
+        </Button>
+      </BoxButtonStyle>
+      <RestaurantCategoryAdd
+        open={addOpen}
+        onClose={onClose}
+        onOpen={onOpen}
+        handleAdd={handleAdd}
+      />
+    </BoxStyle>
   );
 }
 
@@ -93,77 +182,3 @@ const BoxStyle = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(4),
   borderRadius: theme.spacing(1),
 }));
-
-type CategoryProps={
-  categories: Category[],
-  setAddOpen: (state: boolean) => void,
-  addOpen: boolean,
-  handleAdd: (data: CategoryFormData) => void,
-  restaurantId: number,
-}
-
-function CategoryListLaptop({
-  categories,
-  setAddOpen,
-  addOpen,
-  handleAdd,
-  restaurantId,
-}:CategoryProps) {
-  return (
-    <Container sx={{ mt: 3 }}>
-      <NavigateBack />
-      <Typography variant="h6" sx={{ mb: 3 }}>
-        Категории меню
-      </Typography>
-      <Button variant="contained" size="large" onClick={() => setAddOpen(true)}>
-        Добавить Категорию
-      </Button>
-      <Box sx={{ mt: 3, width: 358 }}>
-        {categories.filter((category) => !category.isDeleted).map((category) => (
-          <CategoryCard
-            key={category.id}
-            category={category}
-            restaurantId={restaurantId}
-          />
-        ))}
-        <RestaurantCategoryAdd
-          open={addOpen}
-          setOpen={setAddOpen}
-          handleAdd={handleAdd}
-        />
-      </Box>
-    </Container>
-  );
-}
-
-function CategoryListMobile(
-  {
-    categories,
-    setAddOpen,
-    addOpen,
-    handleAdd,
-    restaurantId,
-  }:CategoryProps,
-) {
-  return (
-    <BoxStyle>
-      {categories.filter((category) => !category.isDeleted).map((category) => (
-        <CategoryCard
-          key={category.id}
-          category={category}
-          restaurantId={restaurantId}
-        />
-      ))}
-      <BoxButtonStyle>
-        <Button variant="contained" size="large" onClick={() => setAddOpen(true)}>
-          Добавить Категорию
-        </Button>
-      </BoxButtonStyle>
-      <RestaurantCategoryAdd
-        open={addOpen}
-        setOpen={setAddOpen}
-        handleAdd={handleAdd}
-      />
-    </BoxStyle>
-  );
-}

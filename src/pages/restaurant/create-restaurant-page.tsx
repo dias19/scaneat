@@ -6,11 +6,11 @@ import { useResponsive } from '~/hooks/useResponsive';
 import { LogoLayout, StackLayout } from '~/layouts/restaurant';
 
 export function CreateRestaurantPage() {
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
   return (
     <>
       {
-      isLaptop
+      isDesktop
       && (
         <LogoLayout>
           <Page title="Добавить ресторан">
@@ -20,7 +20,7 @@ export function CreateRestaurantPage() {
       )
     }
       {
-      !isLaptop
+      !isDesktop
       && (
         <StackLayout title="Добавить ресторан">
           <Page title="Добавить ресторан">

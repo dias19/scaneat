@@ -27,9 +27,7 @@ export const PATH_MANAGEMENT = {
     ROOTS_MANAGEMENT,
     `/restaurants/${restaurantId}/menu/${categoryId}`,
   ),
-  statusPending: path(ROOTS_MANAGEMENT, '/restaurants/status'),
-  statusAccepted: path(ROOTS_MANAGEMENT, '/restaurants/status/accepted'),
-  statusDeclined: path(ROOTS_MANAGEMENT, '/restaurants/status/declined'),
+  restaurantStatuses: path(ROOTS_MANAGEMENT, '/restaurants/status'),
 };
 
 export const PATH_PAGE = {

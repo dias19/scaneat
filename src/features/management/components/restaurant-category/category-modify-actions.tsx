@@ -2,60 +2,62 @@ import React, { useState } from 'react';
 
 import { useResponsive } from '~/hooks/useResponsive';
 
-import { Category } from '../../types';
+import { Category, RestarauntModifyActions } from '../../types';
 import { ModifyActionBottomDrawer } from '../modify-action-bottom-drawer';
 import { ModifyActionPopover } from '../modify-action-popover';
 import { RestaurantCategoryDelete } from './category-delete';
 import { RestaurantCategoryEdit } from './category-edit';
 
-type EditDishProps = {
+type Props = {
   open: boolean;
-  setOpen: (state: boolean) => void;
+  onClose: VoidFunction,
+  onOpen: VoidFunction,
   category: Category,
   anchorEl?: Element | null
 };
 export function RestaurantCategoryModifyActions({
-  open, setOpen, category, anchorEl,
-}: EditDishProps) {
-  const [editOpen, setEditOpen] = useState(false);
+  open, onClose, onOpen, category, anchorEl,
+}: Props) {
+  const [action, setAction] = useState<RestarauntModifyActions | null>(null);
 
-  const [deleteOpen, setDeleteOpen] = useState(false);
+  const handleAction = (modifyAction: RestarauntModifyActions) => {
+    setAction(modifyAction);
+  };
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
   return (
     <>
-      {isLaptop && (
+      {isDesktop && (
       <ModifyActionPopover
         open={open}
-        setOpen={setOpen}
-        setOpenEdit={setEditOpen}
-        setOpenDelete={setDeleteOpen}
+        onClose={onClose}
+        handleAction={handleAction}
         anchorEl={anchorEl}
       />
       )}
 
-      {!isLaptop && (
+      {!isDesktop && (
       <ModifyActionBottomDrawer
         open={open}
-        setOpen={setOpen}
-        setOpenDelete={setEditOpen}
-        setOpenEdit={setDeleteOpen}
+        onClose={onClose}
+        onOpen={onOpen}
+        handleAction={handleAction}
         title={category.name}
       />
       )}
 
       <RestaurantCategoryDelete
         category={category}
-        deleteOpen={deleteOpen}
-        setDeleteOpen={setDeleteOpen}
-        setActionsOpen={setOpen}
+        deleteOpen={action === 'delete'}
+        handleAction={handleAction}
+        onClose={onClose}
       />
 
       <RestaurantCategoryEdit
         category={category}
-        setEditOpen={setEditOpen}
-        editOpen={editOpen}
-        setActionsOpen={setOpen}
+        handleAction={handleAction}
+        editOpen={action === 'edit'}
+        onClose={onClose}
       />
     </>
   );

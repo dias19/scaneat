@@ -12,14 +12,14 @@ import { FormProvider, RHFTextField } from '~/components/hook-form';
 import { Category, CategoryFormData } from '../../types';
 
 type CategoryFormProps={
-    setOpen: (state:boolean)=> void,
+    onCloseForm: VoidFunction,
     onSubmit: (data: CategoryFormData) => void,
     buttonTitle: string,
     category?: Category
 }
 
 export function RestaurantCategoryForm({
-  setOpen, onSubmit, buttonTitle, category,
+  onCloseForm, onSubmit, buttonTitle, category,
 }:CategoryFormProps) {
   const categorySchema = yup.object({
     name: yup.string().required(),
@@ -55,7 +55,7 @@ export function RestaurantCategoryForm({
         </FormProvider>
       </Box>
       <BoxButtonStyle>
-        <Button variant="outlined" onClick={() => setOpen(false)}>
+        <Button variant="outlined" onClick={onCloseForm}>
           Отменить
         </Button>
         <Button

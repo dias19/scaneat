@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { Page } from '~/components/Page';
 import {
   RestaurantProductsListMobile,
-  RestaurantProductsListLaptop,
+  RestaurantProductsListDesktop,
   Category,
 } from '~/features/management';
 import { useResponsive } from '~/hooks/useResponsive';
@@ -17,20 +17,20 @@ interface LocationState {
 
 export function RestaurantMenuItemsPage() {
   const location = useLocation();
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
   const { category } = location.state as LocationState;
 
   return (
     <Page title="Menu Items">
-      {!isLaptop && (
+      {!isDesktop && (
         <ManagementStackLayout title={category.name}>
           <RestaurantProductsListMobile />
         </ManagementStackLayout>
       )}
 
-      {isLaptop && (
+      {isDesktop && (
         <ManagementLogoLayout>
-          <RestaurantProductsListLaptop />
+          <RestaurantProductsListDesktop />
         </ManagementLogoLayout>
       )}
     </Page>

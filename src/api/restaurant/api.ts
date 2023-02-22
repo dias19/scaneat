@@ -4,7 +4,6 @@ import { baseQueryWithLogout } from '..';
 import {
   GetRestaurantsResponse,
   GetRestaurantResponse,
-  GetRestaurantsRequest,
   GetRestaurantRequest,
   VerifyRestaurantResponse,
   RejectRestaurantResponse,
@@ -12,6 +11,7 @@ import {
   RejectRestaurantRequest,
   CreateRestaurantRequest,
   CreateRestaurantResponse,
+  GetRestaurantsByStatusRequest,
 } from './type';
 
 export const RESTAURANT_REDUCER_KEY = 'restaurantApi';
@@ -21,8 +21,8 @@ const restaurantApi = createApi({
   baseQuery: baseQueryWithLogout,
   tagTypes: ['Restaurants'],
   endpoints: (builder) => ({
-    getRestaurants: builder.query<GetRestaurantsResponse, GetRestaurantsRequest>({
-      query: (status) => `/restaurant?status=${status}`,
+    getRestaurants: builder.query<GetRestaurantsResponse, void>({
+      query: () => '/restaurant',
       providesTags: (result) => (result
         ? [
           ...result.map(({ id }) => ({ type: 'Restaurants' as const, id })),
@@ -33,10 +33,13 @@ const restaurantApi = createApi({
     getRestaurant: builder.query<GetRestaurantResponse, GetRestaurantRequest>({
       query: (restaurantSlug) => `/restaurant/${restaurantSlug}`,
     }),
-    getRestaurantQR: builder.query<any, string>({
-      query(restaurantSlug) {
+    getRestaurantsByStatus: builder.query<GetRestaurantsResponse, GetRestaurantsByStatusRequest>({
+      query: ({ status }) => `/restaurant?status=${status}`,
+    }),
+    getRestaurantQR: builder.query<any, number>({
+      query(restaurantId) {
         return {
-          url: `/restaurant/${restaurantSlug}/qr`,
+          url: `/restaurant/${restaurantId}/qr`,
           responseHandler: async (response: any) => {
             if (response.status === 200) {
               const hiddenElement = document.createElement('a');

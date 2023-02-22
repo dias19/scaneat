@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Route } from 'react-router-dom';
 
-import { ManagementLogoLayout, ManagementStackLayout } from '~/layouts/management';
+import { ManagementStackLayout } from '~/layouts/management';
 import { lazyImport } from '~/utils/lazyImport';
 
 const { ManagerProfilePage } = lazyImport(
@@ -44,18 +44,6 @@ const { RestaurantStatusPage } = lazyImport(
   'RestaurantStatusPage',
 );
 
-const { RestaurantStatusRejected } = lazyImport(
-  () => import('~/features/management/components/restaurant-status/restaurant-status-rejected'),
-  'RestaurantStatusRejected',
-);
-const { RestaurantStatusAccepted } = lazyImport(
-  () => import('~/features/management/components/restaurant-status/restaurant-status-accepted'),
-  'RestaurantStatusAccepted',
-);
-const { RestaurantStatusPending } = lazyImport(
-  () => import('~/features/management/components/restaurant-status/restaurant-status-pending'),
-  'RestaurantStatusPending',
-);
 export const ManagementRoutes = [
 
   <Route path="profile" element={<ManagerProfilePage />} key="profile" />,
@@ -103,27 +91,10 @@ export const ManagementRoutes = [
     key="restaurant-menu-items"
   />,
 
-  <Route element={<ManagementLogoLayout />} key="logo-layout">
-    <Route
-      path="restaurants/status"
-      element={<RestaurantStatusPage />}
-      key="restaurants-status"
-    >
-      <Route index element={<RestaurantStatusPending />} key="restaurants-status-pending" />
-      ,
-      <Route
-        path="accepted"
-        element={<RestaurantStatusAccepted />}
-        key="restaurants-status-accepted"
-      />
-      ,
-      <Route
-        path="declined"
-        element={<RestaurantStatusRejected />}
-        key="restaurants-status-rejected"
-      />
+  <Route
+    path="restaurants/status"
+    element={<RestaurantStatusPage />}
+    key="restaurants-status"
+  />,
 
-    </Route>
-    ,
-  </Route>,
 ];

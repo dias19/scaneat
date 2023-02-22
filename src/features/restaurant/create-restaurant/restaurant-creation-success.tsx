@@ -7,24 +7,24 @@ import {
 import { useResponsive } from '~/hooks/useResponsive';
 
 import { CreationSuccessful } from './forms/creation-successful';
-import { StepperLaptop } from './stepper-laptop';
+import { StepperDesktop } from './stepper-desktop';
 
 export function RestaurantCreationSuccess() {
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
   return (
     <BoxContainerStyle>
       {
-    isLaptop
+    isDesktop
       ? (
         <Container>
-          <BoxLaptopStyle>
+          <BoxDesktopStyle>
             <Box sx={{ height: '100%', marginTop: 9 }}>
-              <StepperLaptop activeStep={3} />
+              <StepperDesktop activeStep={3} />
             </Box>
             <Box sx={{ width: 400 }}>
               <CreationSuccessful />
             </Box>
-          </BoxLaptopStyle>
+          </BoxDesktopStyle>
         </Container>
       )
       : (
@@ -52,7 +52,7 @@ const BoxMobileStyle = styled(Box)({
   marginTop: '20%',
 });
 
-const BoxLaptopStyle = styled(Box)(({ theme }) => ({
+const BoxDesktopStyle = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-evenly',
   alignItems: 'self-start',

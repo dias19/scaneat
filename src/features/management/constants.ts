@@ -18,18 +18,3 @@ export const MANAGEMENT_NAVIGATIONS = [
     route: PATH_MANAGEMENT.employees,
   },
 ];
-
-export const MANAGEMENT_RESTAURANT_STATUS = [
-  {
-    name: 'В ожидании',
-    route: PATH_MANAGEMENT.statusPending,
-  },
-  {
-    name: 'Подтвержденные',
-    route: PATH_MANAGEMENT.statusAccepted,
-  },
-  {
-    name: 'Отклоненные',
-    route: PATH_MANAGEMENT.statusDeclined,
-  },
-];

@@ -19,11 +19,11 @@ export function RestaurantDetailsPage() {
       skip,
     });
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
 
-  const isShownLaptop = !isLoading && !isError && isLaptop;
+  const isShownDesktop = !isLoading && !isError && isDesktop;
 
-  const isShownMobile = !isLoading && !isError && !isLaptop;
+  const isShownMobile = !isLoading && !isError && !isDesktop;
   return (
     <Page title="Restaurant Details">
       <CircularLoader isLoading={isLoading} />
@@ -33,7 +33,7 @@ export function RestaurantDetailsPage() {
          <RestaurantDetails />
        </ManagementStackLayout>
        )}
-      {isShownLaptop
+      {isShownDesktop
        && (
        <ManagementLogoLayout>
          <RestaurantDetails />

@@ -12,7 +12,7 @@ import { PATH_MANAGEMENT } from '~/routes/paths';
 import { Category } from '../../types';
 import { RestaurantCategoryModifyActions } from './category-modify-actions';
 
-type CardMobileProps={
+type Props={
     category: Category,
     restaurantId: number,
 }
@@ -20,7 +20,7 @@ type CardMobileProps={
 export function CategoryCard({
   category,
   restaurantId,
-}:CardMobileProps) {
+}:Props) {
   const [cardDisableRipple, setCardDisableRipple] = useState(false);
 
   const [actionsOpen, setActionsOpen] = useState(false);
@@ -29,12 +29,12 @@ export function CategoryCard({
 
   const navigate = useNavigate();
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
 
   const handleClick = (e : React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     setCardDisableRipple(true);
-    if (isLaptop && e.target instanceof Element) setAnchorEl(e.target);
+    if (isDesktop && e.target instanceof Element) setAnchorEl(e.target);
     setActionsOpen(true);
   };
   const handleNavigate = () => {
@@ -75,7 +75,8 @@ export function CategoryCard({
       </Card>
       <RestaurantCategoryModifyActions
         open={actionsOpen}
-        setOpen={setActionsOpen}
+        onClose={() => setActionsOpen(false)}
+        onOpen={() => setActionsOpen(true)}
         category={category}
         anchorEl={anchorEl}
       />

@@ -7,25 +7,25 @@ import {
 import { useResponsive } from '~/hooks/useResponsive';
 
 import { RestaurantForms } from './forms/restaurant-forms';
-import { StepperLaptop } from './stepper-laptop';
+import { StepperDesktop } from './stepper-desktop';
 import { StepperMobile } from './stepper-mobile';
 
 export function CreateRestaurant() {
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
   return (
     <BoxContainerStyle>
       {
-          isLaptop
+          isDesktop
             ? (
               <Container>
-                <BoxLaptopStyle>
+                <BoxDesktopStyle>
                   <Box sx={{ height: '100%', marginTop: 8 }}>
-                    <StepperLaptop activeStep={activeStep} setActiveStep={setActiveStep} />
+                    <StepperDesktop activeStep={activeStep} setActiveStep={setActiveStep} />
                   </Box>
                   <RestaurantForms activeStep={activeStep} setActiveStep={setActiveStep} />
-                </BoxLaptopStyle>
+                </BoxDesktopStyle>
               </Container>
             )
 
@@ -68,7 +68,7 @@ const BoxContainerStyle = styled(Box)(({ theme }) => ({
   },
 }));
 
-const BoxLaptopStyle = styled(Box)(({ theme }) => ({
+const BoxDesktopStyle = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-evenly',
   alignItems: 'self-start',

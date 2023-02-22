@@ -8,25 +8,25 @@ import { BottomDrawer } from '~/components/bottom-drawer';
 import { DialogForm } from '~/components/Dialog';
 import { useResponsive } from '~/hooks/useResponsive';
 
-import { Category, CategoryFormData } from '../../types';
+import { Category, CategoryFormData, RestarauntModifyActions } from '../../types';
 import { RestaurantCategoryForm } from './category-form';
 
 type CategoryEditProps = {
   editOpen: boolean;
-  setEditOpen: (state: boolean) => void;
+  handleAction: (action: RestarauntModifyActions) => void,
   category: Category;
-  setActionsOpen: (state: boolean) => void;
+  onClose: VoidFunction
 };
 
 export function RestaurantCategoryEdit({
   editOpen,
-  setEditOpen,
+  handleAction,
   category,
-  setActionsOpen,
+  onClose,
 }: CategoryEditProps) {
   const [editCategory] = categoryApi.endpoints.editCategory.useMutation();
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
 
   const parameters = useParams();
 
@@ -39,23 +39,23 @@ export function RestaurantCategoryEdit({
       isActive: true,
       ...data,
     });
-    setEditOpen(false);
-    setActionsOpen(false);
+    handleAction(null);
+    onClose();
   };
   return (
     <>
-      {!isLaptop && (
+      {!isDesktop && (
         <CategoryEditMobile
           editOpen={editOpen}
-          setEditOpen={setEditOpen}
+          handleAction={handleAction}
           category={category}
           handleCategoryEdit={handleCategoryEdit}
         />
       )}
-      {isLaptop && (
-        <CategoryEditLaptop
+      {isDesktop && (
+        <CategoryEditDesktop
           editOpen={editOpen}
-          setEditOpen={setEditOpen}
+          handleAction={handleAction}
           category={category}
           handleCategoryEdit={handleCategoryEdit}
         />
@@ -64,18 +64,26 @@ export function RestaurantCategoryEdit({
   );
 }
 
-type EditProps = Pick<CategoryEditProps, 'category' | 'editOpen' | 'setEditOpen'> & {
+type EditProps = Pick<CategoryEditProps, 'category' | 'editOpen' | 'handleAction'> & {
   handleCategoryEdit: (data: CategoryFormData) => void;
 };
 
-function CategoryEditLaptop({
-  editOpen, category, setEditOpen, handleCategoryEdit,
+function CategoryEditDesktop({
+  editOpen, category, handleAction, handleCategoryEdit,
 }: EditProps) {
+  const handleClose = () => {
+    handleAction(null);
+  };
+
+  const handleOpen = () => {
+    handleAction('edit');
+  };
+
   return (
     <DialogForm
       open={editOpen}
-      onClose={() => setEditOpen(false)}
-      onOpen={() => setEditOpen(true)}
+      onClose={handleClose}
+      onOpen={handleOpen}
       title={category.name}
       hasCloser
       maxWidth="sm"
@@ -88,7 +96,7 @@ function CategoryEditLaptop({
         <Box sx={{ flexGrow: 1, mt: 2 }}>
           <RestaurantCategoryForm
             onSubmit={handleCategoryEdit}
-            setOpen={setEditOpen}
+            onCloseForm={handleClose}
             buttonTitle="Редактировать"
             category={category}
           />
@@ -99,19 +107,27 @@ function CategoryEditLaptop({
 }
 
 function CategoryEditMobile({
-  editOpen, category, setEditOpen, handleCategoryEdit,
+  editOpen, category, handleAction, handleCategoryEdit,
 }: EditProps) {
+  const handleClose = () => {
+    handleAction(null);
+  };
+
+  const handleOpen = () => {
+    handleAction('edit');
+  };
+
   return (
     <BottomDrawerStyle
       open={editOpen}
-      onClose={() => setEditOpen(false)}
-      onOpen={() => setEditOpen(true)}
+      onClose={handleClose}
+      onOpen={handleOpen}
       title={category.name}
       hasCloser
     >
       <RestaurantCategoryForm
         onSubmit={handleCategoryEdit}
-        setOpen={setEditOpen}
+        onCloseForm={handleClose}
         buttonTitle="Редактировать"
         category={category}
       />

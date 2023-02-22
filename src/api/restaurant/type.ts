@@ -1,3 +1,4 @@
+import { RestaurantStatus } from '~/features/management';
 import { Restaurant } from '~/features/restaurant';
 
 export type GetRestaurantsResponse = Restaurant[];
@@ -11,6 +12,10 @@ export type RejectRestaurantResponse = Restaurant;
 export type GetRestaurantsRequest = string;
 
 export type GetRestaurantRequest = string;
+
+export type GetRestaurantsByStatusRequest={
+  status: RestaurantStatus
+}
 
 export type GetRestaurantQR = string;
 

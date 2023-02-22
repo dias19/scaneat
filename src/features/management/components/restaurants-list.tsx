@@ -12,13 +12,13 @@ import { RestaurantCard } from './restaurant-card';
 
 export function RestaurantsList() {
   const { data: restaurants = [], isLoading, isError } = restaurantsApi
-    .endpoints.getRestaurants.useQuery('accepted');
+    .endpoints.getRestaurants.useQuery();
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
 
-  const isShownMobile = !isLoading && !isError && !isLaptop;
+  const isShownMobile = !isLoading && !isError && !isDesktop;
 
-  const isShownLaptop = !isLoading && !isError && isLaptop;
+  const isShownDesktop = !isLoading && !isError && isDesktop;
   return (
     <>
       <CircularLoader isLoading={isLoading} />
@@ -35,7 +35,7 @@ export function RestaurantsList() {
        </BoxRestaurantStyle>
      </BoxStyle>
      )}
-      {isShownLaptop
+      {isShownDesktop
      && (
      <Container>
        <Typography sx={{ mt: 8, mb: 5 }} variant="subtitle1">

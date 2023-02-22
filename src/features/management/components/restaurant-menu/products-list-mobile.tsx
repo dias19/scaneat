@@ -27,7 +27,7 @@ export function RestaurantProductsListMobile() {
 
   const { categoryName } = location.state as LocationState;
 
-  const [addDish, setAddDish] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
 
   const {
     data: products = [],
@@ -44,6 +44,14 @@ export function RestaurantProductsListMobile() {
 
   const isShownEmpty = !isError && !isLoading && isCategoryEmpty;
 
+  const handleOpen = () => {
+    setAddOpen(true);
+  };
+
+  const handleClose = () => {
+    setAddOpen(false);
+  };
+
   return (
     <>
       <CircularLoader isLoading={isLoading} />
@@ -53,11 +61,16 @@ export function RestaurantProductsListMobile() {
             Нету созданных товаров
           </Typography>
           <BoxStyle>
-            <Button variant="contained" size="large" onClick={() => setAddDish(true)}>
+            <Button variant="contained" size="large" onClick={handleOpen}>
               Добавить блюдо
             </Button>
           </BoxStyle>
-          <RestaurantProductAdd open={addDish} setOpen={setAddDish} category={categoryName} />
+          <RestaurantProductAdd
+            open={addOpen}
+            onClose={handleClose}
+            onOpen={handleOpen}
+            category={categoryName}
+          />
         </>
       )}
       {isShown && (
@@ -68,11 +81,16 @@ export function RestaurantProductsListMobile() {
               <RestaurantProductCard key={product.id} product={product} />
             ))}
           <BoxStyle>
-            <Button variant="contained" size="large" onClick={() => setAddDish(true)}>
+            <Button variant="contained" size="large" onClick={handleOpen}>
               Добавить блюдо
             </Button>
           </BoxStyle>
-          <RestaurantProductAdd open={addDish} setOpen={setAddDish} category={categoryName} />
+          <RestaurantProductAdd
+            open={addOpen}
+            onClose={handleClose}
+            onOpen={handleOpen}
+            category={categoryName}
+          />
         </BoxProductsStyle>
       )}
     </>

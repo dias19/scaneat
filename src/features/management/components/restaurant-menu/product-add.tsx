@@ -12,13 +12,16 @@ import { useResponsive } from '~/hooks/useResponsive';
 import { ProductFormData } from '../../types';
 import { RestaurantProductForm } from './product-form';
 
-type AddProductProp = {
+type Props = {
   open: boolean;
-  setOpen: (state: boolean) => void;
+  onClose: VoidFunction,
+  onOpen: VoidFunction,
   category?: string;
 };
 
-export function RestaurantProductAdd({ open, setOpen, category }: AddProductProp) {
+export function RestaurantProductAdd({
+  open, onClose, onOpen, category,
+}: Props) {
   const [addProduct] = productsApi.endpoints.addProduct.useMutation();
 
   const parameters = useParams();
@@ -27,7 +30,7 @@ export function RestaurantProductAdd({ open, setOpen, category }: AddProductProp
 
   const categoryId = parseInt(parameters.categoryId as string, 10);
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
 
   const handleAdd = async (data: ProductFormData) => {
     const { photoUrl, ...productData } = data;
@@ -37,24 +40,25 @@ export function RestaurantProductAdd({ open, setOpen, category }: AddProductProp
       categoryId,
       ...productData,
     });
-    setOpen(false);
+    onClose();
   };
-
   return (
     <>
-      {!isLaptop && (
+      {!isDesktop && (
         <ProductAddMobile
           open={open}
-          setOpen={setOpen}
+          onClose={onClose}
+          onOpen={onOpen}
           category={category}
           handleAdd={handleAdd}
         />
       )}
 
-      {isLaptop && (
-        <ProductAddLaptop
+      {isDesktop && (
+        <ProductAddDesktop
           open={open}
-          setOpen={setOpen}
+          onClose={onClose}
+          onOpen={onOpen}
           handleAdd={handleAdd}
         />
       )}
@@ -67,41 +71,47 @@ const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
   },
 }));
 
-type AddPropsLaptop=Pick<AddProductProp, 'open' | 'setOpen'> & {
+type AddPropsDesktop=Pick<Props, 'open' | 'onClose' | 'onOpen'> & {
   handleAdd: (data:ProductFormData) => void
 }
 
-function ProductAddLaptop({
+function ProductAddDesktop({
   open,
-  setOpen,
+  onClose,
+  onOpen,
   handleAdd,
-}:AddPropsLaptop) {
+}:AddPropsDesktop) {
   return (
     <DialogForm
       open={open}
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      onClose={onClose}
+      onOpen={onOpen}
       title="Добавить блюдо"
       hasCloser
     >
-      <RestaurantProductForm onSubmit={handleAdd} setOpen={setOpen} buttonName="Создать" />
+      <RestaurantProductForm
+        onSubmit={handleAdd}
+        onCloseForm={onClose}
+        buttonName="Создать"
+      />
     </DialogForm>
   );
 }
 
-type AddPropsMobile=AddProductProp & Pick<AddPropsLaptop, 'handleAdd'>
+type AddPropsMobile=Props & Pick<AddPropsDesktop, 'handleAdd'>
 
 function ProductAddMobile({
   open,
-  setOpen,
+  onClose,
+  onOpen,
   category,
   handleAdd,
 }:AddPropsMobile) {
   return (
     <BottomDrawerStyle
       open={open}
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      onClose={onClose}
+      onOpen={onOpen}
       title="Добавить блюдо"
       hasCloser
     >
@@ -115,7 +125,11 @@ function ProductAddMobile({
           Заполните поля для нового блюда
         </Typography>
         <Box sx={{ flexGrow: 1 }}>
-          <RestaurantProductForm setOpen={setOpen} onSubmit={handleAdd} buttonName="Создать" />
+          <RestaurantProductForm
+            onCloseForm={onClose}
+            onSubmit={handleAdd}
+            buttonName="Создать"
+          />
         </Box>
       </Box>
     </BottomDrawerStyle>

@@ -9,35 +9,37 @@ import { useResponsive } from '~/hooks/useResponsive';
 import { CategoryFormData } from '../../types';
 import { RestaurantCategoryForm } from './category-form';
 
-type AddCategoryProps = {
+type Props = {
   open: boolean;
-  setOpen: (state: boolean) => void;
+  onClose: VoidFunction,
+  onOpen: VoidFunction,
   handleAdd: (data:CategoryFormData) => void
 };
 
 export function RestaurantCategoryAdd({
-  open, setOpen, handleAdd,
-}: AddCategoryProps) {
-  const isLaptop = useResponsive('up', 'sm');
+  open, onClose, onOpen, handleAdd,
+}: Props) {
+  const isDesktop = useResponsive('up', 'sm');
   return (
     <>
       {
-      !isLaptop
+      !isDesktop
       && (
         <CategoryAddMobile
           open={open}
-          setOpen={setOpen}
+          onClose={onClose}
+          onOpen={onOpen}
           handleAdd={handleAdd}
         />
-
       )
     }
       {
-      isLaptop
+      isDesktop
       && (
-        <CategoryAddLaptop
+        <CategoryAddDesktop
           open={open}
-          setOpen={setOpen}
+          onClose={onClose}
+          onOpen={onOpen}
           handleAdd={handleAdd}
         />
       )
@@ -46,21 +48,16 @@ export function RestaurantCategoryAdd({
   );
 }
 
-const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
-  '.MuiDrawer-paper': {
-    height: `calc(100% - ${theme.spacing(3)})`,
-  },
-}));
-
 function CategoryAddMobile({
   open,
-  setOpen,
+  onClose,
+  onOpen,
   handleAdd,
-}:AddCategoryProps) {
+}:Props) {
   return (
     <BottomDrawerStyle
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      onClose={onClose}
+      onOpen={onOpen}
       open={open}
       title="Создать категорию"
       hasCloser
@@ -73,7 +70,7 @@ function CategoryAddMobile({
         <Box sx={{ flexGrow: 1, mt: 2 }}>
           <RestaurantCategoryForm
             buttonTitle="Создать"
-            setOpen={setOpen}
+            onCloseForm={onClose}
             onSubmit={handleAdd}
           />
         </Box>
@@ -82,16 +79,17 @@ function CategoryAddMobile({
   );
 }
 
-function CategoryAddLaptop({
+function CategoryAddDesktop({
   open,
-  setOpen,
+  onClose,
+  onOpen,
   handleAdd,
-}:AddCategoryProps) {
+}:Props) {
   return (
     <DialogForm
       open={open}
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      onClose={onClose}
+      onOpen={onOpen}
       title="Создать категорию"
       hasCloser
       maxWidth="sm"
@@ -104,7 +102,7 @@ function CategoryAddLaptop({
         <Box sx={{ flexGrow: 1, mt: 2 }}>
           <RestaurantCategoryForm
             buttonTitle="Создать"
-            setOpen={setOpen}
+            onCloseForm={onClose}
             onSubmit={handleAdd}
           />
         </Box>
@@ -112,3 +110,9 @@ function CategoryAddLaptop({
     </DialogForm>
   );
 }
+
+const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
+  '.MuiDrawer-paper': {
+    height: `calc(100% - ${theme.spacing(3)})`,
+  },
+}));
