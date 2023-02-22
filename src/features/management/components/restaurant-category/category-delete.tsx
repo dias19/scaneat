@@ -10,26 +10,26 @@ import { BottomDrawer } from '~/components/bottom-drawer';
 import { DialogForm } from '~/components/Dialog';
 import { useResponsive } from '~/hooks/useResponsive';
 
-import { Category } from '../../types';
+import { Category, RestarauntModifyActions } from '../../types';
 
 type CategoryDeleteProps = {
   category: Category;
   deleteOpen: boolean;
-  setDeleteOpen: (state: boolean) => void;
-  setActionsOpen: (state: boolean) => void;
+  handleAction: (action: RestarauntModifyActions) => void;
+  onClose: VoidFunction;
 };
 
 export function RestaurantCategoryDelete({
   category,
   deleteOpen,
-  setDeleteOpen,
-  setActionsOpen,
+  handleAction,
+  onClose,
 }: CategoryDeleteProps) {
   const parameters = useParams();
 
   const restaurantId = parseInt(parameters.restaurantId as string, 10);
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
 
   const [deleteCategory] = categoryApi.endpoints.deleteCategory.useMutation();
 
@@ -38,24 +38,24 @@ export function RestaurantCategoryDelete({
       restaurantId,
       categoryId: category.id,
     });
-    setDeleteOpen(false);
-    setActionsOpen(false);
+    handleAction(null);
+    onClose();
   };
 
   return (
     <>
-      {!isLaptop && (
+      {!isDesktop && (
         <CategoryDeleteMobile
           deleteOpen={deleteOpen}
-          setDeleteOpen={setDeleteOpen}
+          handleAction={handleAction}
           category={category}
           handleDeleteCategory={handleDeleteCategory}
         />
       )}
-      {isLaptop && (
-        <CategoryDeleteLaptop
+      {isDesktop && (
+        <CategoryDeleteDesktop
           deleteOpen={deleteOpen}
-          setDeleteOpen={setDeleteOpen}
+          handleAction={handleAction}
           category={category}
           handleDeleteCategory={handleDeleteCategory}
         />
@@ -64,43 +64,32 @@ export function RestaurantCategoryDelete({
   );
 }
 
-const BoxButtonStyle = styled(Box)(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: theme.spacing(1),
-  [theme.breakpoints.up('sm')]: {
-    marginTop: theme.spacing(2),
-    display: 'flex',
-    justifyContent: 'end',
-  },
-}));
-
-type DeleteProps = Pick<CategoryDeleteProps, 'category' | 'deleteOpen' | 'setDeleteOpen'> & {
+type DeleteProps = Pick<CategoryDeleteProps, 'category' | 'deleteOpen' | 'handleAction'> & {
   handleDeleteCategory: () => void;
 };
 
-function CategoryDeleteLaptop({
+function CategoryDeleteDesktop({
   deleteOpen,
-  setDeleteOpen,
+  handleAction,
   category,
   handleDeleteCategory,
 }: DeleteProps) {
   const handleClose = () => {
-    setDeleteOpen(false);
+    handleAction(null);
   };
 
   return (
     <DialogForm
       open={deleteOpen}
-      onClose={() => setDeleteOpen(false)}
-      onOpen={() => setDeleteOpen(true)}
+      onClose={handleClose}
+      onOpen={() => handleAction('delete')}
       title="Создать категорию"
       hasCloser
       maxWidth="xs"
     >
       <Box>
         <Typography variant="subtitle2">
-          Вы уверены что хотите удалить блюдо
+          Вы уверены что хотите удалить категорию
           {' '}
           {category.name}
         </Typography>
@@ -122,18 +111,19 @@ function CategoryDeleteLaptop({
 
 function CategoryDeleteMobile({
   deleteOpen,
-  setDeleteOpen,
+  handleAction,
   category,
   handleDeleteCategory,
 }: DeleteProps) {
   const handleClose = () => {
-    setDeleteOpen(false);
+    handleAction(null);
   };
+
   return (
     <BottomDrawer
       open={deleteOpen}
-      onClose={() => setDeleteOpen(false)}
-      onOpen={() => setDeleteOpen(true)}
+      onClose={handleClose}
+      onOpen={() => handleAction('delete')}
       title={category.name}
       hasCloser
     >
@@ -158,3 +148,14 @@ function CategoryDeleteMobile({
     </BottomDrawer>
   );
 }
+
+const BoxButtonStyle = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: theme.spacing(1),
+  [theme.breakpoints.up('sm')]: {
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'end',
+  },
+}));
