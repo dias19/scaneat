@@ -20,7 +20,7 @@ export function RestaurantDetails() {
 
   const skip = !slug;
 
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
   const { data: restaurant } = restaurantApi.endpoints.getRestaurant.useQuery(slug as string, {
     skip,
   });
@@ -28,7 +28,7 @@ export function RestaurantDetails() {
   return (
     <BoxStyle>
       {
-        isLaptop
+        isDesktop
         && (
           <Container>
             <NavigateBack />
@@ -42,7 +42,7 @@ export function RestaurantDetails() {
         )
       }
       {
-        !isLaptop
+        !isDesktop
         && (
           <>
             <Profile restaurant={restaurant} />

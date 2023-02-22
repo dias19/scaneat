@@ -14,7 +14,7 @@ type NavigationProps={
 }
 
 export default function ManagementNavigation({ id }:NavigationProps) {
-  const isLaptop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive('up', 'sm');
   return (
     <>
       <Typography variant="h6" sx={{ mt: 3, mb: 3 }}>
@@ -24,7 +24,7 @@ export default function ManagementNavigation({ id }:NavigationProps) {
         display="grid"
         gridTemplateColumns="repeat(2, 1fr)"
         gap={2}
-        sx={{ width: isLaptop ? 358 : 'auto' }}
+        sx={{ width: isDesktop ? 358 : 'auto' }}
       >
         {MANAGEMENT_NAVIGATIONS.map((navigation) => (
           <Card key={navigation.name}>
