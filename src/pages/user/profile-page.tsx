@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { Page } from '~/components/Page';
-import { UserChefLayout } from '~/layouts/user';
+import { RestaurantStaffLayout } from '~/layouts/staff';
 
 export function ProfilePage() {
   return (
-    <UserChefLayout>
-      <Page title="Заказы">
+    <RestaurantStaffLayout staffRole="chef">
+      <Page title="Профиль">
         <div>profile</div>
       </Page>
-    </UserChefLayout>
+    </RestaurantStaffLayout>
   );
 }

@@ -16,7 +16,9 @@ export function AppRoutes() {
   return (
     <BrowserRouter basename={import.meta.env.VITE_PUBLIC_URL}>
       <Routes>
-        {RestaurantRoutes}
+        <Route path="/restaurant" key="restaurant-routes">
+          {RestaurantRoutes}
+        </Route>
         {MiscRoutes}
         {AuthRoutes}
         <Route path="/management" element={<ProtectedRoute />} key="management">

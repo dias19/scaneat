@@ -3,6 +3,8 @@ import React from 'react';
 import { styled } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 
+import { useResponsive } from '~/hooks/useResponsive';
+
 import { BOTTOM_NAVIGATION, HEADER } from '../management/constants';
 import { LogoHeader } from '../management/header/header-with-logo';
 import { BottomNavigationChef } from './bottom-navigation';
@@ -12,7 +14,8 @@ const MainStyle = styled('main', {
 })(({ theme }) => ({
   paddingBottom: BOTTOM_NAVIGATION.BOTTOM_NAVIGATION_HEIGHT,
   backgroundColor: '#F4F6F8',
-  height: '100vh',
+  height: '100%',
+  overflow: 'scroll',
   paddingTop: HEADER.HEADER_HEIGHT,
   [theme.breakpoints.up('lg')]: {
     paddingLeft: 16,
@@ -21,15 +24,19 @@ const MainStyle = styled('main', {
 }));
 
 type LayoutProps = {
-    children?: React.ReactElement;
+  children?: React.ReactElement;
+  staffRole: 'chef';
 };
 
-export function UserChefLayout({ children }:LayoutProps) {
+export function RestaurantStaffLayout({ children, staffRole }: LayoutProps) {
+  const isLaptop = useResponsive('up', 'sm');
+
+  const isChef = staffRole === 'chef';
   return (
     <>
-      <LogoHeader />
+      {!isLaptop && <LogoHeader />}
       <MainStyle>{children || <Outlet />}</MainStyle>
-      <BottomNavigationChef />
+      {!isLaptop && isChef && <BottomNavigationChef />}
     </>
   );
 }
