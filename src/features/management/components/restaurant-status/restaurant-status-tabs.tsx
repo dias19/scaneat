@@ -58,10 +58,12 @@ function TabsDesktop({ status, handleChange }: TabsProps) {
       <Box display="flex">
         <TabsStyle
           value={status}
-          indicatorColor="primary.light"
           onChange={handleChange}
           variant="standard"
           orientation="vertical"
+          TabIndicatorProps={{
+            sx: { display: 'none' },
+          }}
         >
           {MANAGER_STATUSES.map((restaurantStatus) => (
             <TabStyle

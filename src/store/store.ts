@@ -6,6 +6,7 @@ import {
 
 import authApi, { AUTH_API_REDUCER_KEY } from '~/api/auth/api';
 import categoryApi, { CATEGORY_API_REDUCER_KEY } from '~/api/category/api';
+import employeeApi, { EMPLOYEE_API_REDUCER_KEY } from '~/api/employee/api';
 import miscApi, { MISC_API_REDUCER_KEY } from '~/api/misc/api';
 import ordersApi, { ORDERS_API_REDUCER_KEY } from '~/api/orders/api';
 import photoApi, { PHOTO_API_REDUCER_KEY } from '~/api/photo/api';
@@ -24,6 +25,7 @@ const reducers = {
   [PHOTO_API_REDUCER_KEY]: photoApi.reducer,
   [MISC_API_REDUCER_KEY]: miscApi.reducer,
   [ORDERS_API_REDUCER_KEY]: ordersApi.reducer,
+  [EMPLOYEE_API_REDUCER_KEY]: employeeApi.reducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);
@@ -51,6 +53,7 @@ export const store = configureStore({
     miscApi.middleware,
     photoApi.middleware,
     ordersApi.middleware,
+    employeeApi.middleware,
   ),
 });
 

@@ -23,6 +23,7 @@ export function NavigateBack() {
 }
 const BoxStyle = styled(Box)(({ theme }) => ({
   display: 'flex',
+  marginTop: theme.spacing(3),
   alignItems: 'center',
   marginBottom: theme.spacing(3),
   cursor: 'default',
