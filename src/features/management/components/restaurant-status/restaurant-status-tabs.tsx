@@ -58,10 +58,12 @@ function TabsDesktop({ status, handleChange }: TabsProps) {
       <Box display="flex">
         <TabsStyle
           value={status}
-          indicatorColor="primary.light"
           onChange={handleChange}
           variant="standard"
           orientation="vertical"
+          TabIndicatorProps={{
+            sx: { display: 'none' },
+          }}
         >
           {MANAGER_STATUSES.map((restaurantStatus) => (
             <TabStyle
@@ -99,13 +101,14 @@ const TabsStyle = styled(Tabs)(({ theme }) => ({
   width: '100%',
   display: 'grid',
   position: 'fixed',
+  padding: theme.spacing(0.5),
   zIndex: theme.zIndex.appBar,
   top: HEADER.HEADER_HEIGHT,
   [theme.breakpoints.up('sm')]: {
     position: 'relative',
     backgroundColor: 'inherit',
-    width: 'auto',
     marginRight: theme.spacing(7),
+    maxWidth: 150,
   },
 })) as typeof Tabs;
 
