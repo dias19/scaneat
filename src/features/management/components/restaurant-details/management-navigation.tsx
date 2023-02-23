@@ -3,18 +3,26 @@ import React from 'react';
 import {
   Box, Card, CardActionArea, CardContent, styled, Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useResponsive } from '~/hooks/useResponsive';
 
 import { MANAGEMENT_NAVIGATIONS } from '../../constants';
+import { ManagementDetailsNavigation } from '../../types';
 
-type NavigationProps={
-  id?: number
-}
+type NavigationProps = {
+  id?: number;
+  restaurantName?: string;
+};
 
-export default function ManagementNavigation({ id }:NavigationProps) {
+export default function ManagementNavigation({ id, restaurantName }: NavigationProps) {
   const isDesktop = useResponsive('up', 'sm');
+
+  const navigate = useNavigate();
+
+  const handleNavigate = (navigation: ManagementDetailsNavigation) => {
+    navigate(navigation.route(id), { state: { restaurantName } });
+  };
   return (
     <>
       <Typography variant="h6" sx={{ mt: 3, mb: 3 }}>
@@ -28,10 +36,10 @@ export default function ManagementNavigation({ id }:NavigationProps) {
       >
         {MANAGEMENT_NAVIGATIONS.map((navigation) => (
           <Card key={navigation.name}>
-            <CardActionArea to={navigation.route((id))} component={Link}>
-              <CardContentStyle>
-                {navigation.name}
-              </CardContentStyle>
+            <CardActionArea
+              onClick={() => handleNavigate(navigation)}
+            >
+              <CardContentStyle>{navigation.name}</CardContentStyle>
             </CardActionArea>
           </Card>
         ))}
@@ -44,5 +52,4 @@ const CardContentStyle = styled(CardContent)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-
 });

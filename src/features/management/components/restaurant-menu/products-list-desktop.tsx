@@ -57,7 +57,7 @@ export function RestaurantProductsListDesktop() {
   return (
     <Container>
       <CircularLoader isLoading={isLoading} />
-      <Box display="flex" flexDirection="column" sx={{ mt: 3 }}>
+      <Box display="flex" flexDirection="column">
         <NavigateBack />
         {isShownEmpty && (
         <>
