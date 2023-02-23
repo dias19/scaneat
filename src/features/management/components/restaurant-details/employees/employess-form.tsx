@@ -13,9 +13,10 @@ import { PostPhoto } from '~/features/misc';
 
 import { EmployeeFormData, Employee } from '../../../types';
 
-type EmployeeFormProps = {
+type Props = {
   employee?: Employee;
   buttonTitle: string;
+  onCloseForm: VoidFunction,
 };
 
 const staffSchema = yup.object().shape(
@@ -24,12 +25,12 @@ const staffSchema = yup.object().shape(
     surname: yup.string().required('Введите фамилию рабочего'),
     email: yup.string().email().required('Введите почту рабочего'),
     phone: yup.string().required('Введите номер телефона рабочего'),
-    isCheff: yup.boolean().when('isManager', {
+    isChef: yup.boolean().when('isManager', {
       is: (isManager: boolean) => !isManager,
       then: yup.boolean().oneOf([true], 'Выберите один из вариантов').required(),
     }),
-    isManager: yup.boolean().when('isCheff', {
-      is: (isCheff: boolean) => !isCheff,
+    isManager: yup.boolean().when('isChef', {
+      is: (isChef: boolean) => !isChef,
       then: yup.boolean().oneOf([true], 'Выберите один из вариантов').required(),
     }),
     role: yup.string(),
@@ -37,12 +38,11 @@ const staffSchema = yup.object().shape(
     photoId: yup.number().required(),
   },
   [
-    ['isManager', 'isCheff'],
-    ['isCheff', 'isManager'],
+    ['isManager', 'isChef'],
   ],
 );
 
-export function EmployeeForm({ employee, buttonTitle }: EmployeeFormProps) {
+export function EmployeeForm({ employee, buttonTitle, onCloseForm }: Props) {
   const defaultValues = {
     name: employee?.name || '',
     surname: employee?.surname || '',
@@ -51,7 +51,7 @@ export function EmployeeForm({ employee, buttonTitle }: EmployeeFormProps) {
     photoUrl: employee?.photoUrl || '',
     isManager: employee?.role === 'manager' || false,
     role: employee?.role || '',
-    isCheff: employee?.role === 'cheff' || false,
+    isChef: employee?.role === 'chef' || false,
     photoId: employee?.photoId,
   };
 
@@ -75,7 +75,7 @@ export function EmployeeForm({ employee, buttonTitle }: EmployeeFormProps) {
 
   function onSubmit(data: EmployeeFormData) {
     if (data.isManager) setValue('role', 'manager');
-    else if (data.isCheff) setValue('role', 'chef');
+    else if (data.isChef) setValue('role', 'chef');
     console.log(data);
   }
 
@@ -107,12 +107,12 @@ export function EmployeeForm({ employee, buttonTitle }: EmployeeFormProps) {
         </Typography>
 
         <BoxSwitchStyle>
-          <RHFSwitch name="isCheff" label="Шеф" />
+          <RHFSwitch name="isChef" label="Шеф" />
           <RHFSwitch name="isManager" label="Менеджер" />
         </BoxSwitchStyle>
       </Box>
       <BoxButtonStyle>
-        <Button variant="outlined" size="large">
+        <Button variant="outlined" size="large" onClick={onCloseForm}>
           Отмена
         </Button>
         <Button

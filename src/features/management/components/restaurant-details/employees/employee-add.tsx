@@ -21,7 +21,10 @@ export function EmployeeAdd({ open, onOpen, onClose }: EmployeeAddProps) {
       title="Добавить рабочего"
       hasCloser
     >
-      <EmployeeForm buttonTitle="Добавить" />
+      <EmployeeForm
+        buttonTitle="Добавить"
+        onCloseForm={onClose}
+      />
     </BottomDrawerStyle>
   );
 }

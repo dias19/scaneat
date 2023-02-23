@@ -4,28 +4,38 @@ import { styled } from '@mui/material';
 
 import { BottomDrawer } from '~/components/bottom-drawer';
 
-import { Employee } from '../../../types';
+import { Employee, RestarauntModifyActions } from '../../../types';
 import { EmployeeForm } from './employess-form';
 
-type EmployeeEditProps = {
+type Props = {
   openEdit: boolean;
-  onCloseEdit: VoidFunction,
-  onOpenEdit: VoidFunction,
+ handleAction: (action: RestarauntModifyActions) => void,
   employee: Employee;
 };
 
 export function EmployeeEdit({
-  openEdit, onCloseEdit, onOpenEdit, employee,
-}: EmployeeEditProps) {
+  openEdit, handleAction, employee,
+}: Props) {
+  const handleClose = () => {
+    handleAction(null);
+  };
+
+  const handleOpen = () => {
+    handleAction('edit');
+  };
   return (
     <BottomDrawerStyle
       open={openEdit}
-      onClose={onCloseEdit}
-      onOpen={onOpenEdit}
+      onClose={handleClose}
+      onOpen={handleOpen}
       hasCloser
       title="Редактировать рабочего"
     >
-      <EmployeeForm buttonTitle="Редактировать" employee={employee} />
+      <EmployeeForm
+        buttonTitle="Редактировать"
+        employee={employee}
+        onCloseForm={handleClose}
+      />
     </BottomDrawerStyle>
   );
 }

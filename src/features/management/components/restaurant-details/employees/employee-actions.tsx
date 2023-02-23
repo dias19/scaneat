@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-import { Employee } from '../../../types';
+import { Employee, RestarauntModifyActions } from '../../../types';
 import { ModifyActionBottomDrawer } from '../../modify-action-bottom-drawer';
 import { EmployeeDelete } from './employee-delete';
 import { EmployeeEdit } from './employee-edit';
 
-type EmployeeActionsProps={
+type Props={
   openActions: boolean,
   onCloseActions: VoidFunction,
   onOpenActions: VoidFunction,
@@ -17,25 +17,11 @@ export function EmployeeActions({
   onCloseActions,
   onOpenActions,
   employee,
-}:EmployeeActionsProps) {
-  const [openDelete, setOpenDelete] = useState(false);
+}:Props) {
+  const [action, setAction] = useState<RestarauntModifyActions | null>(null);
 
-  const [openEdit, setOpenEdit] = useState(false);
-
-  const handleOpenEdit = () => {
-    setOpenEdit(true);
-  };
-
-  const handleOpenDelete = () => {
-    setOpenDelete(true);
-  };
-
-  const handleCloseEdit = () => {
-    setOpenEdit(false);
-  };
-
-  const handleCloseDelete = () => {
-    setOpenDelete(false);
+  const handleAction = (modifyAction: RestarauntModifyActions) => {
+    setAction(modifyAction);
   };
 
   return (
@@ -44,20 +30,17 @@ export function EmployeeActions({
         open={openActions}
         onClose={onCloseActions}
         onOpen={onOpenActions}
-        onOpenDelete={handleOpenDelete}
-        onOpenEdit={handleOpenEdit}
+        handleAction={handleAction}
         title={`${employee.name} ${employee.surname}`}
       />
       <EmployeeDelete
-        openDelete={openDelete}
-        onCloseDelete={handleCloseDelete}
-        onOpenDelete={handleOpenDelete}
+        openDelete={action === 'delete'}
+        handleAction={handleAction}
         employee={employee}
       />
       <EmployeeEdit
-        openEdit={openEdit}
-        onOpenEdit={handleOpenEdit}
-        onCloseEdit={handleCloseEdit}
+        openEdit={action === 'edit'}
+        handleAction={handleAction}
         employee={employee}
       />
     </>

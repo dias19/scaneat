@@ -6,27 +6,33 @@ import {
 
 import { BottomDrawer } from '~/components/bottom-drawer';
 
-import { Employee } from '../../../types';
+import { Employee, RestarauntModifyActions } from '../../../types';
 
-type EmployeeDeleteProps={
+type Props={
     openDelete: boolean,
-    onOpenDelete: VoidFunction,
-    onCloseDelete: VoidFunction,
+    handleAction: (action: RestarauntModifyActions) => void,
     employee: Employee,
 }
 
 export function EmployeeDelete({
-  openDelete, onCloseDelete, onOpenDelete, employee,
-}:EmployeeDeleteProps) {
+  openDelete, handleAction, employee,
+}:Props) {
   const handleDeleteEmployee = () => {
-    onCloseDelete();
+    handleAction(null);
   };
 
+  const handleOpen = () => {
+    handleAction('delete');
+  };
+
+  const handleClose = () => {
+    handleAction(null);
+  };
   return (
     <BottomDrawer
       open={openDelete}
-      onClose={onCloseDelete}
-      onOpen={onOpenDelete}
+      onClose={handleClose}
+      onOpen={handleOpen}
       title={`${employee.name} ${employee.surname}`}
       hasCloser
     >
@@ -40,7 +46,7 @@ export function EmployeeDelete({
           После удалении вы не сможете вернуть этого рабочего
         </Typography>
         <BoxButtonStyle>
-          <Button variant="outlined" sx={{ mr: 1 }} size="large" onClick={onCloseDelete}>
+          <Button variant="outlined" sx={{ mr: 1 }} size="large" onClick={handleClose}>
             Отмена
           </Button>
           <Button variant="contained" color="error" size="large" onClick={handleDeleteEmployee}>
