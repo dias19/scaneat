@@ -6,23 +6,25 @@ import {
 
 import { Iconify } from '~/components/Iconify';
 import { Image } from '~/components/image';
+import { useResponsive } from '~/hooks/useResponsive';
 
 import { Employee } from '../../../types';
 import { EmployeeActions } from './employee-actions';
 
-type EmployeeCardProps={
+type Props={
     employee: Employee
 }
 
-export function EmployeeCard({ employee }:EmployeeCardProps) {
+export function EmployeeCard({ employee }:Props) {
   const [openActions, setOpenActions] = useState(false);
 
-  const handleActionsOpen = () => {
-    setOpenActions(true);
-  };
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
 
-  const handleActionsClose = () => {
-    setOpenActions(false);
+  const isDesktop = useResponsive('up', 'sm');
+
+  const handleActionsOpen = (e: React.MouseEvent<HTMLElement>) => {
+    if (isDesktop) setAnchorEl(e.target as Element);
+    setOpenActions(true);
   };
 
   return (
@@ -65,9 +67,10 @@ export function EmployeeCard({ employee }:EmployeeCardProps) {
       </Card>
       <EmployeeActions
         openActions={openActions}
-        onCloseActions={handleActionsClose}
-        onOpenActions={handleActionsOpen}
+        onCloseActions={() => setOpenActions(false)}
+        onOpenActions={() => setOpenActions(true)}
         employee={employee}
+        anchorEl={anchorEl}
       />
     </>
   );

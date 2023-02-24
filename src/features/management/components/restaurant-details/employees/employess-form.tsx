@@ -69,13 +69,12 @@ export function EmployeeForm({ employee, buttonTitle, onCloseForm }: Props) {
   } = methods;
 
   const photoUrl = watch('photoUrl');
+
   const photoId = watch('photoId');
 
   const isPhotoUploaded = !!photoId;
 
   function onSubmit(data: EmployeeFormData) {
-    if (data.isManager) setValue('role', 'manager');
-    else if (data.isChef) setValue('role', 'chef');
     console.log(data);
   }
 
@@ -107,8 +106,14 @@ export function EmployeeForm({ employee, buttonTitle, onCloseForm }: Props) {
         </Typography>
 
         <BoxSwitchStyle>
-          <RHFSwitch name="isChef" label="Шеф" />
-          <RHFSwitch name="isManager" label="Менеджер" />
+          <RHFSwitch
+            name="isChef"
+            label="Шеф"
+          />
+          <RHFSwitch
+            name="isManager"
+            label="Менеджер"
+          />
         </BoxSwitchStyle>
       </Box>
       <BoxButtonStyle>

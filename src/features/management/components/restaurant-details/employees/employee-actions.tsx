@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 
+import { useResponsive } from '~/hooks/useResponsive';
+
 import { Employee, RestarauntModifyActions } from '../../../types';
 import { ModifyActionBottomDrawer } from '../../modify-action-bottom-drawer';
+import { ModifyActionPopover } from '../../modify-action-popover';
 import { EmployeeDelete } from './employee-delete';
 import { EmployeeEdit } from './employee-edit';
 
@@ -10,6 +13,7 @@ type Props={
   onCloseActions: VoidFunction,
   onOpenActions: VoidFunction,
   employee: Employee
+  anchorEl: Element | null
 }
 
 export function EmployeeActions({
@@ -17,7 +21,10 @@ export function EmployeeActions({
   onCloseActions,
   onOpenActions,
   employee,
+  anchorEl,
 }:Props) {
+  const isDesktop = useResponsive('up', 'sm');
+
   const [action, setAction] = useState<RestarauntModifyActions | null>(null);
 
   const handleAction = (modifyAction: RestarauntModifyActions) => {
@@ -26,13 +33,27 @@ export function EmployeeActions({
 
   return (
     <>
-      <ModifyActionBottomDrawer
-        open={openActions}
-        onClose={onCloseActions}
-        onOpen={onOpenActions}
-        handleAction={handleAction}
-        title={`${employee.name} ${employee.surname}`}
-      />
+      {
+     !isDesktop && (
+     <ModifyActionBottomDrawer
+       open={openActions}
+       onClose={onCloseActions}
+       onOpen={onOpenActions}
+       handleAction={handleAction}
+       title={`${employee.name} ${employee.surname}`}
+     />
+     )
+    }
+      {
+      isDesktop && (
+        <ModifyActionPopover
+          open={openActions}
+          onClose={onCloseActions}
+          handleAction={handleAction}
+          anchorEl={anchorEl}
+        />
+      )
+    }
       <EmployeeDelete
         openDelete={action === 'delete'}
         handleAction={handleAction}

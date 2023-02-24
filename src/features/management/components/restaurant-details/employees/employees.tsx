@@ -14,6 +14,10 @@ import { NavigateBack } from '../../navigate-back';
 import { EmployeeAdd } from './employee-add';
 import { EmployeeCard } from './employee-card';
 
+interface LocationState {
+  restaurantName: string;
+}
+
 export function RestaurantEmployees() {
   const { data: employees = [] } = employeeApi.endpoints.getEmployees.useQuery({
     restaurantId: 12,
@@ -27,7 +31,7 @@ export function RestaurantEmployees() {
 
   const location = useLocation();
 
-  const restaurantName = location.state;
+  const { restaurantName } = location.state as LocationState;
 
   const handleAddClose = () => {
     setAddOpen(false);
@@ -54,7 +58,7 @@ export function RestaurantEmployees() {
           employees={employees}
           handleAddClose={handleAddClose}
           handleAddOpen={handleAddOpen}
-          restaurantName={restaurantName as string}
+          restaurantName={restaurantName}
         />
         )
       }
@@ -118,7 +122,7 @@ function EmployeeListDesktop({
       <Typography variant="h6" sx={{ mb: 3 }}>
         Рабочие ресторана
         {' '}
-        {`"${restaurantName}"`}
+        {`${restaurantName}`}
       </Typography>
       <Button variant="contained" size="large" onClick={handleAddOpen}>
         Добавить рабочего
@@ -136,6 +140,7 @@ function EmployeeListDesktop({
     </Container>
   );
 }
+
 const BoxButtonStyle = styled(Box)(({ theme }) => ({
   position: 'fixed',
   bottom: `calc(${BOTTOM_NAVIGATION.BOTTOM_NAVIGATION_HEIGHT}px + ${theme.spacing(2)})`,
