@@ -106,7 +106,7 @@ function CategoryListDesktop({
   restaurantId,
 }:CategoryProps) {
   return (
-    <Container sx={{ mt: 3 }}>
+    <Container>
       <NavigateBack />
       <Typography variant="h6" sx={{ mb: 3 }}>
         Категории меню

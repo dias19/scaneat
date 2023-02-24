@@ -1,12 +1,15 @@
 import React from 'react';
 
 import { styled } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
+import employeeApi from '~/api/employee/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
 import { DialogForm } from '~/components/Dialog';
 import { useResponsive } from '~/hooks/useResponsive';
 
-import { Employee, RestarauntModifyActions } from '../../../types';
+import { Employee, EmployeeFormData, RestarauntModifyActions } from '../../../types';
 import { EmployeeForm } from './employess-form';
 
 type Props = {
@@ -22,8 +25,24 @@ export function EmployeeEdit({
     handleAction(null);
   };
 
+  const parameters = useParams();
+
+  const restaurantId = parseInt(parameters.restaurantId as string, 10);
+
   const handleOpen = () => {
     handleAction('edit');
+  };
+
+  const [editEmployee] = employeeApi.endpoints.editEmployee.useMutation();
+
+  const handleEdit = async (data: EmployeeFormData) => {
+    const { photoUrl, email, ...body } = data;
+    try {
+      await editEmployee({ restaurantId, staffId: employee.id, body });
+      handleClose();
+    } catch (e) {
+      toast.error('Упс, вышла ошибочка');
+    }
   };
 
   const isDesktop = useResponsive('up', 'sm');
@@ -36,6 +55,7 @@ export function EmployeeEdit({
           handleClose={handleClose}
           handleOpen={handleOpen}
           employee={employee}
+          handleEdit={handleEdit}
         />
       )
       }
@@ -46,6 +66,7 @@ export function EmployeeEdit({
             handleClose={handleClose}
             handleOpen={handleOpen}
             employee={employee}
+            handleEdit={handleEdit}
           />
         )
       }
@@ -58,6 +79,7 @@ type EmployeeEditProps={
   handleOpen: VoidFunction,
   openEdit: boolean,
   employee: Employee
+  handleEdit: (data: EmployeeFormData) => void,
 }
 
 function EmployeeEditMobile({
@@ -65,6 +87,7 @@ function EmployeeEditMobile({
   handleOpen,
   openEdit,
   employee,
+  handleEdit,
 }:EmployeeEditProps) {
   return (
     <BottomDrawerStyle
@@ -78,6 +101,7 @@ function EmployeeEditMobile({
         buttonTitle="Редактировать"
         employee={employee}
         onCloseForm={handleClose}
+        onSubmit={handleEdit}
       />
     </BottomDrawerStyle>
   );
@@ -88,6 +112,7 @@ function EmployeeEditDesktop({
   handleOpen,
   openEdit,
   employee,
+  handleEdit,
 }:EmployeeEditProps) {
   return (
     <DialogForm
@@ -101,6 +126,7 @@ function EmployeeEditDesktop({
         buttonTitle="Редактировать"
         employee={employee}
         onCloseForm={handleClose}
+        onSubmit={handleEdit}
       />
     </DialogForm>
   );

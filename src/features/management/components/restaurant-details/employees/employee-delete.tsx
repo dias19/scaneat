@@ -3,7 +3,10 @@ import React from 'react';
 import {
   Box, Typography, Button, styled,
 } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
+import employeeApi from '~/api/employee/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
 import { DialogForm } from '~/components/Dialog';
 import { useResponsive } from '~/hooks/useResponsive';
@@ -19,7 +22,20 @@ type Props={
 export function EmployeeDelete({
   openDelete, handleAction, employee,
 }:Props) {
-  const handleDeleteEmployee = () => {
+  const [deleteEmployee] = employeeApi.endpoints.deleteEmployee.useMutation();
+
+  const parameters = useParams();
+
+  const restaurantId = parseInt(parameters.restaurantId as string, 10);
+
+  const isDesktop = useResponsive('up', 'sm');
+
+  const handleDeleteEmployee = async () => {
+    try {
+      await deleteEmployee({ restaurantId, staffId: employee.restaurantStaffId });
+    } catch (e) {
+      toast.error('Упс, вышла ошибочка');
+    }
     handleAction(null);
   };
 
@@ -30,9 +46,6 @@ export function EmployeeDelete({
   const handleClose = () => {
     handleAction(null);
   };
-
-  const isDesktop = useResponsive('up', 'sm');
-
   return (
     <>
       {

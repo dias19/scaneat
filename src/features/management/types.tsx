@@ -46,11 +46,12 @@ export type Employee={
   photoId: number,
   name: string,
   surname: string,
+  email: string,
   phone: string,
-  role: string,
   photoUrl:string,
-  email:string,
   id: number,
+  restaurantStaffId: number,
+  role:string
 }
 export interface EmployeeFormData{
   name: string,
@@ -59,7 +60,6 @@ export interface EmployeeFormData{
   phone:string,
   photoUrl: string,
   isManager: boolean,
-  role:string,
   isChef: boolean,
   photoId: number
 }

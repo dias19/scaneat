@@ -34,18 +34,22 @@ const employeeApi = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: [{ type: 'Employees', id: 'Employees' }],
     }),
     editEmployee: builder.mutation<EditEmployeeResponse, EditEmployeeRequest>({
       query: ({ restaurantId, staffId, body }) => ({
         url: `/restaurant/${restaurantId}/staff/${staffId}`,
-        method: 'PATCH',
+        method: 'PUT',
         body,
       }),
+      invalidatesTags: [{ type: 'Employees', id: 'Employees' }],
     }),
     deleteEmployee: builder.mutation<DeleteEmployeeResponse, DeleteEmployeeRequest>({
       query: ({ restaurantId, staffId }) => ({
         url: `/restaurant/${restaurantId}/staff/${staffId}`,
+        method: 'DELETE',
       }),
+      invalidatesTags: [{ type: 'Employees', id: 'Employees' }],
     }),
   }),
 });

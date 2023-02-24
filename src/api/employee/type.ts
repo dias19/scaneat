@@ -1,4 +1,4 @@
-import { Employee } from '~/features/management';
+import { Employee, EmployeeFormData } from '~/features/management';
 
 export type GetEmployeeResponse = Employee[];
 
@@ -10,32 +10,23 @@ export type CreateEmployeeResponse = void;
 
 export interface CreateEmployeeRequest {
   restaurantId: number;
-  body: {
-    photoId: number;
-    name: string;
-    surname: string;
-    email: string;
-    phone: string;
-    role: string
-  };
+  body: Pick<
+    EmployeeFormData,
+    'email' | 'isChef' | 'isManager' | 'photoId' | 'name' | 'phone' | 'surname'
+  >;
 }
 
-export type EditEmployeeResponse=void
+export type EditEmployeeResponse = void;
 
-export interface EditEmployeeRequest{
-    restaurantId: number,
-    staffId: number,
-    body:{
-        photoId: number,
-        name: string,
-        surname: string,
-        phone: string
-    }
+export interface EditEmployeeRequest {
+  restaurantId: number;
+  staffId: number;
+  body: Pick<EmployeeFormData, 'isChef' | 'isManager' | 'photoId' | 'name' | 'phone' | 'surname'>;
 }
 
-export type DeleteEmployeeResponse=void
+export type DeleteEmployeeResponse = void;
 
-export interface DeleteEmployeeRequest{
-    restaurantId: number,
-    staffId: number
+export interface DeleteEmployeeRequest {
+  restaurantId: number;
+  staffId: number;
 }

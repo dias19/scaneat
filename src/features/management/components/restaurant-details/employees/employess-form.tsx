@@ -17,6 +17,7 @@ type Props = {
   employee?: Employee;
   buttonTitle: string;
   onCloseForm: VoidFunction,
+  onSubmit: (employeeData: EmployeeFormData) => void
 };
 
 const staffSchema = yup.object().shape(
@@ -42,7 +43,9 @@ const staffSchema = yup.object().shape(
   ],
 );
 
-export function EmployeeForm({ employee, buttonTitle, onCloseForm }: Props) {
+export function EmployeeForm({
+  employee, buttonTitle, onCloseForm, onSubmit,
+}: Props) {
   const defaultValues = {
     name: employee?.name || '',
     surname: employee?.surname || '',
@@ -50,7 +53,6 @@ export function EmployeeForm({ employee, buttonTitle, onCloseForm }: Props) {
     phone: employee?.phone || '',
     photoUrl: employee?.photoUrl || '',
     isManager: employee?.role === 'manager' || false,
-    role: employee?.role || '',
     isChef: employee?.role === 'chef' || false,
     photoId: employee?.photoId,
   };
@@ -65,7 +67,6 @@ export function EmployeeForm({ employee, buttonTitle, onCloseForm }: Props) {
     formState: { isValid },
     handleSubmit,
     watch,
-    setValue,
   } = methods;
 
   const photoUrl = watch('photoUrl');
@@ -73,10 +74,6 @@ export function EmployeeForm({ employee, buttonTitle, onCloseForm }: Props) {
   const photoId = watch('photoId');
 
   const isPhotoUploaded = !!photoId;
-
-  function onSubmit(data: EmployeeFormData) {
-    console.log(data);
-  }
 
   return (
     <FormProviderStyle
