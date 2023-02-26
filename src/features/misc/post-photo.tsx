@@ -4,6 +4,7 @@ import {
   Box, Avatar, Typography, Button, CircularProgress,
 } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import photoApi from '~/api/photo/api';
@@ -39,9 +40,14 @@ export function PostPhoto({
     const formData = new FormData();
     if (!e.target.files) return;
     formData.append('image', e.target.files[0]);
-    const { originalUrl, id } = await postPhoto(formData).unwrap();
-    setValue(photoIdPath, id);
-    setValue(photoUrlPath, originalUrl);
+    try {
+      const { originalUrl, id } = await postPhoto(formData).unwrap();
+      setValue(photoIdPath, id);
+      setValue(photoUrlPath, originalUrl);
+    } catch (error) {
+      // response doesn't include status code
+      toast.error('Большой размер фото');
+    }
   }
 
   const isPhotoShown = isPhotoUploaded && !isLoading;
@@ -59,7 +65,7 @@ export function PostPhoto({
       )}
       <Box display="flex" flexDirection="column">
         <Typography sx={{ flexGrow: 1 }} variant="body2">
-          Фото ресторана
+          Фото
         </Typography>
         <input
           type="file"

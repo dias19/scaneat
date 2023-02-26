@@ -70,8 +70,8 @@ export function RestaurantProductForm({
               photoUrlPath="photoUrl"
             />
             <RHFTextField name="name" label="Название" />
-            <RHFTextField name="price" label="Цена" />
-            <RHFTextField name="unitPrice" label="Себестоимость" />
+            <RHFTextField name="price" label="Цена" type="number" />
+            <RHFTextField name="unitPrice" label="Себестоимость" type="number" />
             <RHFTextField name="description" label="Описание" multiline minRows={3} />
           </Stack>
         </FormProvider>
