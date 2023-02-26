@@ -29,7 +29,7 @@ const employeeApi = createApi({
         : [{ type: 'Employees', id: 'Employees' }]),
     }),
     createEmployee: builder.mutation<CreateEmployeeResponse, CreateEmployeeRequest>({
-      query: ({ restaurantId, body }) => ({
+      query: ({ restaurantId, ...body }) => ({
         url: `/restaurant/${restaurantId}/staff`,
         method: 'POST',
         body,
@@ -37,7 +37,7 @@ const employeeApi = createApi({
       invalidatesTags: [{ type: 'Employees', id: 'Employees' }],
     }),
     editEmployee: builder.mutation<EditEmployeeResponse, EditEmployeeRequest>({
-      query: ({ restaurantId, staffId, body }) => ({
+      query: ({ restaurantId, staffId, ...body }) => ({
         url: `/restaurant/${restaurantId}/staff/${staffId}`,
         method: 'PUT',
         body,
