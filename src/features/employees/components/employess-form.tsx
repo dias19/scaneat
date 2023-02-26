@@ -11,7 +11,18 @@ import { FormProvider, RHFSwitch, RHFTextField } from '~/components/hook-form';
 import { RHFPhoneField } from '~/components/hook-form/rhf-phone-field';
 import { PostPhoto } from '~/features/misc';
 
-import { EmployeeFormData, Employee } from '../../../types';
+import { Employee } from '../type';
+
+export interface EmployeeFormData{
+  name: string,
+  surname: string,
+  email: string,
+  phone:string,
+  photoUrl: string,
+  isManager: boolean,
+  isChef: boolean,
+  photoId: number
+}
 
 type Props = {
   employee?: Employee;

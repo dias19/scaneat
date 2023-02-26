@@ -9,8 +9,7 @@ import { BottomDrawer } from '~/components/bottom-drawer';
 import { DialogForm } from '~/components/Dialog';
 import { useResponsive } from '~/hooks/useResponsive';
 
-import { EmployeeFormData } from '../../../types';
-import { EmployeeForm } from './employess-form';
+import { EmployeeForm, EmployeeFormData } from './employess-form';
 
 type Props = {
   open: boolean;
@@ -30,37 +29,31 @@ export function EmployeeAdd({ open, onOpen, onClose }: Props) {
   const handleAdd = async (data: EmployeeFormData) => {
     const { photoUrl, ...body } = data;
     try {
-      await createEmployee({ restaurantId, body });
+      await createEmployee({ restaurantId, ...body });
       onClose();
     } catch (e) {
       toast.error('Упс, вышла ошибочка');
     }
   };
 
+  if (isDesktop) {
+    return (
+      <EmployeeAddDesktop
+        onClose={onClose}
+        onOpen={onOpen}
+        open={open}
+        handleAdd={handleAdd}
+      />
+    );
+  }
+
   return (
-    <>
-      {
-      isDesktop
-      && (
-        <EmployeeAddDesktop
-          onClose={onClose}
-          onOpen={onOpen}
-          open={open}
-          handleAdd={handleAdd}
-        />
-      )
-      }
-      {
-        !isDesktop && (
-          <EmployeeAddMobile
-            onClose={onClose}
-            onOpen={onOpen}
-            open={open}
-            handleAdd={handleAdd}
-          />
-        )
-      }
-    </>
+    <EmployeeAddMobile
+      onClose={onClose}
+      onOpen={onOpen}
+      open={open}
+      handleAdd={handleAdd}
+    />
   );
 }
 

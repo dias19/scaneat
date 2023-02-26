@@ -8,14 +8,18 @@ import { useNavigate } from 'react-router-dom';
 import { useResponsive } from '~/hooks/useResponsive';
 
 import { MANAGEMENT_NAVIGATIONS } from '../../constants';
-import { ManagementDetailsNavigation } from '../../types';
 
-type NavigationProps = {
+interface ManagementDetailsNavigation{
+  name: string,
+  route: (id?: number | undefined) => string;
+}
+
+type Props = {
   id?: number;
   restaurantName?: string;
 };
 
-export default function ManagementNavigation({ id, restaurantName }: NavigationProps) {
+export default function ManagementNavigation({ id, restaurantName }: Props) {
   const isDesktop = useResponsive('up', 'sm');
 
   const navigate = useNavigate();

@@ -3,42 +3,24 @@ import React from 'react';
 import {
   Box, Typography, Button, styled,
 } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
-import employeeApi from '~/api/employee/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
 import { DialogForm } from '~/components/Dialog';
 import { useResponsive } from '~/hooks/useResponsive';
 
-import { Employee, RestarauntModifyActions } from '../../../types';
+import { RestarauntModifyActions } from '../../management/types';
+import { Employee } from '../type';
 
 type Props={
-    openDelete: boolean,
+    deleteOpen: boolean,
     handleAction: (action: RestarauntModifyActions) => void,
     employee: Employee,
+    handleDelete: VoidFunction,
 }
 
 export function EmployeeDelete({
-  openDelete, handleAction, employee,
+  deleteOpen, handleAction, employee, handleDelete,
 }:Props) {
-  const [deleteEmployee] = employeeApi.endpoints.deleteEmployee.useMutation();
-
-  const parameters = useParams();
-
-  const restaurantId = parseInt(parameters.restaurantId as string, 10);
-
-  const isDesktop = useResponsive('up', 'sm');
-
-  const handleDeleteEmployee = async () => {
-    try {
-      await deleteEmployee({ restaurantId, staffId: employee.restaurantStaffId });
-    } catch (e) {
-      toast.error('Упс, вышла ошибочка');
-    }
-    handleAction(null);
-  };
-
   const handleOpen = () => {
     handleAction('delete');
   };
@@ -46,52 +28,45 @@ export function EmployeeDelete({
   const handleClose = () => {
     handleAction(null);
   };
+  const isDesktop = useResponsive('up', 'sm');
+
+  if (isDesktop) {
+    return (
+      <EmployeeDeleteDesktop
+        deleteOpen={deleteOpen}
+        handleClose={handleClose}
+        handleOpen={handleOpen}
+        employee={employee}
+        handleDelete={handleDelete}
+      />
+    );
+  }
   return (
-    <>
-      {
-      isDesktop && (
-        <EmployeeDeleteDesktop
-          openDelete={openDelete}
-          handleClose={handleClose}
-          handleOpen={handleOpen}
-          employee={employee}
-          handleDeleteEmployee={handleDeleteEmployee}
-        />
-      )
-      }
-      {
-        !isDesktop && (
-          <EmployeeDeleteMobile
-            openDelete={openDelete}
-            handleClose={handleClose}
-            handleOpen={handleOpen}
-            employee={employee}
-            handleDeleteEmployee={handleDeleteEmployee}
-          />
-        )
-      }
-    </>
+    <EmployeeDeleteMobile
+      deleteOpen={deleteOpen}
+      handleClose={handleClose}
+      handleOpen={handleOpen}
+      employee={employee}
+      handleDelete={handleDelete}
+    />
   );
 }
 
-type EmployeeDeleteProps={
-  openDelete: boolean,
-  employee: Employee,
-  handleDeleteEmployee: VoidFunction,
+type EmployeeDeleteProps=Pick<Props, 'employee' | 'deleteOpen' | 'handleDelete'> & {
   handleClose: VoidFunction,
   handleOpen: VoidFunction,
 }
 
 function EmployeeDeleteMobile({
-  openDelete,
+  deleteOpen,
   employee,
-  handleDeleteEmployee,
+  handleDelete,
   handleClose,
   handleOpen,
 }:EmployeeDeleteProps) {
   return (
     <BottomDrawer
-      open={openDelete}
+      open={deleteOpen}
       onClose={handleClose}
       onOpen={handleOpen}
       title={`${employee.name} ${employee.surname}`}
@@ -110,7 +85,12 @@ function EmployeeDeleteMobile({
           <Button variant="outlined" sx={{ mr: 1 }} size="large" onClick={handleClose}>
             Отмена
           </Button>
-          <Button variant="contained" color="error" size="large" onClick={handleDeleteEmployee}>
+          <Button
+            variant="contained"
+            color="error"
+            size="large"
+            onClick={handleDelete}
+          >
             Удалить
           </Button>
         </BoxButtonStyle>
@@ -120,15 +100,15 @@ function EmployeeDeleteMobile({
 }
 
 function EmployeeDeleteDesktop({
-  openDelete,
+  deleteOpen,
   employee,
-  handleDeleteEmployee,
+  handleDelete,
   handleClose,
   handleOpen,
 }:EmployeeDeleteProps) {
   return (
     <DialogForm
-      open={openDelete}
+      open={deleteOpen}
       onClose={handleClose}
       onOpen={handleOpen}
       title={`Удалить "${employee.name} ${employee.surname}"`}
@@ -148,7 +128,7 @@ function EmployeeDeleteDesktop({
           <Button variant="outlined" sx={{ mr: 1 }} size="large" onClick={handleClose}>
             Отмена
           </Button>
-          <Button variant="contained" size="large" onClick={handleDeleteEmployee} color="error">
+          <Button variant="contained" size="large" onClick={handleDelete} color="error">
             Удалить
           </Button>
         </BoxButtonStyle>

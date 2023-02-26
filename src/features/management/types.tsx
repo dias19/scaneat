@@ -41,30 +41,3 @@ export type RestaurantStatus='pending' | 'accepted' | 'rejected'
 type Actions='edit' | 'delete'
 
 export type RestarauntModifyActions= Actions | null
-
-export type Employee={
-  photoId: number,
-  name: string,
-  surname: string,
-  email: string,
-  phone: string,
-  photoUrl:string,
-  id: number,
-  restaurantStaffId: number,
-  role:string
-}
-export interface EmployeeFormData{
-  name: string,
-  surname: string,
-  email: string,
-  phone:string,
-  photoUrl: string,
-  isManager: boolean,
-  isChef: boolean,
-  photoId: number
-}
-
-export interface ManagementDetailsNavigation{
-  name: string,
-  route: (id?: number | undefined) => string;
-}

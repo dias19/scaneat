@@ -9,8 +9,8 @@ import employeeApi from '~/api/employee/api';
 import { useResponsive } from '~/hooks/useResponsive';
 import { BOTTOM_NAVIGATION } from '~/layouts/management/constants';
 
-import { Employee } from '../../../types';
-import { NavigateBack } from '../../navigate-back';
+import { NavigateBack } from '../../management/components/navigate-back';
+import { Employee } from '../type';
 import { EmployeeAdd } from './employee-add';
 import { EmployeeCard } from './employee-card';
 
@@ -18,7 +18,7 @@ interface LocationState {
   restaurantName: string;
 }
 
-export function RestaurantEmployees() {
+export function RestaurantEmployeesList() {
   const { data: employees = [] } = employeeApi.endpoints.getEmployees.useQuery({
     restaurantId: 12,
   });
@@ -39,30 +39,24 @@ export function RestaurantEmployees() {
 
   const isDesktop = useResponsive('up', 'sm');
 
+  if (isDesktop) {
+    return (
+      <EmployeeListDesktop
+        addOpen={addOpen}
+        employees={employees}
+        handleAddClose={handleAddClose}
+        handleAddOpen={handleAddOpen}
+        restaurantName={restaurantName}
+      />
+    );
+  }
   return (
-    <>
-      {
-      !isDesktop && (
-        <EmployeeListMobile
-          addOpen={addOpen}
-          employees={employees}
-          handleAddClose={handleAddClose}
-          handleAddOpen={handleAddOpen}
-        />
-      )
-      }
-      {
-        isDesktop && (
-        <EmployeeListDesktop
-          addOpen={addOpen}
-          employees={employees}
-          handleAddClose={handleAddClose}
-          handleAddOpen={handleAddOpen}
-          restaurantName={restaurantName}
-        />
-        )
-      }
-    </>
+    <EmployeeListMobile
+      addOpen={addOpen}
+      employees={employees}
+      handleAddClose={handleAddClose}
+      handleAddOpen={handleAddOpen}
+    />
   );
 }
 

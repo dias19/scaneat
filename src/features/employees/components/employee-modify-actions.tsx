@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 
 import { useResponsive } from '~/hooks/useResponsive';
 
-import { Employee, RestarauntModifyActions } from '../../../types';
-import { ModifyActionBottomDrawer } from '../../modify-action-bottom-drawer';
-import { ModifyActionPopover } from '../../modify-action-popover';
-import { EmployeeDelete } from './employee-delete';
-import { EmployeeEdit } from './employee-edit';
+import { ModifyActionBottomDrawer } from '../../management/components/modify-action-bottom-drawer';
+import { ModifyActionPopover } from '../../management/components/modify-action-popover';
+import { RestarauntModifyActions } from '../../management/types';
+import { Employee } from '../type';
+import { EmployeeActions } from './employee-actions';
 
 type Props={
   openActions: boolean,
@@ -16,7 +16,7 @@ type Props={
   anchorEl: Element | null
 }
 
-export function EmployeeActions({
+export function EmployeeModifyActions({
   openActions,
   onCloseActions,
   onOpenActions,
@@ -30,7 +30,6 @@ export function EmployeeActions({
   const handleAction = (modifyAction: RestarauntModifyActions) => {
     setAction(modifyAction);
   };
-
   return (
     <>
       {
@@ -54,15 +53,10 @@ export function EmployeeActions({
         />
       )
     }
-      <EmployeeDelete
-        openDelete={action === 'delete'}
+      <EmployeeActions
         handleAction={handleAction}
         employee={employee}
-      />
-      <EmployeeEdit
-        openEdit={action === 'edit'}
-        handleAction={handleAction}
-        employee={employee}
+        action={action}
       />
     </>
   );

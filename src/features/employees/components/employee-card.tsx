@@ -8,8 +8,8 @@ import { Iconify } from '~/components/Iconify';
 import { Image } from '~/components/image';
 import { useResponsive } from '~/hooks/useResponsive';
 
-import { Employee } from '../../../types';
-import { EmployeeActions } from './employee-actions';
+import { Employee } from '../type';
+import { EmployeeModifyActions } from './employee-modify-actions';
 
 type Props={
     employee: Employee
@@ -65,7 +65,7 @@ export function EmployeeCard({ employee }:Props) {
           </BoxStyle>
         </CardContentStyle>
       </Card>
-      <EmployeeActions
+      <EmployeeModifyActions
         openActions={openActions}
         onCloseActions={() => setOpenActions(false)}
         onOpenActions={() => setOpenActions(true)}
