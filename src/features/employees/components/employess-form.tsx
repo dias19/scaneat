@@ -62,9 +62,9 @@ export function EmployeeForm({
     surname: employee?.surname || '',
     email: employee?.email || '',
     phone: employee?.phone || '',
-    photoUrl: employee?.photoUrl || '',
-    isManager: employee?.role === 'manager' || false,
-    isChef: employee?.role === 'chef' || false,
+    photoUrl: employee?.originalUrl || '',
+    isManager: employee?.roles.includes('manager') || false,
+    isChef: employee?.roles.includes('chef') || false,
     photoId: employee?.photoId,
   };
 

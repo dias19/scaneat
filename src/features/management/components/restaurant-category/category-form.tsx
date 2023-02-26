@@ -61,6 +61,7 @@ export function RestaurantCategoryForm({
         <Button
           variant="contained"
           disabled={!isValid}
+          size="large"
           onClick={handleSubmit(onSubmit)}
         >
           {buttonTitle}

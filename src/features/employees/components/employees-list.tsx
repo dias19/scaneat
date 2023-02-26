@@ -82,7 +82,7 @@ function EmployeeListMobile({
       {employees.map((employee) => (
         <EmployeeCard
           employee={employee}
-          key={employee.name}
+          key={`employee-${employee.id}-card`}
         />
       ))}
       <BoxButtonStyle>
@@ -123,7 +123,7 @@ function EmployeeListDesktop({
       </Button>
       <BoxEmployeeStyle>
         {employees.map((employee) => (
-          <EmployeeCard employee={employee} key={employee.name} />
+          <EmployeeCard employee={employee} key={`employee-${employee.id}-card`} />
         ))}
       </BoxEmployeeStyle>
       <EmployeeAdd

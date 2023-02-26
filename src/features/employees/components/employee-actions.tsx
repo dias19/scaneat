@@ -42,7 +42,7 @@ export function EmployeeActions({
   const handleEditEmployee = async (data: EmployeeFormData) => {
     const { photoUrl, email, ...body } = data;
     try {
-      await editEmployee({ restaurantId, staffId: employee.id, ...body });
+      await editEmployee({ restaurantId, staffId: employee.restaurantStaffId, ...body });
       handleAction(null);
     } catch (e) {
       toast.error('Упс, вышла ошибочка');

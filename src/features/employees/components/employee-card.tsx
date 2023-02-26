@@ -32,7 +32,7 @@ export function EmployeeCard({ employee }:Props) {
       <Card sx={{ mb: 2 }}>
         <CardContentStyle>
           <ImageStyle
-            url={employee.photoUrl}
+            url={employee.originalUrl}
             alt="Employee"
           />
           <BoxStyle>
@@ -57,10 +57,16 @@ export function EmployeeCard({ employee }:Props) {
               {employee.email}
             </Typography>
             <Box>
-              <Chip
-                label={employee.role}
-                color="info"
-              />
+              {
+                employee.roles.map((role) => (
+                  <Chip
+                    label={role}
+                    color="info"
+                    key={`employee-role-${role}`}
+                    sx={{ mr: 0.5 }}
+                  />
+                ))
+              }
             </Box>
           </BoxStyle>
         </CardContentStyle>
