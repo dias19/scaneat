@@ -72,9 +72,9 @@ export function EmployeeCard({ employee }:Props) {
         </CardContentStyle>
       </Card>
       <EmployeeModifyActions
-        openActions={openActions}
-        onCloseActions={() => setOpenActions(false)}
-        onOpenActions={() => setOpenActions(true)}
+        open={openActions}
+        onClose={() => setOpenActions(false)}
+        onOpen={() => setOpenActions(true)}
         employee={employee}
         anchorEl={anchorEl}
       />

@@ -3,7 +3,9 @@ import React from 'react';
 import {
   Box, Typography, Button, styled,
 } from '@mui/material';
+import { toast } from 'react-toastify';
 
+import employeeApi from '~/api/employee/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
 import { DialogForm } from '~/components/Dialog';
 import { useResponsive } from '~/hooks/useResponsive';
@@ -13,54 +15,63 @@ import { Employee } from '../type';
 
 type Props={
     deleteOpen: boolean,
-    handleAction: (action: RestarauntModifyActions) => void,
+    setAction: (action: RestarauntModifyActions) => void,
     employee: Employee,
-    handleDelete: VoidFunction,
+    restaurantId: number,
 }
 
 export function EmployeeDelete({
-  deleteOpen, handleAction, employee, handleDelete,
+  deleteOpen, setAction, employee, restaurantId,
 }:Props) {
   const handleOpen = () => {
-    handleAction('delete');
+    setAction('delete');
   };
 
   const handleClose = () => {
-    handleAction(null);
+    setAction(null);
+  };
+  const [deleteEmployee] = employeeApi.endpoints.deleteEmployee.useMutation();
+
+  const handleDeleteEmployee = async () => {
+    try {
+      await deleteEmployee({ restaurantId, staffId: employee.restaurantStaffId });
+    } catch (e) {
+      toast.error('Упс, вышла ошибочка');
+    }
+    setAction(null);
   };
   const isDesktop = useResponsive('up', 'sm');
 
-  if (isDesktop) {
-    return (
-      <EmployeeDeleteDesktop
-        deleteOpen={deleteOpen}
-        handleClose={handleClose}
-        handleOpen={handleOpen}
-        employee={employee}
-        handleDelete={handleDelete}
-      />
-    );
-  }
+  const commonProps = {
+    handleClose,
+    handleOpen,
+    employee,
+    handleDeleteEmployee,
+  };
   return (
-    <EmployeeDeleteMobile
-      deleteOpen={deleteOpen}
-      handleClose={handleClose}
-      handleOpen={handleOpen}
-      employee={employee}
-      handleDelete={handleDelete}
-    />
+    <>
+      <EmployeeDeleteDesktop
+        deleteOpen={deleteOpen && isDesktop}
+        {...commonProps}
+      />
+      <EmployeeDeleteMobile
+        deleteOpen={deleteOpen && !isDesktop}
+        {...commonProps}
+      />
+    </>
   );
 }
 
-type EmployeeDeleteProps=Pick<Props, 'employee' | 'deleteOpen' | 'handleDelete'> & {
+type EmployeeDeleteProps=Pick<Props, 'employee' | 'deleteOpen'> & {
   handleClose: VoidFunction,
   handleOpen: VoidFunction,
+  handleDeleteEmployee: VoidFunction,
 }
 
 function EmployeeDeleteMobile({
   deleteOpen,
   employee,
-  handleDelete,
+  handleDeleteEmployee,
   handleClose,
   handleOpen,
 }:EmployeeDeleteProps) {
@@ -89,7 +100,7 @@ function EmployeeDeleteMobile({
             variant="contained"
             color="error"
             size="large"
-            onClick={handleDelete}
+            onClick={handleDeleteEmployee}
           >
             Удалить
           </Button>
@@ -102,7 +113,7 @@ function EmployeeDeleteMobile({
 function EmployeeDeleteDesktop({
   deleteOpen,
   employee,
-  handleDelete,
+  handleDeleteEmployee,
   handleClose,
   handleOpen,
 }:EmployeeDeleteProps) {
@@ -128,7 +139,7 @@ function EmployeeDeleteDesktop({
           <Button variant="outlined" sx={{ mr: 1 }} size="large" onClick={handleClose}>
             Отмена
           </Button>
-          <Button variant="contained" size="large" onClick={handleDelete} color="error">
+          <Button variant="contained" size="large" onClick={handleDeleteEmployee} color="error">
             Удалить
           </Button>
         </BoxButtonStyle>

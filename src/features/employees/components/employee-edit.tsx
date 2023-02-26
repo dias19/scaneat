@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { styled } from '@mui/material';
+import { toast } from 'react-toastify';
 
+import employeeApi from '~/api/employee/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
 import { DialogForm } from '~/components/Dialog';
 import { useResponsive } from '~/hooks/useResponsive';
@@ -12,44 +14,55 @@ import { EmployeeForm, EmployeeFormData } from './employess-form';
 
 type Props = {
   editOpen: boolean,
-  handleAction: (action: RestarauntModifyActions) => void;
+  setAction: (action: RestarauntModifyActions) => void;
   employee: Employee;
-  handleEdit: (data: EmployeeFormData) => void;
+  restaurantId: number,
 };
 
 export function EmployeeEdit({
-  editOpen, handleAction, employee, handleEdit,
+  editOpen, setAction, employee, restaurantId,
 }: Props) {
+  const [editEmployee] = employeeApi.endpoints.editEmployee.useMutation();
+
   const handleClose = () => {
-    handleAction(null);
+    setAction(null);
   };
 
   const handleOpen = () => {
-    handleAction('edit');
+    setAction('edit');
   };
 
   const isDesktop = useResponsive('up', 'sm');
 
-  if (isDesktop) {
-    return (
-      <EmployeeEditDesktop
-        editOpen={editOpen}
-        handleClose={handleClose}
-        handleOpen={handleOpen}
-        employee={employee}
-        handleEdit={handleEdit}
-      />
-    );
-  }
+  const handleEditEmployee = async (data: EmployeeFormData) => {
+    const { photoUrl, email, ...body } = data;
+    try {
+      await editEmployee({ restaurantId, staffId: employee.restaurantStaffId, ...body });
+      setAction(null);
+    } catch (e) {
+      toast.error('Упс, вышла ошибочка');
+    }
+  };
+  const commonProps = {
+    handleClose,
+    handleOpen,
+    employee,
+    handleEditEmployee,
+
+  };
 
   return (
-    <EmployeeEditMobile
-      editOpen={editOpen}
-      handleClose={handleClose}
-      handleOpen={handleOpen}
-      employee={employee}
-      handleEdit={handleEdit}
-    />
+    <>
+      <EmployeeEditDesktop
+        editOpen={editOpen && isDesktop}
+        {...commonProps}
+      />
+
+      <EmployeeEditMobile
+        editOpen={editOpen && !isDesktop}
+        {...commonProps}
+      />
+    </>
   );
 }
 
@@ -58,7 +71,7 @@ type EmployeeEditProps = {
   handleOpen: VoidFunction;
   editOpen: boolean;
   employee: Employee;
-  handleEdit: (data: EmployeeFormData) => void;
+  handleEditEmployee: (data: EmployeeFormData) => void;
 };
 
 function EmployeeEditMobile({
@@ -66,7 +79,7 @@ function EmployeeEditMobile({
   handleOpen,
   editOpen,
   employee,
-  handleEdit,
+  handleEditEmployee,
 }: EmployeeEditProps) {
   return (
     <BottomDrawerStyle
@@ -80,7 +93,7 @@ function EmployeeEditMobile({
         buttonTitle="Редактировать"
         employee={employee}
         onCloseForm={handleClose}
-        onSubmit={handleEdit}
+        onSubmit={handleEditEmployee}
       />
     </BottomDrawerStyle>
   );
@@ -91,7 +104,7 @@ function EmployeeEditDesktop({
   handleOpen,
   editOpen,
   employee,
-  handleEdit,
+  handleEditEmployee,
 }: EmployeeEditProps) {
   return (
     <DialogForm
@@ -105,7 +118,7 @@ function EmployeeEditDesktop({
         buttonTitle="Редактировать"
         employee={employee}
         onCloseForm={handleClose}
-        onSubmit={handleEdit}
+        onSubmit={handleEditEmployee}
       />
     </DialogForm>
   );

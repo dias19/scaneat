@@ -6,20 +6,20 @@ import { ModifyActionBottomDrawer } from '../../management/components/modify-act
 import { ModifyActionPopover } from '../../management/components/modify-action-popover';
 import { RestarauntModifyActions } from '../../management/types';
 import { Employee } from '../type';
-import { EmployeeActions } from './employee-actions';
+import { EmployeeAction } from './employee-action';
 
 type Props={
-  openActions: boolean,
-  onCloseActions: VoidFunction,
-  onOpenActions: VoidFunction,
+  open: boolean,
+  onClose: VoidFunction,
+  onOpen: VoidFunction,
   employee: Employee
   anchorEl: Element | null
 }
 
 export function EmployeeModifyActions({
-  openActions,
-  onCloseActions,
-  onOpenActions,
+  open,
+  onClose,
+  onOpen,
   employee,
   anchorEl,
 }:Props) {
@@ -30,15 +30,20 @@ export function EmployeeModifyActions({
   const handleAction = (modifyAction: RestarauntModifyActions) => {
     setAction(modifyAction);
   };
+
+  const commonProps = {
+    open,
+    onClose,
+    handleAction,
+
+  };
   return (
     <>
       {
      !isDesktop && (
      <ModifyActionBottomDrawer
-       open={openActions}
-       onClose={onCloseActions}
-       onOpen={onOpenActions}
-       handleAction={handleAction}
+       onOpen={onOpen}
+       {...commonProps}
        title={`${employee.name} ${employee.surname}`}
      />
      )
@@ -46,15 +51,13 @@ export function EmployeeModifyActions({
       {
       isDesktop && (
         <ModifyActionPopover
-          open={openActions}
-          onClose={onCloseActions}
-          handleAction={handleAction}
+          {...commonProps}
           anchorEl={anchorEl}
         />
       )
     }
-      <EmployeeActions
-        handleAction={handleAction}
+      <EmployeeAction
+        setAction={handleAction}
         employee={employee}
         action={action}
       />

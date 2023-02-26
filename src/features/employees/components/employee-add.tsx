@@ -36,24 +36,24 @@ export function EmployeeAdd({ open, onOpen, onClose }: Props) {
     }
   };
 
-  if (isDesktop) {
-    return (
-      <EmployeeAddDesktop
-        onClose={onClose}
-        onOpen={onOpen}
-        open={open}
-        handleAdd={handleAdd}
-      />
-    );
-  }
+  const commonProps = {
+    onClose,
+    onOpen,
+    handleAdd,
+  };
 
   return (
-    <EmployeeAddMobile
-      onClose={onClose}
-      onOpen={onOpen}
-      open={open}
-      handleAdd={handleAdd}
-    />
+    <>
+      <EmployeeAddDesktop
+        open={open && isDesktop}
+        {...commonProps}
+      />
+
+      <EmployeeAddMobile
+        open={open && !isDesktop}
+        {...commonProps}
+      />
+    </>
   );
 }
 
