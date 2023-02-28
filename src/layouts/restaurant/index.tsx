@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 
 import { HEADER } from '../management/constants';
 import { BackButtonHeader } from '../management/header/header-with-back-buttom';
-import { LogoHeader } from '../management/header/header-with-logo';
+import { LogoHeader } from './header';
 
 const MainStyle = styled('main', {
   shouldForwardProp: (prop) => prop !== 'collapseClick',
