@@ -5,13 +5,11 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { useResponsive } from '~/hooks/useResponsive';
 import { PATH_RESTAURANTS } from '~/routes/paths';
 
 import main from '../../../assets/images/main.png';
 
 export function GettingStarted() {
-  const isDesktop = useResponsive('up', 'sm');
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -21,14 +19,10 @@ export function GettingStarted() {
   return (
     <BoxContainerStyle>
       <Box>
-        <TypographyHeadingStyle
-          align={!isDesktop ? 'center' : 'left'}
-        >
+        <TypographyHeadingStyle>
           QR-меню для вашего заведения
         </TypographyHeadingStyle>
-        <TypographyBodyStyle
-          align={!isDesktop ? 'center' : 'left'}
-        >
+        <TypographyBodyStyle>
           Зарегистрируйте свое заведение и получите QR-меню мгновенно!
         </TypographyBodyStyle>
         <ButtonStyle
@@ -39,12 +33,12 @@ export function GettingStarted() {
           Получить QR меню
         </ButtonStyle>
       </Box>
-      <Box sx={{ alignSelf: 'center' }}>
+      <BoxStyle>
         <ImageStyle
           src={main}
           alt="main"
         />
-      </Box>
+      </BoxStyle>
     </BoxContainerStyle>
   );
 }
@@ -52,13 +46,14 @@ export function GettingStarted() {
 const BoxContainerStyle = styled(Box)(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: theme.spacing(15),
-  marginBottom: theme.spacing(3),
+  gap: theme.spacing(10),
+  marginBottom: theme.spacing(15),
   marginTop: theme.spacing(1),
   [theme.breakpoints.down('sm')]: {
     display: 'flex',
     flexDirection: 'column-reverse',
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(3),
     gap: 0,
   },
 }));
@@ -66,11 +61,15 @@ const BoxContainerStyle = styled(Box)(({ theme }) => ({
 const TypographyHeadingStyle = styled(Typography)(({ theme }) => ({
   fontSize: 40,
   lineHeight: '52px',
+  textAlign: 'center',
+  overflow: 'hidden',
+  color: theme.palette.common.black,
   [theme.breakpoints.up('sm')]: {
     fontSize: 48,
     fontWeight: 'bold',
     lineHeight: '64px',
     marginTop: theme.spacing(15),
+    textAlign: 'left',
   },
 }));
 
@@ -79,8 +78,10 @@ const TypographyBodyStyle = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(3),
   fontSize: 18,
   lineHeight: '25px',
+  textAlign: 'center',
   color: theme.palette.grey[600],
   [theme.breakpoints.up('sm')]: {
+    textAlign: 'left',
     fontSize: 20,
     lineHeight: '28px',
   },
@@ -98,11 +99,29 @@ const ButtonStyle = styled(Button)(({ theme }) => ({
 }));
 
 const ImageStyle = styled('img')(({ theme }) => ({
-  height: 530,
-  maxWidth: '100%',
-  [theme.breakpoints.down('sm')]: {
-    height: 362,
-    objectFit: 'cover',
+  height: 362,
+  objectFit: 'cover',
+  [theme.breakpoints.up('md')]: {
+    height: 530,
+    objectFit: 'contain',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    zIndex: -1,
+  },
+  [theme.breakpoints.between('sm', 'md')]: {
+    height: 410,
+    top: 0,
+    right: 0,
+    margin: 'auto',
+    bottom: 0,
+    position: 'absolute',
+  },
+}));
 
+const BoxStyle = styled(Box)(({ theme }) => ({
+  position: 'relative',
+  [theme.breakpoints.down('sm')]: {
+    alignSelf: 'center',
   },
 }));

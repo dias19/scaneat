@@ -7,9 +7,11 @@ import { Element } from 'react-scroll';
 
 import { StepsDetails } from '../contants';
 
+export const GUIDE_STEPS = 'guideSteps';
+
 export function GuideSteps() {
   return (
-    <Element name="guideSteps">
+    <Element name={GUIDE_STEPS}>
       <TypographyHeadingStyle>
         Как работает
       </TypographyHeadingStyle>

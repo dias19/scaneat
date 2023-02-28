@@ -9,21 +9,26 @@ import { Iconify } from '~/components/Iconify';
 
 import { FAQs } from '../contants';
 
+export const FAQS = 'FAQS';
+
 export function FAQ() {
   return (
-    <>
+    <Box>
       <TypographyHeadingStyle>
         Часто задаваемые вопросы
       </TypographyHeadingStyle>
-      <Element name="FAQ">
+      <Element name={FAQS}>
         <BoxStyle>
           {
           FAQs.map((quesiton) => (
-            <Accordion sx={{ mb: 2 }}>
+            <AccordionStyle
+              elevation={0}
+            >
               <AccordionSummary
                 expandIcon={(
                   <Iconify icon="material-symbols:add" />
                   )}
+                sx={{ minHeight: 68 }}
               >
                 <TypographyBodyStyle>{quesiton.question}</TypographyBodyStyle>
               </AccordionSummary>
@@ -32,12 +37,12 @@ export function FAQ() {
                   {quesiton.answer}
                 </Typography>
               </AccordionDetails>
-            </Accordion>
+            </AccordionStyle>
           ))
         }
         </BoxStyle>
       </Element>
-    </>
+    </Box>
   );
 }
 
@@ -54,7 +59,6 @@ const TypographyBodyStyle = styled(Typography)(({ theme }) => ({
   fontSize: 18,
   lineHeight: '22px',
   fontWeight: 'bold',
-  marginBottom: theme.spacing(1),
   [theme.breakpoints.down('sm')]: {
     fontSize: 14,
   },
@@ -67,4 +71,16 @@ const BoxStyle = styled(Box)(({ theme }) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(5),
   },
+}));
+
+const AccordionStyle = styled(Accordion)(({ theme }) => ({
+  '& .MuiPaper-root': {
+    borderRadius: 0,
+  },
+  '&:before': {
+    display: 'none',
+  },
+  boxShadow: 'none',
+  borderRadius: theme.spacing(1),
+  marginBottom: theme.spacing(2),
 }));

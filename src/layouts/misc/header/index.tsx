@@ -3,7 +3,7 @@ import React from 'react';
 import {
   Box, Button, styled, Typography,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-scroll';
 
 import { Logo } from '~/assets/logo';
@@ -16,6 +16,10 @@ export function HomeHeader() {
   const navigate = useNavigate();
 
   const isDesktop = useResponsive('up', 'sm');
+
+  const { pathname } = useLocation();
+
+  const isLoginActive = pathname !== PATH_AUTH.login;
 
   const navigateLogin = () => {
     navigate(PATH_AUTH.login);
@@ -37,15 +41,19 @@ export function HomeHeader() {
           </>
         )}
       </BoxStyle>
-      <Box>
-        <Button
-          variant="outlined"
-          size="large"
-          onClick={navigateLogin}
-        >
-          Войти
-        </Button>
-      </Box>
+      {
+        isLoginActive && (
+        <Box>
+          <Button
+            variant="outlined"
+            size="large"
+            onClick={navigateLogin}
+          >
+            Войти
+          </Button>
+        </Box>
+        )
+      }
     </BoxContainerStyle>
   );
 }
@@ -60,6 +68,9 @@ const TypographyStyle = styled(Typography)(({ theme }) => ({
 const BoxContainerStyle = styled(Box)(({ theme }) => ({
   display: 'flex',
   marginTop: theme.spacing(4),
+  [theme.breakpoints.down('sm')]: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const BoxStyle = styled(Box)({
