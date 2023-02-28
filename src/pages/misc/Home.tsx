@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Page } from '~/components/Page';
-import { GuideSteps, GettingStarted } from '~/features/misc';
+import { GuideSteps, GettingStarted, FAQ } from '~/features/misc';
 import HomePageLayout from '~/layouts/misc';
 
 export function HomePage() {
@@ -10,6 +10,7 @@ export function HomePage() {
       <Page title="Homepage">
         <GettingStarted />
         <GuideSteps />
+        <FAQ />
       </Page>
     </HomePageLayout>
   );

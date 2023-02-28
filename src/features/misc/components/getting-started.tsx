@@ -12,66 +12,37 @@ import main from '../../../assets/images/main.png';
 
 export function GettingStarted() {
   const isDesktop = useResponsive('up', 'sm');
-  if (isDesktop) return <GettingStarterDesktop />;
-  return (
-    <GettingStarterMobile />
-  );
-}
-
-function GettingStarterMobile() {
   const navigate = useNavigate();
 
-  return (
-    <Box sx={{ mb: 3 }}>
-      <Box>
-        <img
-          src={main}
-          alt="main"
-          width="100%"
-          height={362}
-        />
-      </Box>
-      <TypographyHeadingStyle align="center">
-        QR-меню для вашего заведения
-      </TypographyHeadingStyle>
-      <TypographyBodyStyle align="center">
-        Зарегистрируйте свое заведение и получите QR-меню мгновенно!
-      </TypographyBodyStyle>
-      <ButtonStyle
-        variant="contained"
-        size="large"
-        onClick={() => navigate(PATH_RESTAURANTS.createRestaurant)}
-      >
-        Получить QR меню
-      </ButtonStyle>
-    </Box>
-  );
-}
+  const handleNavigate = () => {
+    navigate(PATH_RESTAURANTS.createRestaurant);
+  };
 
-function GettingStarterDesktop() {
-  const navigate = useNavigate();
   return (
     <BoxContainerStyle>
-      <Box width={460}>
-        <TypographyHeadingStyle>
+      <Box>
+        <TypographyHeadingStyle
+          align={!isDesktop ? 'center' : 'left'}
+        >
           QR-меню для вашего заведения
         </TypographyHeadingStyle>
-        <TypographyBodyStyle>
+        <TypographyBodyStyle
+          align={!isDesktop ? 'center' : 'left'}
+        >
           Зарегистрируйте свое заведение и получите QR-меню мгновенно!
         </TypographyBodyStyle>
         <ButtonStyle
           variant="contained"
           size="large"
-          onClick={() => navigate(PATH_RESTAURANTS.createRestaurant)}
+          onClick={handleNavigate}
         >
           Получить QR меню
         </ButtonStyle>
       </Box>
-      <Box>
-        <img
+      <Box sx={{ alignSelf: 'center' }}>
+        <ImageStyle
           src={main}
           alt="main"
-          height={530}
         />
       </Box>
     </BoxContainerStyle>
@@ -79,10 +50,17 @@ function GettingStarterDesktop() {
 }
 
 const BoxContainerStyle = styled(Box)(({ theme }) => ({
-  display: 'flex',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: theme.spacing(15),
   marginBottom: theme.spacing(3),
   marginTop: theme.spacing(1),
-  justifyContent: 'space-between',
+  [theme.breakpoints.down('sm')]: {
+    display: 'flex',
+    flexDirection: 'column-reverse',
+    marginTop: theme.spacing(3),
+    gap: 0,
+  },
 }));
 
 const TypographyHeadingStyle = styled(Typography)(({ theme }) => ({
@@ -92,7 +70,7 @@ const TypographyHeadingStyle = styled(Typography)(({ theme }) => ({
     fontSize: 48,
     fontWeight: 'bold',
     lineHeight: '64px',
-    marginTop: theme.spacing(20),
+    marginTop: theme.spacing(15),
   },
 }));
 
@@ -116,5 +94,15 @@ const ButtonStyle = styled(Button)(({ theme }) => ({
     paddingTop: theme.spacing(1.5),
     paddingBottom: theme.spacing(1.5),
     width: 'auto',
+  },
+}));
+
+const ImageStyle = styled('img')(({ theme }) => ({
+  height: 530,
+  maxWidth: '100%',
+  [theme.breakpoints.down('sm')]: {
+    height: 362,
+    objectFit: 'cover',
+
   },
 }));

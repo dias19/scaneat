@@ -1,28 +1,28 @@
 import React from 'react';
 
-import { Box, styled, Typography } from '@mui/material';
+import {
+  Box, Card, styled, Typography,
+} from '@mui/material';
+import { Element } from 'react-scroll';
 
 import { StepsDetails } from '../contants';
 
 export function GuideSteps() {
   return (
-    <>
+    <Element name="guideSteps">
       <TypographyHeadingStyle>
         Как работает
       </TypographyHeadingStyle>
       <BoxContainerStyle>
         {
                 StepsDetails.map((stepDetail) => (
-                  <BoxStyle>
-                    <img
+                  <CardStyle>
+                    <ImageStyle
                       alt="step"
                       src={stepDetail.photo}
                       height={198}
-                      style={{
-                        borderRadius: '8px 8px 0 0',
-                      }}
                     />
-                    <Box display="flex" flexDirection="column" padding={2}>
+                    <Box display="flex" flexDirection="column" padding={1.5}>
                       <TypographyBodyStyle>
                         Шаг
                         {' '}
@@ -33,11 +33,11 @@ export function GuideSteps() {
                         {stepDetail.description}
                       </TypographySubtitleStyle>
                     </Box>
-                  </BoxStyle>
+                  </CardStyle>
                 ))
             }
       </BoxContainerStyle>
-    </>
+    </Element>
   );
 }
 
@@ -46,15 +46,17 @@ const BoxContainerStyle = styled(Box)(({ theme }) => ({
   gridTemplateColumns: 'repeat(2, 1fr)',
   gap: theme.spacing(5),
   marginTop: theme.spacing(8),
+  marginBottom: theme.spacing(8),
   [theme.breakpoints.down('sm')]: {
     display: 'flex',
     flexDirection: 'column',
     marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
     gap: 0,
   },
 }));
 
-const BoxStyle = styled(Box)(({ theme }) => ({
+const CardStyle = styled(Card)(({ theme }) => ({
   backgroundColor: 'white',
   display: 'inline-flex',
   flexDirection: 'column',
@@ -91,3 +93,7 @@ const TypographySubtitleStyle = styled(Typography)(({ theme }) => ({
     lineHeight: '22px',
   },
 }));
+
+const ImageStyle = styled('img')({
+  objectFit: 'cover',
+});
