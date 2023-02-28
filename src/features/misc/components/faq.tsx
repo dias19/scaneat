@@ -23,6 +23,7 @@ export function FAQ() {
           FAQs.map((quesiton) => (
             <AccordionStyle
               elevation={0}
+              key={`faq-question-${quesiton.question}`}
             >
               <AccordionSummary
                 expandIcon={(

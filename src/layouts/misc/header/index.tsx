@@ -59,14 +59,15 @@ export function HomeHeader() {
 }
 
 const TypographyStyle = styled(Typography)(({ theme }) => ({
-  marginLeft: theme.spacing(5),
-  fontSize: 14,
+  marginLeft: theme.spacing(4),
+  fontSize: 16,
   color: theme.palette.grey[600],
   cursor: 'pointer',
 }));
 
 const BoxContainerStyle = styled(Box)(({ theme }) => ({
   display: 'flex',
+  alignItems: 'center',
   marginTop: theme.spacing(4),
   [theme.breakpoints.down('sm')]: {
     marginTop: theme.spacing(2),
