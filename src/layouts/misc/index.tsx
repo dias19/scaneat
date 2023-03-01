@@ -27,6 +27,6 @@ const BoxStyle = styled(Container)({
 
 const MainStyle = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'collapseClick',
-})(({ theme }) => ({
+})({
   flexGrow: 1,
-}));
+});

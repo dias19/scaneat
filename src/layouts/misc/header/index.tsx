@@ -4,13 +4,13 @@ import {
   Box, Button, styled, Typography,
 } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Link } from 'react-scroll';
 
 import { Logo } from '~/assets/logo';
 import { useResponsive } from '~/hooks/useResponsive';
 import { PATH_AUTH } from '~/routes/paths';
 
 import { HOME_NAVIGATION } from '../contants';
+import LinkComponent from './link-component';
 
 export function HomeHeader() {
   const navigate = useNavigate();
@@ -19,11 +19,12 @@ export function HomeHeader() {
 
   const { pathname } = useLocation();
 
-  const isLoginPage = pathname !== PATH_AUTH.login;
+  const isLoginPage = pathname === PATH_AUTH.login;
 
   const navigateLogin = () => {
     navigate(PATH_AUTH.login);
   };
+
   return (
     <BoxContainerStyle>
       <BoxStyle>
@@ -31,15 +32,13 @@ export function HomeHeader() {
         {isDesktop
         && (HOME_NAVIGATION.map((navigation) => (
           <TypographyStyle key={`navigation-${navigation.name}`}>
-            <Link to={navigation.name} smooth duration={500}>
-              {navigation.label}
-            </Link>
+            <LinkComponent navigation={navigation} isLoginPage={isLoginPage} />
           </TypographyStyle>
         ))
         )}
       </BoxStyle>
       {
-        isLoginPage && (
+        !isLoginPage && (
         <Box>
           <Button
             variant="outlined"

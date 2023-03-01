@@ -2,7 +2,9 @@ import React from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
-import { Stack, Alert } from '@mui/material';
+import {
+  Stack, Alert, Typography, Box, styled,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -45,38 +47,54 @@ export function LoginForm() {
     try {
       await login(data).unwrap();
       navigate(PATH_MANAGEMENT.myRestaurants);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setError('email', { message: 'Wrong credentials', type: 'custom' });
       setError('password', { message: 'Wrong credentials', type: 'custom' });
     }
   };
   return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3}>
-        {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
+    <BoxContainerStyle>
+      <TypographyStyle variant="body2">
+        Укажите необходимые данные
+      </TypographyStyle>
+      <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={2}>
+          {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
-        <RHFTextField
-          name="email"
-          label="Электронная почта"
-        />
+          <RHFTextField
+            name="email"
+            label="Электронная почта"
+          />
 
-        <RHFTextField
-          name="password"
-          label="Пароль"
-          type="password"
-        />
-
+          <RHFTextField
+            name="password"
+            label="Пароль"
+            type="password"
+          />
+        </Stack>
         <LoadingButton
           fullWidth
           size="large"
           type="submit"
           variant="contained"
           loading={isSubmitting}
+          sx={{ mt: 2 }}
         >
           Войти
         </LoadingButton>
-      </Stack>
-    </FormProvider>
+      </FormProvider>
+    </BoxContainerStyle>
   );
 }
+
+const BoxContainerStyle = styled(Box)(({ theme }) => ({
+  backgroundColor: 'white',
+  padding: theme.spacing(3),
+  width: '100%',
+  borderRadius: theme.spacing(1),
+}));
+
+const TypographyStyle = styled(Typography)(({ theme }) => ({
+  marginBottom: theme.spacing(3),
+  color: theme.palette.grey[600],
+}));
