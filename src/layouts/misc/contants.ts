@@ -1,12 +1,12 @@
-import { FAQS, GUIDE_STEPS } from '~/features/misc';
+import { HOME_PAGE_SECTION_NAMES } from '~/features/misc';
 
 export const HOME_NAVIGATION = [
   {
     label: 'Как работает',
-    name: GUIDE_STEPS,
+    name: HOME_PAGE_SECTION_NAMES.GUIDE_STEPS,
   },
   {
     label: 'FAQ',
-    name: FAQS,
+    name: HOME_PAGE_SECTION_NAMES.FAQS,
   },
 ];

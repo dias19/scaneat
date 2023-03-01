@@ -7,9 +7,7 @@ import { Element } from 'react-scroll';
 
 import { Iconify } from '~/components/Iconify';
 
-import { FAQs } from '../contants';
-
-export const FAQS = 'FAQS';
+import { FAQs, HOME_PAGE_SECTION_NAMES } from '../constants';
 
 export function FAQ() {
   return (
@@ -17,7 +15,7 @@ export function FAQ() {
       <TypographyHeadingStyle>
         Часто задаваемые вопросы
       </TypographyHeadingStyle>
-      <Element name={FAQS}>
+      <Element name={HOME_PAGE_SECTION_NAMES.FAQS}>
         <BoxStyle>
           {
           FAQs.map((quesiton) => (

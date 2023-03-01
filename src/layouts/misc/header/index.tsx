@@ -19,7 +19,7 @@ export function HomeHeader() {
 
   const { pathname } = useLocation();
 
-  const isLoginActive = pathname !== PATH_AUTH.login;
+  const isLoginPage = pathname !== PATH_AUTH.login;
 
   const navigateLogin = () => {
     navigate(PATH_AUTH.login);
@@ -29,20 +29,17 @@ export function HomeHeader() {
       <BoxStyle>
         <Logo />
         {isDesktop
-        && (
-          <>
-            {HOME_NAVIGATION.map((navigation) => (
-              <TypographyStyle>
-                <Link to={navigation.name} smooth duration={500}>
-                  {navigation.label}
-                </Link>
-              </TypographyStyle>
-            ))}
-          </>
+        && (HOME_NAVIGATION.map((navigation) => (
+          <TypographyStyle key={`navigation-${navigation.name}`}>
+            <Link to={navigation.name} smooth duration={500}>
+              {navigation.label}
+            </Link>
+          </TypographyStyle>
+        ))
         )}
       </BoxStyle>
       {
-        isLoginActive && (
+        isLoginPage && (
         <Box>
           <Button
             variant="outlined"

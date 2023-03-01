@@ -5,20 +5,18 @@ import {
 } from '@mui/material';
 import { Element } from 'react-scroll';
 
-import { StepsDetails } from '../contants';
-
-export const GUIDE_STEPS = 'guideSteps';
+import { HOME_PAGE_SECTION_NAMES, StepsDetails } from '../constants';
 
 export function GuideSteps() {
   return (
-    <Element name={GUIDE_STEPS}>
+    <Element name={HOME_PAGE_SECTION_NAMES.GUIDE_STEPS}>
       <TypographyHeadingStyle>
         Как работает
       </TypographyHeadingStyle>
       <BoxContainerStyle>
         {
                 StepsDetails.map((stepDetail) => (
-                  <CardStyle>
+                  <CardStyle key={`step-number-${stepDetail.step}`}>
                     <ImageStyle
                       alt="step"
                       src={stepDetail.photo}
