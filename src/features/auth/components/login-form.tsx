@@ -3,7 +3,7 @@ import React from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import {
-  Stack, Alert, Typography, Box, styled,
+  Stack, Alert, Typography, styled, Card,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -53,7 +53,7 @@ export function LoginForm() {
     }
   };
   return (
-    <BoxContainerStyle>
+    <CardContainerStyle>
       <TypographyStyle variant="body2">
         Укажите необходимые данные
       </TypographyStyle>
@@ -83,14 +83,13 @@ export function LoginForm() {
           Войти
         </LoadingButton>
       </FormProvider>
-    </BoxContainerStyle>
+    </CardContainerStyle>
   );
 }
 
-const BoxContainerStyle = styled(Box)(({ theme }) => ({
-  backgroundColor: 'white',
-  padding: theme.spacing(3),
+const CardContainerStyle = styled(Card)(({ theme }) => ({
   width: '100%',
+  padding: theme.spacing(3),
   borderRadius: theme.spacing(1),
 }));
 
