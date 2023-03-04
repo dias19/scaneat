@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import productsApi from '~/api/products/api';
@@ -34,42 +35,37 @@ export function RestaurantProductAdd({
 
   const handleAdd = async (data: ProductFormData) => {
     const { photoUrl, ...productData } = data;
-
-    await addProduct({
-      restaurantId,
-      categoryId,
-      ...productData,
-    });
-    onClose();
+    try {
+      await addProduct({
+        restaurantId,
+        categoryId,
+        ...productData,
+      });
+      onClose();
+    } catch (e) {
+      toast.error('Упс,вышла ошибочка');
+    }
   };
+  if (isDesktop) {
+    return (
+      <ProductAddDesktop
+        open={open}
+        onClose={onClose}
+        onOpen={onOpen}
+        handleAdd={handleAdd}
+      />
+    );
+  }
   return (
-    <>
-      {!isDesktop && (
-        <ProductAddMobile
-          open={open}
-          onClose={onClose}
-          onOpen={onOpen}
-          category={category}
-          handleAdd={handleAdd}
-        />
-      )}
-
-      {isDesktop && (
-        <ProductAddDesktop
-          open={open}
-          onClose={onClose}
-          onOpen={onOpen}
-          handleAdd={handleAdd}
-        />
-      )}
-    </>
+    <ProductAddMobile
+      open={open}
+      onClose={onClose}
+      onOpen={onOpen}
+      category={category}
+      handleAdd={handleAdd}
+    />
   );
 }
-const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
-  '.MuiDrawer-paper': {
-    height: `calc(100% - ${theme.spacing(3)})`,
-  },
-}));
 
 type AddPropsDesktop=Pick<Props, 'open' | 'onClose' | 'onOpen'> & {
   handleAdd: (data:ProductFormData) => void
@@ -135,3 +131,9 @@ function ProductAddMobile({
     </BottomDrawerStyle>
   );
 }
+
+const BottomDrawerStyle = styled(BottomDrawer)(({ theme }) => ({
+  '.MuiDrawer-paper': {
+    height: `calc(100% - ${theme.spacing(3)})`,
+  },
+}));

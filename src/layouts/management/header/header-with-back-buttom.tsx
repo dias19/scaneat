@@ -13,6 +13,7 @@ type HeaderProps={
 
 export function BackButtonHeader({ title }:HeaderProps) {
   const navigate = useNavigate();
+
   return (
     <BoxStyle>
       <IconButton onClick={() => navigate(-1)}>
@@ -26,7 +27,6 @@ export function BackButtonHeader({ title }:HeaderProps) {
         sx={{
           width: '100%',
         }}
-        align="center"
       >
         {title}
       </Typography>
@@ -36,7 +36,8 @@ export function BackButtonHeader({ title }:HeaderProps) {
 
 const BoxStyle = styled(Box)(({ theme }) => ({
   display: 'flex',
-  justifyContent: 'start',
+  justifyContent: 'center',
+  textAlign: 'center',
   alignItems: 'center',
   backgroundColor: 'white',
   position: 'fixed',
@@ -45,4 +46,5 @@ const BoxStyle = styled(Box)(({ theme }) => ({
   top: 0,
   zIndex: theme.zIndex.appBar,
   minHeight: 56,
+  paddingRight: theme.spacing(5),
 }));

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Box, styled, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import categoryApi from '~/api/category/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
@@ -33,34 +34,36 @@ export function RestaurantCategoryEdit({
   const restaurantId = parseInt(parameters.restaurantId as string, 10);
 
   const handleCategoryEdit = async (data: CategoryFormData) => {
-    await editCategory({
-      restaurantId,
-      categoryId: category.id,
-      isActive: true,
-      ...data,
-    });
-    handleAction(null);
-    onClose();
+    try {
+      await editCategory({
+        restaurantId,
+        categoryId: category.id,
+        isActive: true,
+        ...data,
+      });
+      handleAction(null);
+      onClose();
+    } catch (e) {
+      toast.error('Упс, вышла ошибочка');
+    }
   };
+  if (isDesktop) {
+    return (
+      <CategoryEditDesktop
+        editOpen={editOpen}
+        handleAction={handleAction}
+        category={category}
+        handleCategoryEdit={handleCategoryEdit}
+      />
+    );
+  }
   return (
-    <>
-      {!isDesktop && (
-        <CategoryEditMobile
-          editOpen={editOpen}
-          handleAction={handleAction}
-          category={category}
-          handleCategoryEdit={handleCategoryEdit}
-        />
-      )}
-      {isDesktop && (
-        <CategoryEditDesktop
-          editOpen={editOpen}
-          handleAction={handleAction}
-          category={category}
-          handleCategoryEdit={handleCategoryEdit}
-        />
-      )}
-    </>
+    <CategoryEditMobile
+      editOpen={editOpen}
+      handleAction={handleAction}
+      category={category}
+      handleCategoryEdit={handleCategoryEdit}
+    />
   );
 }
 

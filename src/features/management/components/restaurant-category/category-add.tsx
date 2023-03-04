@@ -20,31 +20,24 @@ export function RestaurantCategoryAdd({
   open, onClose, onOpen, handleAdd,
 }: Props) {
   const isDesktop = useResponsive('up', 'sm');
+
+  if (isDesktop) {
+    return (
+      <CategoryAddDesktop
+        open={open}
+        onClose={onClose}
+        onOpen={onOpen}
+        handleAdd={handleAdd}
+      />
+    );
+  }
   return (
-    <>
-      {
-      !isDesktop
-      && (
-        <CategoryAddMobile
-          open={open}
-          onClose={onClose}
-          onOpen={onOpen}
-          handleAdd={handleAdd}
-        />
-      )
-    }
-      {
-      isDesktop
-      && (
-        <CategoryAddDesktop
-          open={open}
-          onClose={onClose}
-          onOpen={onOpen}
-          handleAdd={handleAdd}
-        />
-      )
-    }
-    </>
+    <CategoryAddMobile
+      open={open}
+      onClose={onClose}
+      onOpen={onOpen}
+      handleAdd={handleAdd}
+    />
   );
 }
 

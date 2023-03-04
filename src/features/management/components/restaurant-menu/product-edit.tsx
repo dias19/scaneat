@@ -42,30 +42,30 @@ export function RestaurantProductEdit({
   const handleClose = () => {
     handleAction(null);
   };
+
   const isDesktop = useResponsive('up', 'sm');
+
+  if (isDesktop) {
+    return (
+      <ProductEditDesktop
+        editOpen={editOpen}
+        title={title}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        product={product}
+        handleSubmit={handleSubmit}
+      />
+    );
+  }
   return (
-    <>
-      {!isDesktop && (
-        <ProductEditMobile
-          editOpen={editOpen}
-          title={title}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          product={product}
-          handleSubmit={handleSubmit}
-        />
-      )}
-      {isDesktop && (
-        <ProductEditDesktop
-          editOpen={editOpen}
-          title={title}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          product={product}
-          handleSubmit={handleSubmit}
-        />
-      )}
-    </>
+    <ProductEditMobile
+      editOpen={editOpen}
+      title={title}
+      onClose={handleClose}
+      onOpen={handleOpen}
+      product={product}
+      handleSubmit={handleSubmit}
+    />
   );
 }
 

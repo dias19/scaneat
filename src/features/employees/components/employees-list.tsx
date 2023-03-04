@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import {
   Box, Button, Container, styled, Typography,
 } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import employeeApi from '~/api/employee/api';
 import { useResponsive } from '~/hooks/useResponsive';
@@ -19,8 +19,12 @@ interface LocationState {
 }
 
 export function RestaurantEmployeesList() {
+  const parameters = useParams();
+
+  const restaurantId = parseInt(parameters.restaurantId as string, 10);
+
   const { data: employees = [] } = employeeApi.endpoints.getEmployees.useQuery({
-    restaurantId: 12,
+    restaurantId,
   });
 
   const [addOpen, setAddOpen] = useState(false);
@@ -77,8 +81,14 @@ function EmployeeListMobile({
   handleAddClose,
   handleAddOpen,
 }:EmployeeListMobileProps) {
+  const isEmployeesListEmpty = employees.length === 0;
   return (
     <BoxStyle>
+      {isEmployeesListEmpty && (
+        <Typography variant="h6">
+          Нету созданных работчиков
+        </Typography>
+      )}
       {employees.map((employee) => (
         <EmployeeCard
           employee={employee}
@@ -110,6 +120,7 @@ function EmployeeListDesktop({
   handleAddOpen,
   restaurantName,
 }:EmployeeListDesktopProps) {
+  const isEmployeesListEmpty = employees.length === 0;
   return (
     <Container>
       <NavigateBack />
@@ -122,6 +133,11 @@ function EmployeeListDesktop({
         Добавить рабочего
       </Button>
       <BoxEmployeeStyle>
+        {isEmployeesListEmpty && (
+        <Typography variant="h6">
+          Нету созданных работчиков
+        </Typography>
+        )}
         {employees.map((employee) => (
           <EmployeeCard employee={employee} key={`employee-${employee.id}-card`} />
         ))}

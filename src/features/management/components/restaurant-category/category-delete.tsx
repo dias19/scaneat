@@ -4,6 +4,7 @@ import {
   Box, Button, styled, Typography,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import categoryApi from '~/api/category/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
@@ -34,33 +35,35 @@ export function RestaurantCategoryDelete({
   const [deleteCategory] = categoryApi.endpoints.deleteCategory.useMutation();
 
   const handleDeleteCategory = async () => {
-    await deleteCategory({
-      restaurantId,
-      categoryId: category.id,
-    });
-    handleAction(null);
-    onClose();
+    try {
+      await deleteCategory({
+        restaurantId,
+        categoryId: category.id,
+      });
+      handleAction(null);
+      onClose();
+    } catch (e) {
+      toast.error('Упс вышла ошибочка');
+    }
   };
 
+  if (isDesktop) {
+    return (
+      <CategoryDeleteDesktop
+        deleteOpen={deleteOpen}
+        handleAction={handleAction}
+        category={category}
+        handleDeleteCategory={handleDeleteCategory}
+      />
+    );
+  }
   return (
-    <>
-      {!isDesktop && (
-        <CategoryDeleteMobile
-          deleteOpen={deleteOpen}
-          handleAction={handleAction}
-          category={category}
-          handleDeleteCategory={handleDeleteCategory}
-        />
-      )}
-      {isDesktop && (
-        <CategoryDeleteDesktop
-          deleteOpen={deleteOpen}
-          handleAction={handleAction}
-          category={category}
-          handleDeleteCategory={handleDeleteCategory}
-        />
-      )}
-    </>
+    <CategoryDeleteMobile
+      deleteOpen={deleteOpen}
+      handleAction={handleAction}
+      category={category}
+      handleDeleteCategory={handleDeleteCategory}
+    />
   );
 }
 

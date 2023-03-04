@@ -105,6 +105,7 @@ function CategoryListDesktop({
   handleAdd,
   restaurantId,
 }:CategoryProps) {
+  const isCategoriesEmpty = categories.length === 0;
   return (
     <Container>
       <NavigateBack />
@@ -115,6 +116,12 @@ function CategoryListDesktop({
         Добавить Категорию
       </Button>
       <Box sx={{ mt: 3, width: 358 }}>
+        {isCategoriesEmpty
+        && (
+        <Typography variant="h6">
+          Нету созданных категорий
+        </Typography>
+        )}
         {categories.filter((category) => !category.isDeleted).map((category) => (
           <CategoryCard
             key={category.id}
@@ -143,8 +150,15 @@ function CategoryListMobile(
     restaurantId,
   }:CategoryProps,
 ) {
+  const isCategoriesEmpty = categories.length === 0;
   return (
     <BoxStyle>
+      {isCategoriesEmpty
+        && (
+        <Typography variant="h6" align="center">
+          Нету созданных категорий
+        </Typography>
+        )}
       {categories.filter((category) => !category.isDeleted).map((category) => (
         <CategoryCard
           key={category.id}

@@ -4,6 +4,7 @@ import {
   Box, Button, styled, Typography,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import productsApi from '~/api/products/api';
 import { BottomDrawer } from '~/components/bottom-drawer';
@@ -34,8 +35,12 @@ export function RestaurantProductDelete({
   const isDesktop = useResponsive('up', 'sm');
 
   const handleDelete = async () => {
-    await deleteProduct({ productId, restaurantId });
-    handleAction(null);
+    try {
+      await deleteProduct({ productId, restaurantId });
+      handleAction(null);
+    } catch (e) {
+      toast.error('Упс, вышла ошибочка');
+    }
   };
 
   const handleOpen = () => {
@@ -45,27 +50,26 @@ export function RestaurantProductDelete({
   const handleClose = () => {
     handleAction(null);
   };
+
+  if (isDesktop) {
+    return (
+      <RestaurantProductDeleteDesktop
+        title={title}
+        deleteOpen={deleteOpen}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        handleDelete={handleDelete}
+      />
+    );
+  }
   return (
-    <>
-      {!isDesktop && (
-        <RestaurantProductDeleteMobile
-          deleteOpen={deleteOpen}
-          title={title}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          handleDelete={handleDelete}
-        />
-      )}
-      {isDesktop && (
-        <RestaurantProductDeleteDesktop
-          title={title}
-          deleteOpen={deleteOpen}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          handleDelete={handleDelete}
-        />
-      )}
-    </>
+    <RestaurantProductDeleteMobile
+      deleteOpen={deleteOpen}
+      title={title}
+      onClose={handleClose}
+      onOpen={handleOpen}
+      handleDelete={handleDelete}
+    />
   );
 }
 

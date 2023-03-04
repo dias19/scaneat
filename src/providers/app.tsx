@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Button, CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { SnackbarProvider } from 'notistack';
@@ -34,9 +34,12 @@ export function AppProvider({ children }: AppProviderProps) {
   return (
     <React.Suspense
       fallback={(
-        <div className="flex items-center justify-center w-screen h-screen">
-          <CircularProgress />
-        </div>
+        <Box
+          display="flex"
+          justifyContent="center"
+        >
+          <CircularProgress sx={{ position: 'absolute', top: '50%' }} />
+        </Box>
       )}
     >
       <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>

@@ -27,12 +27,16 @@ export function EmployeeAdd({ open, onOpen, onClose }: Props) {
   const restaurantId = parseInt(parameters.restaurantId as string, 10);
 
   const handleAdd = async (data: EmployeeFormData) => {
-    const { photoUrl, ...body } = data;
     try {
-      await createEmployee({ restaurantId, ...body });
+      const { photoUrl, ...body } = data;
+      await createEmployee({ restaurantId, ...body }).unwrap();
       onClose();
-    } catch (e) {
-      toast.error('Упс, вышла ошибочка');
+    } catch (e: any) {
+      console.log(e);
+      if (e.status === 400) toast.error('Уже существует рабочий с такой почтой');
+      else {
+        toast.error('Упс, вышла ошибочка');
+      }
     }
   };
 

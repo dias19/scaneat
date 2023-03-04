@@ -24,6 +24,7 @@ export function Image({ url, alt, ...other }:CombinedProps) {
   );
 }
 const ImageStyle = styled('img')({
+  objectFit: 'cover',
   borderRadius: 8,
   width: '100%',
   height: '100%',
